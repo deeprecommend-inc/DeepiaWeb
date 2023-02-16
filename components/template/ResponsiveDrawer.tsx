@@ -12,6 +12,8 @@ import LeftNav from "../organisms/LeftNav";
 import { TabPanels } from "../molecules/TabPanels";
 import AccountMenu from "../atoms/menu/AccountMenu";
 import { useAppSelector } from "../../redux/hooks";
+import { Button } from "@mui/material";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -27,6 +29,8 @@ export const ResponsiveDrawer = (props: Props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const dark = useAppSelector((state) => state.ui.dark);
+  const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -68,7 +72,17 @@ export const ResponsiveDrawer = (props: Props) => {
               <MenuIcon />
             </IconButton>
           </div>
-          <AccountMenu />
+          {isAfterLogin ? (
+            <AccountMenu />
+          ) : (
+            <Button
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Log in
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Box

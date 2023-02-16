@@ -167,7 +167,7 @@ export default function SignInSide() {
                 alignItems: "center",
               }}
             >
-              <Box sx={{ m: 1 }} className="ml-8">
+              <Box sx={{ m: 1 }}>
                 <Logo />
               </Box>
               <Typography component="h1" variant="h5">
