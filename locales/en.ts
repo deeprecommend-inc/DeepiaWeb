@@ -2,14 +2,14 @@
 export default {
   index: {
     head: {
-      title: "Deepia｜Website to manage websites from DeepRecommend",
-      description: "Website to manage websites",
+      title: "Deepia",
+      description: "Brain Power Enhancer",
     },
   },
   login: {
     head: {
       title: "Deepia｜Log in",
-      description: "Log in page of Deepia website to manage websites",
+      description: "Log in page of Deepia",
     },
     header: {
       description: "Brain Power Enhancer",
@@ -24,7 +24,7 @@ export default {
   signup: {
     head: {
       title: "Deepia｜Sign Up",
-      description: "Sign up page of Deepia website to manage websites",
+      description: "Sign up page of Deepia",
     },
     header: {
       description: "Brain Power Enhancer",
@@ -49,7 +49,9 @@ export default {
     desktopApp: "Desktop App",
     chromeExtension: "Chrome Extension",
     homepage: "Homepage",
-    community: "Help / Support",
+    community: "Support",
+    following: "Following",
+    feedback: "Feedback",
     shop: "Shop",
   },
   dialog: {

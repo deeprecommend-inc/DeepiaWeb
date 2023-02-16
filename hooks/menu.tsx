@@ -8,30 +8,20 @@ import HomeIcon from "@mui/icons-material/Home";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import React from "react";
 
-export const useAnotherServices = () => {
+export const useMenus = () => {
   const { t } = useLocale();
-  const anotherServices = [
+  const menus = [
     {
       title: t.leftNav.homepage,
-      link: "https://www.deep-recommend.com/",
+      link: "/",
       iconElement: <HomeIcon />,
     },
     {
-      title: t.leftNav.community,
-      link: "https://discord.gg/QjSFUCzDn5",
+      title: t.leftNav.following,
+      link: "/following",
       iconElement: <GroupIcon />,
-    },
-    {
-      title: t.leftNav.feedback,
-      link: "https://www.deep-recommend.com/feedback",
-      iconElement: <FeedbackIcon />,
-    },
-    {
-      title: t.leftNav.shop,
-      link: "https://deeprecommed.official.ec",
-      iconElement: <StoreIcon />,
     },
   ];
 
-  return anotherServices;
+  return menus;
 };

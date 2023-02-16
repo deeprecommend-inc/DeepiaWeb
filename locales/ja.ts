@@ -2,15 +2,14 @@
 export default {
   index: {
     head: {
-      title: "Deepia＜ディープログ＞|",
-      description: "Webサイトを一元管理するWebアプリケーション",
+      title: "Deepia",
+      description: "脳力拡張機",
     },
   },
   login: {
     head: {
-      title: "Deepia＜ディープログ＞｜ログイン画面",
-      description:
-        "Webサイトを一元管理するWebアプリケーション、Deepia＜ディープログ＞のログイン画面",
+      title: "Deepia｜ログイン画面",
+      description: "Deepiaのログイン画面",
     },
     header: {
       description: "脳力拡張機",
@@ -24,9 +23,8 @@ export default {
   },
   signup: {
     head: {
-      title: "Deepia＜ディープログ＞｜新規登録画面",
-      description:
-        "Webサイトを一元管理するWebアプリケーション、Deepia＜ディープログ＞の新規登録画面",
+      title: "Deepia｜新規登録画面",
+      description: "Deepiaの新規登録画面",
     },
     header: {
       description: "脳力拡張機",
@@ -51,7 +49,9 @@ export default {
     desktopApp: "デスクトップアプリ",
     chromeExtension: "Chrome拡張",
     homepage: "ホームページ",
-    community: "ヘルプ / サポート",
+    community: "サポート",
+    feedback: "フィードバック",
+    following: "フォロー",
     shop: "ショップ",
   },
   dialog: {

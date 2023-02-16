@@ -5,7 +5,7 @@ import React from "react";
 import ListCommonItem from "../atoms/listItems/ListCommonItem";
 import ListCreateLogItem from "../atoms/listItems/ListCreateLogItem";
 import ListAccountItem from "../atoms/listItems/ListAccountItem";
-import { List, ListItemText, Tab, Tabs } from "@mui/material";
+import { List, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -21,11 +21,15 @@ import { useAnotherServices } from "../../hooks/anotherServices";
 import { useAppSelector } from "../../redux/hooks";
 import ListTipItem from "../atoms/listItems/ListTipItem";
 import PaidIcon from "@mui/icons-material/Paid";
+import Logo from "../atoms/Logo";
+import { CopyrightContent } from "../molecules/CopyrightContent";
+import { useMenus } from "../../hooks/menu";
 
 export const LeftNav = () => {
   const router = useRouter();
   const { t } = useLocale();
   const anotherServices = useAnotherServices();
+  const menus = useMenus();
   const dark = useAppSelector((state) => state.ui.dark);
 
   const logout = async () => {
@@ -36,12 +40,33 @@ export const LeftNav = () => {
   return (
     <div
       className="overflow-hidden"
-      style={{ backgroundColor: dark ? "" : "#FAFAFA" }}
+      style={{ backgroundColor: dark ? "" : "#ffffff" }}
     >
-      <Toolbar />
+      <Toolbar
+        onClick={() => {
+          router.push("/");
+        }}
+        style={{ minHeight: "64px" }}
+      >
+        <Logo />
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{
+            color: dark ? "#B8B8B8" : "#000000",
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+            fontWeight: 600,
+          }}
+        >
+          Deepia
+        </Typography>
+      </Toolbar>
       <Divider />
-      <ListCreateLogItem />
-      <BasicTabs />
+      {/* <ListCreateLogItem />
+      <BasicTabs /> */}
       {/* <Divider />
           
             <ListCommonItem
@@ -55,30 +80,43 @@ export const LeftNav = () => {
                 iconElement={<ExtensionIcon />}
             /> */}
       {/* <ListTipItem text={t.leftNav.tipping} iconElement={<PaidIcon />} /> */}
-      {/* <Divider />
-            <List
-                sx={{
-                    position: 'fixed',
-                    bottom: 0,
-                    left: 0,
+      <List>
+        {menus.map((menu) => {
+          return (
+            <div key={menu.title}>
+              <ListCommonItem
+                text={menu.title}
+                iconElement={menu.iconElement}
+                callback={() => {
+                  router.push(menu.link);
                 }}
-            >
-                <ListItemText className="text-gray-500 ml-2">
-                    Powered by DeepRecommend
-                </ListItemText>
-                {anotherServices.map((service) => {
-                    return (
-                        <div key={service.title}>
-                            <ListCommonItem
-                                text={service.title}
-                                link={service.link}
-                                iconElement={service.iconElement}
-                            />
-                        </div>
-                    );
-                })}
-            </List> */}
-      <Adsense />
+              />
+            </div>
+          );
+        })}
+      </List>
+      <Divider />
+      <List
+        sx={{
+          position: "absolute",
+          width: "100%",
+          bottom: 0,
+          left: 0,
+        }}
+      >
+        {anotherServices.map((service) => {
+          return (
+            <div key={service.title}>
+              <ListCommonItem
+                text={service.title}
+                link={service.link}
+                iconElement={service.iconElement}
+              />
+            </div>
+          );
+        })}
+        <CopyrightContent className="ml-4" />
+      </List>
     </div>
   );
 };

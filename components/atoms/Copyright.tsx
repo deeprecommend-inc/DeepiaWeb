@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const CopyrightText = () => {
-    return <>{'Copyright © '}</>;
+  return <>{"© "}</>;
 };
 
 export default CopyrightText;

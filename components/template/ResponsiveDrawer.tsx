@@ -17,6 +17,7 @@ const drawerWidth = 240;
 const drawerHeight = 148;
 
 type Props = {
+  contents: any;
   window?: () => Window;
 };
 
@@ -47,7 +48,7 @@ export const ResponsiveDrawer = (props: Props) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: dark ? "" : "#FAFAFA",
+            backgroundColor: dark ? "" : "#ffffff",
           }}
         >
           <div
@@ -66,15 +67,6 @@ export const ResponsiveDrawer = (props: Props) => {
             >
               <MenuIcon />
             </IconButton>
-            <Logo />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: dark ? "#B8B8B8" : "#707070" }}
-            >
-              Deepia
-            </Typography>
           </div>
           <AccountMenu />
         </Toolbar>
@@ -127,7 +119,7 @@ export const ResponsiveDrawer = (props: Props) => {
         }}
       >
         <Toolbar />
-        <TabPanels />
+        {props.contents}
       </Box>
     </Box>
   );

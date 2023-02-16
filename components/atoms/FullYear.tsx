@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const FullYear = () => {
-    return <>{new Date().getFullYear()}</>;
+  return <>{new Date().getFullYear() + " "}</>;
 };
 
 export default FullYear;

@@ -37,7 +37,7 @@ const darkMode = createTheme({
 
 const lightMode = createTheme({});
 
-const Home = () => {
+const Following = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
@@ -140,4 +140,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Following;
