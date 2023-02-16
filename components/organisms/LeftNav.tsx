@@ -1,48 +1,48 @@
-import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import React from 'react';
-import ListCommonItem from '../atoms/listItems/ListCommonItem';
-import ListCreateLogItem from '../atoms/listItems/ListCreateLogItem';
-import ListAccountItem from '../atoms/listItems/ListAccountItem';
-import { List, ListItemText, Tab, Tabs } from '@mui/material';
-import { useRouter } from 'next/router';
-import LogoutIcon from '@mui/icons-material/Logout';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import { BasicTabs } from '../atoms/BasicTabs';
-import Adsense from '../template/Adsence';
-import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
-import { asyncLocalStorage } from '../../general/utils/asyncLocalStorage';
-import { accessTokenKey } from '../../general/constants/localStorageKey';
-import ExtensionIcon from '@mui/icons-material/Extension';
-import { spacing } from '@mui/system';
-import { useLocale } from '../../hooks/useLocale';
-import { useAnotherServices } from '../../hooks/anotherServices';
-import { useAppSelector } from '../../redux/hooks';
-import ListTipItem from '../atoms/listItems/ListTipItem';
-import PaidIcon from '@mui/icons-material/Paid';
+import Toolbar from "@mui/material/Toolbar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import React from "react";
+import ListCommonItem from "../atoms/listItems/ListCommonItem";
+import ListCreateLogItem from "../atoms/listItems/ListCreateLogItem";
+import ListAccountItem from "../atoms/listItems/ListAccountItem";
+import { List, ListItemText, Tab, Tabs } from "@mui/material";
+import { useRouter } from "next/router";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import { BasicTabs } from "../atoms/BasicTabs";
+import Adsense from "../template/Adsence";
+import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
+import { asyncLocalStorage } from "../../general/utils/asyncLocalStorage";
+import { accessTokenKey } from "../../general/constants/localStorageKey";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import { spacing } from "@mui/system";
+import { useLocale } from "../../hooks/useLocale";
+import { useAnotherServices } from "../../hooks/anotherServices";
+import { useAppSelector } from "../../redux/hooks";
+import ListTipItem from "../atoms/listItems/ListTipItem";
+import PaidIcon from "@mui/icons-material/Paid";
 
 export const LeftNav = () => {
-    const router = useRouter();
-    const { t } = useLocale();
-    const anotherServices = useAnotherServices();
-    const dark = useAppSelector((state) => state.ui.dark);
+  const router = useRouter();
+  const { t } = useLocale();
+  const anotherServices = useAnotherServices();
+  const dark = useAppSelector((state) => state.ui.dark);
 
-    const logout = async () => {
-        await asyncLocalStorage.removeItem(accessTokenKey);
-        router.push('login');
-    };
+  const logout = async () => {
+    await asyncLocalStorage.removeItem(accessTokenKey);
+    router.push("login");
+  };
 
-    return (
-        <div
-            className="overflow-hidden"
-            style={{ backgroundColor: dark ? '' : '#FAFAFA' }}
-        >
-            <Toolbar />
-            <Divider />
-            <ListCreateLogItem />
-            <BasicTabs />
-            {/* <Divider />
+  return (
+    <div
+      className="overflow-hidden"
+      style={{ backgroundColor: dark ? "" : "#FAFAFA" }}
+    >
+      <Toolbar />
+      <Divider />
+      <ListCreateLogItem />
+      <BasicTabs />
+      {/* <Divider />
           
             <ListCommonItem
                 text={t.leftNav.desktopApp}
@@ -51,11 +51,11 @@ export const LeftNav = () => {
             />
             <ListCommonItem
                 text={t.leftNav.chromeExtension}
-                link="https://chrome.google.com/webstore/detail/deeplog/nmmfoalnbcllnnknfagnfmdmdkdgjgoi"
+                link="https://chrome.google.com/webstore/detail/deepia/nmmfoalnbcllnnknfagnfmdmdkdgjgoi"
                 iconElement={<ExtensionIcon />}
             /> */}
-            {/* <ListTipItem text={t.leftNav.tipping} iconElement={<PaidIcon />} /> */}
-            {/* <Divider />
+      {/* <ListTipItem text={t.leftNav.tipping} iconElement={<PaidIcon />} /> */}
+      {/* <Divider />
             <List
                 sx={{
                     position: 'fixed',
@@ -78,9 +78,9 @@ export const LeftNav = () => {
                     );
                 })}
             </List> */}
-            <Adsense />
-        </div>
-    );
+      <Adsense />
+    </div>
+  );
 };
 
 export default LeftNav;
