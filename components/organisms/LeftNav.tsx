@@ -104,6 +104,7 @@ export const LeftNav = () => {
           left: 0,
         }}
       >
+        <Divider />
         {anotherServices.map((service) => {
           return (
             <div key={service.title}>
