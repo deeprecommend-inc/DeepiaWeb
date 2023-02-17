@@ -52,7 +52,7 @@ const Home = () => {
       if (!token) {
         // await asyncLocalStorage.removeItem(accessTokenKey);
         // router.push("login");
-        return;
+        // return;
       }
 
       if (!isAfterLogin) {
