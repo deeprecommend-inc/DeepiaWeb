@@ -3,7 +3,10 @@ import { Box } from "@mui/system";
 import router, { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setLogList } from "../redux/reducers/logSlice";
-import { setCurrentUser } from "../redux/reducers/authSlice";
+import {
+  setCurrentUser,
+  updateIsAfterLogin,
+} from "../redux/reducers/authSlice";
 import { NextSeo } from "next-seo";
 import ResponsiveDrawer from "../components/template/ResponsiveDrawer";
 import { logUiController } from "../libs/log/presentation/log.ui.controler";
@@ -53,31 +56,36 @@ const Home = () => {
         // await asyncLocalStorage.removeItem(accessTokenKey);
         // router.push("login");
         // return;
-      }
-
-      if (!isAfterLogin) {
+      } else {
+        dispatch(updateIsAfterLogin(true));
         await authUiController.currentUser().then((currentUser) => {
           dispatch(setCurrentUser(currentUser));
         });
-        //   .catch(() => {
-        //     router.push("login");
-        //   });
-
-        // const categoryId = await asyncLocalStorage.getItem(
-        //   categoryIdForGetLogKey
-        // );
-
-        // const logList = categoryId
-        //   ? await categoryLogUiController.findAll(Number(categoryId))
-        //   : await logUiController.findAll();
-        // const categoryList = await categoryUiController.findAll();
-        // const publicCategoryList = await categoryUiController.findPublic();
-
-        // dispatch(setLogList(logList));
-
-        // dispatch(setCategoryList(categoryList));
-        // dispatch(setPublicCategoryList(publicCategoryList));
       }
+
+      //   if (!isAfterLogin) {
+      //     await authUiController.currentUser().then((currentUser) => {
+      //       dispatch(setCurrentUser(currentUser));
+      //     });
+      //       .catch(() => {
+      //         router.push("login");
+      //       });
+
+      //     const categoryId = await asyncLocalStorage.getItem(
+      //       categoryIdForGetLogKey
+      //     );
+
+      //     const logList = categoryId
+      //       ? await categoryLogUiController.findAll(Number(categoryId))
+      //       : await logUiController.findAll();
+      //     const categoryList = await categoryUiController.findAll();
+      //     const publicCategoryList = await categoryUiController.findPublic();
+
+      //     dispatch(setLogList(logList));
+
+      //     dispatch(setCategoryList(categoryList));
+      //     dispatch(setPublicCategoryList(publicCategoryList));
+      //   }
 
       Boolean(dark)
         ? await dispatch(setDark(true))
