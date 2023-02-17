@@ -49,6 +49,7 @@ export default {
     desktopApp: "デスクトップアプリ",
     chromeExtension: "Chrome拡張",
     homepage: "ホームページ",
+    home: "ホーム",
     community: "サポート",
     feedback: "フィードバック",
     following: "フォロー",

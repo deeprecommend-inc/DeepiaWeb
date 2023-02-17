@@ -49,6 +49,7 @@ export default {
     desktopApp: "Desktop App",
     chromeExtension: "Chrome Extension",
     homepage: "Homepage",
+    home: "Home",
     community: "Support",
     following: "Following",
     feedback: "Feedback",

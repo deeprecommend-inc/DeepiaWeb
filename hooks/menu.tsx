@@ -12,7 +12,7 @@ export const useMenus = () => {
   const { t } = useLocale();
   const menus = [
     {
-      title: t.leftNav.homepage,
+      title: t.leftNav.home,
       link: "/",
       iconElement: <HomeIcon />,
     },
