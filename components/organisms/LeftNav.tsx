@@ -98,7 +98,7 @@ export const LeftNav = () => {
       <Divider />
 
       <List>
-        <div className="ml-4 font-semibold">{t.leftNav.following}</div>
+        <div className="ml-4">{t.leftNav.following}</div>
         {anotherServices.map((service) => {
           return (
             <div key={service.title}>

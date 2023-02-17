@@ -15,6 +15,8 @@ import { useAppSelector } from "../../redux/hooks";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import AddIcon from "@mui/icons-material/Add";
+import ListCreateLogItem from "../atoms/listItems/ListCreateLogItem";
+import CreateContent from "../atoms/CreateContent";
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -80,9 +82,7 @@ export const ResponsiveDrawer = (props: Props) => {
               alignItems: "center",
             }}
           >
-            <IconButton>
-              <AddIcon />
-            </IconButton>
+            <CreateContent />
             {isAfterLogin ? (
               <AccountMenu />
             ) : (

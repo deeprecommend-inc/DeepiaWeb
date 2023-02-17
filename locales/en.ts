@@ -57,9 +57,9 @@ export default {
   },
   dialog: {
     createLog: {
-      title: "New Log",
+      title: "New",
       contentText:
-        "To register new log (website) to this website, please enter title and link here.",
+        "Enter a title and select the category of content to generate.",
     },
     editLog: {
       title: "Edit Log",
@@ -107,6 +107,7 @@ export default {
       required: {
         title: "Title required",
         link: "Link required",
+        category: "Category required",
       },
       pattern: {
         link: "Link should be url",
@@ -167,4 +168,7 @@ export default {
   private: "Private",
   individual: "Individual",
   business: "Business",
+  image: "Image",
+  music: "Music",
+  text: "Text",
 };

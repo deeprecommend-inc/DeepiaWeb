@@ -57,8 +57,8 @@ export default {
   },
   dialog: {
     createLog: {
-      title: "新規ログ",
-      contentText: "タイトルとリンクを入力し、ログを新規作成してください",
+      title: "新規",
+      contentText: "タイトルを入力し、生成するコンテンツのカテゴリを選択します",
     },
     editLog: {
       title: "ログ編集",
@@ -163,4 +163,7 @@ export default {
   private: "自分のみ",
   individual: "個人",
   business: "企業",
+  image: "画像",
+  music: "音楽",
+  text: "テキスト",
 };
