@@ -36,13 +36,13 @@ export class Content extends AggregateRoot<IContent> {
   }
 
   static create(props: IContent, id?: UniqueEntityID): Content {
-    const user = new Content(
+    const content = new Content(
       {
         ...props,
       },
       id
     );
 
-    return user;
+    return content;
   }
 }

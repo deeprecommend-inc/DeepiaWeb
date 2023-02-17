@@ -54,6 +54,7 @@ export default {
     feedback: "フィードバック",
     following: "フォロー",
     shop: "ショップ",
+    quickAI: "Quick AI",
   },
   dialog: {
     createLog: {

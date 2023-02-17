@@ -54,6 +54,7 @@ export default {
     following: "Following",
     feedback: "Feedback",
     shop: "Shop",
+    quickAI: "Quick AI",
   },
   dialog: {
     createLog: {

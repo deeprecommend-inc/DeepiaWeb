@@ -77,6 +77,7 @@ const CreateContent = () => {
     await contentUiController.create(data);
     // await setList();
     resetFormValue();
+    closeDialog();
   };
 
   const setList = async () => {
@@ -139,13 +140,13 @@ const CreateContent = () => {
                 }}
               />
               <Controller
-                name="category"
+                name="categoryId"
                 control={control}
                 render={({ field }) => (
                   <Select {...field}>
-                    <MenuItem value="1">{t.image}</MenuItem>
-                    <MenuItem value="2">{t.music}</MenuItem>
-                    <MenuItem value="3">{t.text}</MenuItem>
+                    <MenuItem value={1}>{t.image}</MenuItem>
+                    <MenuItem value={2}>{t.music}</MenuItem>
+                    <MenuItem value={3}>{t.text}</MenuItem>
                   </Select>
                 )}
                 rules={{ required: t.form.err.required.category }}

@@ -13,7 +13,7 @@ export const useAnotherServices = () => {
   const anotherServices = [
     {
       title: t.leftNav.homepage,
-      link: "https://www.deep-recommend.com/",
+      link: "https://www.deep-recommend.com/deepia",
       iconElement: <HomeIcon />,
     },
     {

@@ -5,6 +5,7 @@ import { ContentDto } from "../dto/content.dto";
 
 export class ContentMapper {
   static toDomain(dto: any): Content {
+    console.log({ dto });
     return Content.create(
       {
         id: dto.id,
@@ -34,6 +35,8 @@ export class ContentMapper {
     model.category_id = domain.categoryId;
     model.deliverables = domain.deliverables;
     model.user_id = domain.userId;
+
+    console.log({ model });
 
     return model;
   }
