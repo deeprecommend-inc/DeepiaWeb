@@ -19,8 +19,8 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Controller, useForm } from "react-hook-form";
 import { REGEXP } from "../../general/utils/regExp";
-import { CreateLogDto } from "../../libs/log/session/dto/create.log.dto";
-import { setLogList } from "../../redux/reducers/logSlice";
+import { CreateContentDto } from "../../libs/content/session/dto/create.content.dto";
+import { setContentList } from "../../redux/reducers/contentSlice";
 import { logUiController } from "../../libs/log/presentation/log.ui.controler";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -35,6 +35,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import { useLocale } from "../../hooks/useLocale";
 import AddIcon from "@mui/icons-material/Add";
+import { contentUiController } from "../../libs/content/presentation/content.ui.controler";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -64,10 +65,6 @@ const CreateContent = () => {
     resetFormValue();
   }, [open]);
 
-  const toggleIsContinuous = () => {
-    setIsContinuous(!isContinuous);
-  };
-
   const openDialog = () => {
     setOpen(true);
   };
@@ -76,23 +73,21 @@ const CreateContent = () => {
     setOpen(false);
   };
 
-  const createLog = async (data: CreateLogDto) => {
-    await setList();
+  const createContent = async (data: CreateContentDto) => {
+    await contentUiController.create(data);
+    // await setList();
     resetFormValue();
-
-    if (!isContinuous) setOpen(false);
   };
 
   const setList = async () => {
     const list = await logUiController.findAll();
-    dispatch(setLogList(list));
+    // dispatch(setContentList(list));
   };
 
   const resetFormValue = () => {
     reset({
       title: "",
-      link: "",
-      memo: "",
+      category: "",
     });
   };
 
@@ -103,7 +98,7 @@ const CreateContent = () => {
       </IconButton>
 
       <Dialog open={open} maxWidth="xs">
-        <form onSubmit={handleSubmit(createLog)}>
+        <form onSubmit={handleSubmit(createContent)}>
           <DialogTitle>{t.dialog.createLog.title}</DialogTitle>
           <DialogContent>
             <DialogContentText>

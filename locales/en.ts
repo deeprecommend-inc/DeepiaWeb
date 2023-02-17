@@ -95,7 +95,7 @@ export default {
   form: {
     close: "Close",
     canncel: "Canncel",
-    create: "Create",
+    create: "Generate",
     update: "Update",
     delete: "Delete",
     save: "Save",

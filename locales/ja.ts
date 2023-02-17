@@ -76,7 +76,7 @@ export default {
     },
     createCategory: {
       title: "新規カテゴリー",
-      contentText: "タイトルを入力し、カテゴリーを新規作成してください",
+      contentText: "タイトルを入力し、カテゴリーを新規生成してください",
     },
     editCategory: {
       title: "カテゴリー編集",
@@ -91,7 +91,7 @@ export default {
   form: {
     close: "閉じる",
     canncel: "キャンセル",
-    create: "作成",
+    create: "生成",
     update: "更新",
     delete: "削除",
     save: "保存",
@@ -103,6 +103,7 @@ export default {
       required: {
         title: "タイトルは必須です",
         link: "リンクは必須です",
+        category: "カテゴリは必須です",
       },
       pattern: {
         link: "リンクはURLである必要があります",
