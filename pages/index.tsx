@@ -58,6 +58,9 @@ const Home = () => {
         // return;
       } else {
         dispatch(updateIsAfterLogin(true));
+        await authUiController.currentUser().then((currentUser) => {
+          dispatch(setCurrentUser(currentUser));
+        });
       }
 
       if (!isAfterLogin) {

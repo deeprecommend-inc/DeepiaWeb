@@ -96,6 +96,22 @@ export const LeftNav = () => {
         })}
       </List>
       <Divider />
+
+      <List>
+        <div className="ml-4 font-semibold">{t.leftNav.following}</div>
+        {anotherServices.map((service) => {
+          return (
+            <div key={service.title}>
+              <ListCommonItem
+                text={service.title}
+                link={service.link}
+                iconElement={service.iconElement}
+              />
+            </div>
+          );
+        })}
+      </List>
+
       <List
         sx={{
           position: "absolute",

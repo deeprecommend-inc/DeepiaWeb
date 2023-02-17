@@ -14,6 +14,7 @@ import AccountMenu from "../atoms/menu/AccountMenu";
 import { useAppSelector } from "../../redux/hooks";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import AddIcon from "@mui/icons-material/Add";
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -72,17 +73,29 @@ export const ResponsiveDrawer = (props: Props) => {
               <MenuIcon />
             </IconButton>
           </div>
-          {isAfterLogin ? (
-            <AccountMenu />
-          ) : (
-            <Button
-              onClick={() => {
-                router.push("/login");
-              }}
-            >
-              Log in
-            </Button>
-          )}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <IconButton>
+              <AddIcon />
+            </IconButton>
+            {isAfterLogin ? (
+              <AccountMenu />
+            ) : (
+              <Button
+                className="ml-4"
+                onClick={() => {
+                  router.push("/login");
+                }}
+              >
+                Log in
+              </Button>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
       <Box

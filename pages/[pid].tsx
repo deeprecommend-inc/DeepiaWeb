@@ -3,7 +3,10 @@ import { Box } from "@mui/system";
 import router, { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setLogList } from "../redux/reducers/logSlice";
-import { setCurrentUser } from "../redux/reducers/authSlice";
+import {
+  setCurrentUser,
+  updateIsAfterLogin,
+} from "../redux/reducers/authSlice";
 import { NextSeo } from "next-seo";
 import ResponsiveDrawer from "../components/template/ResponsiveDrawer";
 import { logUiController } from "../libs/log/presentation/log.ui.controler";
@@ -53,6 +56,11 @@ const Pid = () => {
         // await asyncLocalStorage.removeItem(accessTokenKey);
         // router.push("login");
         return;
+      } else {
+        dispatch(updateIsAfterLogin(true));
+        await authUiController.currentUser().then((currentUser) => {
+          dispatch(setCurrentUser(currentUser));
+        });
       }
 
       if (!isAfterLogin) {
