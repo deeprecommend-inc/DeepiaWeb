@@ -172,4 +172,7 @@ export default {
   image: "Image",
   music: "Music",
   text: "Text",
+  all: "All",
+  search: "Search",
+  video: "Video",
 };

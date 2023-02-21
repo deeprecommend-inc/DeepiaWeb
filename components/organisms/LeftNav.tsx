@@ -5,7 +5,14 @@ import React from "react";
 import ListCommonItem from "../atoms/listItems/ListCommonItem";
 import ListCreateLogItem from "../atoms/listItems/ListCreateLogItem";
 import ListAccountItem from "../atoms/listItems/ListAccountItem";
-import { List, ListItemText, Tab, Tabs, Typography } from "@mui/material";
+import {
+  Avatar,
+  List,
+  ListItemText,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -24,6 +31,11 @@ import PaidIcon from "@mui/icons-material/Paid";
 import Logo from "../atoms/Logo";
 import { CopyrightContent } from "../molecules/CopyrightContent";
 import { useMenus } from "../../hooks/menu";
+import { AuthCurrentUserDto } from "../../libs/auth/session/dto/auth.current.user.dto";
+import PersonIcon from "@mui/icons-material/Person";
+import SimpleBar from "simplebar-react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import "simplebar/dist/simplebar.min.css";
 
 export const LeftNav = () => {
   const router = useRouter();
@@ -31,6 +43,9 @@ export const LeftNav = () => {
   const anotherServices = useAnotherServices();
   const menus = useMenus();
   const dark = useAppSelector((state) => state.ui.dark);
+  const currentUser: AuthCurrentUserDto = useAppSelector(
+    (state) => state.auth.currentUser
+  );
 
   const logout = async () => {
     await asyncLocalStorage.removeItem(accessTokenKey);
@@ -46,11 +61,10 @@ export const LeftNav = () => {
         onClick={() => {
           router.push("/");
         }}
-        style={{ minHeight: "64px" }}
       >
         <Logo />
         <Typography
-          variant="h6"
+          variant="h5"
           noWrap
           component="div"
           sx={{
@@ -65,6 +79,7 @@ export const LeftNav = () => {
         </Typography>
       </Toolbar>
       <Divider />
+
       {/* <ListCreateLogItem />
       <BasicTabs /> */}
       {/* <Divider />
@@ -80,60 +95,82 @@ export const LeftNav = () => {
                 iconElement={<ExtensionIcon />}
             /> */}
       {/* <ListTipItem text={t.leftNav.tipping} iconElement={<PaidIcon />} /> */}
-      <List>
-        {menus.map((menu) => {
-          return (
-            <div key={menu.title}>
-              <ListCommonItem
-                text={menu.title}
-                iconElement={menu.iconElement}
-                callback={() => {
-                  router.push(menu.link);
-                }}
-              />
-            </div>
-          );
-        })}
-      </List>
-      <Divider />
-
-      <List>
-        <div className="ml-4">{t.leftNav.following}</div>
-        {anotherServices.map((service) => {
-          return (
-            <div key={service.title}>
-              <ListCommonItem
-                text={service.title}
-                link={service.link}
-                iconElement={service.iconElement}
-              />
-            </div>
-          );
-        })}
-      </List>
-
-      <List
-        sx={{
-          position: "absolute",
-          width: "100%",
-          bottom: 0,
-          left: 0,
+      <SimpleBar
+        style={{
+          height: "calc(100% - 64px)",
         }}
       >
+        <List>
+          {menus.map((menu) => {
+            return (
+              <div key={menu.title}>
+                <ListCommonItem
+                  text={menu.title}
+                  iconElement={menu.iconElement}
+                  callback={() => {
+                    router.push(menu.link);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </List>
         <Divider />
-        {anotherServices.map((service) => {
-          return (
-            <div key={service.title}>
-              <ListCommonItem
-                text={service.title}
-                link={service.link}
-                iconElement={service.iconElement}
-              />
-            </div>
-          );
-        })}
-        <CopyrightContent className="ml-4" />
-      </List>
+
+        <List>
+          <div className="ml-4">{t.leftNav.following}</div>
+          {[
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0,
+          ].map((sample) => {
+            return (
+              <div key={sample}>
+                <ListCommonItem
+                  text={currentUser?.name}
+                  iconElement={
+                    currentUser?.image ? (
+                      <Avatar
+                        src={currentUser?.image}
+                        sx={{ width: 32, height: 32 }}
+                      />
+                    ) : (
+                      <Avatar sx={{ width: 32, height: 32 }}>
+                        <PersonIcon />
+                      </Avatar>
+                    )
+                  }
+                  callback={() => {
+                    router.push(currentUser?.name);
+                  }}
+                  isPurple={true}
+                />
+              </div>
+            );
+          })}
+        </List>
+
+        <List
+          sx={{
+            width: "100%",
+            bottom: 0,
+            left: 0,
+          }}
+        >
+          <Divider />
+          {anotherServices.map((service) => {
+            return (
+              <div key={service.title}>
+                <ListCommonItem
+                  text={service.title}
+                  link={service.link}
+                  iconElement={service.iconElement}
+                />
+              </div>
+            );
+          })}
+          <CopyrightContent className="ml-4" />
+        </List>
+      </SimpleBar>
     </div>
   );
 };

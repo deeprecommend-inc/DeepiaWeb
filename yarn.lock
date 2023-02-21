@@ -3531,6 +3531,11 @@ camelize@^1.0.0:
   resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.0.tgz#164a5483e630fa4321e5af07020e531831b2609b"
   integrity sha1-FkpUg+Yw+kMh5a8HAg5TGDGyYJs=
 
+can-use-dom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
+  integrity sha512-ceOhN1DL7Y4O6M0j9ICgmTYziV89WMd96SvSl0REd8PMgrY0B/WBOPoed5S1KUmJqXgUXh8gzSe6E3ae27upsQ==
+
 caniuse-lite@^1.0.30001202, caniuse-lite@^1.0.30001219, caniuse-lite@^1.0.30001228, caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001297:
   version "1.0.30001298"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz#0e690039f62e91c3ea581673d716890512e7ec52"
@@ -3648,6 +3653,11 @@ classnames@2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
+
+classnames@^2.2.6:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
+  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
 
 clean-set@^1.1.1:
   version "1.1.2"
@@ -6744,6 +6754,13 @@ matcher@^3.0.0:
   dependencies:
     escape-string-regexp "^4.0.0"
 
+material-ui-audio-player@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/material-ui-audio-player/-/material-ui-audio-player-1.7.1.tgz#0c4aff517e30322722a8e36b41be777f58ede835"
+  integrity sha512-5MGudB9K82Txm6cRoRaXS2AypPS3/kJvwPW5B+Gll8T6WIT6wPkX/NYpoOupasxuJKXXcSR+vNmCLh06QWdHbA==
+  dependencies:
+    classnames "^2.2.6"
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -8853,6 +8870,29 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+simplebar-core@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/simplebar-core/-/simplebar-core-1.2.1.tgz#7e7c0a2e5676e82db9573b3bd88abeb8d864ea19"
+  integrity sha512-dgX6qDOSDM3+crxFstIKOlxyxnD3NYGRPm7CqmAtnNfFLVeadrydym5eNpduIO7aDFU/rayS6hEdrcxO0WBqnQ==
+  dependencies:
+    can-use-dom "^0.1.0"
+    lodash-es "^4.17.21"
+
+simplebar-react@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/simplebar-react/-/simplebar-react-3.2.1.tgz#486afc9536710ec71b1b36564d50c5dad69014c8"
+  integrity sha512-viHQs/34ZQk956b88Kl7+VckWO8DKOhg2Hkl8kjPv2q16w+/nnOJOGhZKrpj/egMGqDpQywou2AhdRkAM0oddA==
+  dependencies:
+    simplebar-core "^1.2.1"
+
+simplebar@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/simplebar/-/simplebar-6.2.1.tgz#0e28532eb24cd35d00a9bda8b698d6abf12923fa"
+  integrity sha512-zEurqs3D/010l8nxqj4EkorH5BQGfJb/T3mUvrVx1H6hT99daOVtkQo0p1NL1/ChoLrfzQzrBN9sD8saK456LQ==
+  dependencies:
+    can-use-dom "^0.1.0"
+    simplebar-core "^1.2.1"
 
 slash@^2.0.0:
   version "2.0.0"

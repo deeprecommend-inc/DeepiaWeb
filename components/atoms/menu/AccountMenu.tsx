@@ -17,11 +17,12 @@ import router from "next/router";
 import { accessTokenKey } from "../../../general/constants/localStorageKey";
 import { asyncLocalStorage } from "../../../general/utils/asyncLocalStorage";
 import { AuthCurrentUserDto } from "../../../libs/auth/session/dto/auth.current.user.dto";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { Button } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SettingMenu from "./SettingMenu";
 import { useLocale } from "../../../hooks/useLocale";
+import { updateIsAfterLogin } from "../../../redux/reducers/authSlice";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -30,6 +31,7 @@ const AccountMenu = () => {
     (state) => state.auth.currentUser
   );
   const { t } = useLocale();
+  const dispatch = useAppDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,6 +42,7 @@ const AccountMenu = () => {
 
   const logout = async () => {
     await asyncLocalStorage.removeItem(accessTokenKey);
+    dispatch(updateIsAfterLogin(false));
     // router.push('login');
   };
 

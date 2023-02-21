@@ -168,4 +168,7 @@ export default {
   image: "画像",
   music: "音楽",
   text: "テキスト",
+  all: "すべて",
+  search: "検索",
+  video: "動画",
 };

@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import AddIcon from "@mui/icons-material/Add";
 import ListCreateLogItem from "../atoms/listItems/ListCreateLogItem";
 import CreateContent from "../atoms/CreateContent";
+import { SearchForm } from "../atoms/SearchFrom";
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -65,6 +66,7 @@ export const ResponsiveDrawer = (props: Props) => {
               alignItems: "center",
             }}
           >
+            <SearchForm />
             <IconButton
               color="inherit"
               aria-label="open drawer"
