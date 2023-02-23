@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://deepia.net
+
+# Sitemaps
+Sitemap: https://deepia.net/sitemap.xml
+Sitemap: https://deepia.net/sitemap-0.xml
