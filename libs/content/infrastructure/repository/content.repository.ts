@@ -21,6 +21,7 @@ export const contentRepo: ContentRepo = {
   create: async (domain: Content): Promise<void> => {
     const apiClient = await asyncApiClient.create();
     const model = await ContentMapper.toPersistence(domain);
+    console.log({ model });
     await apiClient.post<void>("/content/", model);
   },
   update: async (id: number, domain: Content): Promise<void> => {

@@ -176,13 +176,13 @@ const Home = () => {
                       narrowDown(3);
                     }}
                   />
-                  <Chip
+                  {/* <Chip
                     label={t.video}
                     variant="outlined"
                     onClick={() => {
                       narrowDown(4);
                     }}
-                  />
+                  /> */}
                 </Toolbar>
                 <Grid
                   container

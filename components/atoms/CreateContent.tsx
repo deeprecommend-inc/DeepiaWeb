@@ -144,9 +144,9 @@ const CreateContent = () => {
                 control={control}
                 render={({ field }) => (
                   <Select {...field}>
-                    <MenuItem value={1}>{t.image}</MenuItem>
-                    <MenuItem value={2}>{t.music}</MenuItem>
-                    <MenuItem value={3}>{t.text}</MenuItem>
+                    <MenuItem value={0}>{t.image}</MenuItem>
+                    <MenuItem value={1}>{t.music}</MenuItem>
+                    <MenuItem value={2}>{t.text}</MenuItem>
                   </Select>
                 )}
                 rules={{ required: t.form.err.required.category }}
