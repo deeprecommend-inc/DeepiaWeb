@@ -122,9 +122,9 @@ export const LeftNav = () => {
           {[
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0,
-          ].map((sample) => {
+          ].map((sample, index) => {
             return (
-              <div key={sample}>
+              <div key={index}>
                 <ListCommonItem
                   text={currentUser?.name}
                   iconElement={
