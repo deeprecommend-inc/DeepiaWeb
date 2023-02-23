@@ -121,7 +121,6 @@ export const LeftNav = () => {
           <div className="ml-4">{t.leftNav.following}</div>
           {[
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0,
           ].map((sample, index) => {
             return (
               <div key={index}>
