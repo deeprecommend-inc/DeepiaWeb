@@ -9,8 +9,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm install --lts --latest-npm
-        - nvm use stable
         - yarn install --ignore-engines
     build:
       commands:
@@ -20,5 +18,3 @@ frontend:
     files:
       - "**/*"
   cache:
-    paths:
-      - node_modules/**/*
