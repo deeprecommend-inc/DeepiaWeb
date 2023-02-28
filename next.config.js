@@ -4,6 +4,8 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
   reactStrictMode: true,
+  output: "static",
+  target: "serverless",
   webpack: (config, options) => {
     config.optimization.minimize = isProd;
     config.optimization.minimizer = [
