@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn install --force
+        - yarn install --ignore-engines
     build:
       commands:
         - yarn run build
