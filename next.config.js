@@ -3,8 +3,9 @@ const TerserPlugin = require("terser-webpack-plugin");
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-    reactStrictMode: true,
-    webpack: (config, options) => {
+  reactStrictMode: true,
+  output: "standalone",
+  webpack: (config, options) => {
     config.optimization.minimize = isProd;
     config.optimization.minimizer = [
       new TerserPlugin({
@@ -19,7 +20,7 @@ module.exports = {
     return config;
   },
   i18n: {
-    locales: ['en', 'ja'],
-    defaultLocale: 'en',
+    locales: ["en", "ja"],
+    defaultLocale: "en",
   },
 };
