@@ -3,7 +3,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npx browserslist@latest --update-db
         - yarn install --ignore-engines
     build:
       commands:
