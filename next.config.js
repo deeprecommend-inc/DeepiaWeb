@@ -3,8 +3,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  reactStrictMode: true,
-  output: "standalone",
+  // reactStrictMode: true,
+  // output: "standalone",
   webpack: (config, options) => {
     config.optimization.minimize = isProd;
     config.optimization.minimizer = [
