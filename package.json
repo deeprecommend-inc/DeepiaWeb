@@ -6,7 +6,7 @@
   "main": "main/index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap --config sitemap.config.js",
+    "build": "next build",
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
