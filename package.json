@@ -1,9 +1,8 @@
 {
-  "name": "deepia-client",
+  "name": "deepia",
   "version": "0.1.0",
   "private": true,
   "productName": "Deepia",
-  "main": "main/index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-sitemap --config sitemap.config.js",
