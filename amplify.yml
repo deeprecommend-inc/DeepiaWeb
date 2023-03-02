@@ -7,7 +7,6 @@ frontend:
     build:
       commands:
         - yarn run build
-        - echo "API_URL" >> .env
   artifacts:
     baseDirectory: .next
     files:
