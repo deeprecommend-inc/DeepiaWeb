@@ -7,4 +7,3 @@ Host: https://deepia.space
 
 # Sitemaps
 Sitemap: https://deepia.space/sitemap.xml
-Sitemap: https://deepia.space/sitemap-0.xml
