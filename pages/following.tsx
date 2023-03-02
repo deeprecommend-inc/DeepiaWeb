@@ -100,9 +100,9 @@ const Following = () => {
       <NextSeo
         title={t.index.head.title}
         description={t.index.head.description}
-        canonical={"https://deepia.net"}
+        canonical={"https://deepia.space"}
         openGraph={{
-          url: "https://deepia.net",
+          url: "https://deepia.space",
           title: t.index.head.title,
           description: t.index.head.description,
           type: "website",

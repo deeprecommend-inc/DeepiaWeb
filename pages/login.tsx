@@ -102,9 +102,9 @@ export default function SignIn() {
       <NextSeo
         title={t.login.head.title}
         description={t.login.head.description}
-        canonical={"https://deepia.net"}
+        canonical={"https://deepia.space"}
         openGraph={{
-          url: "https://deepia.net",
+          url: "https://deepia.space",
           title: t.index.head.title,
           description: t.index.head.description,
           type: "website",
