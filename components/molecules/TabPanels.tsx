@@ -3,7 +3,6 @@ import { useAppSelector } from '../../redux/hooks';
 import Iframe from '../atoms/iframes/Iframe';
 import TabPanel from '../atoms/TabPanel';
 import IFrameTabs from '../organisms/IFrameTabs';
-import Category from '../template/Category';
 import LikeNatvie from '../template/LikeNative';
 import Recommendation from '../template/Recommendation';
 import EnhancedTable from './EnhancedTable';
@@ -15,7 +14,7 @@ export const TabPanels = () => {
     return (
         <>
             <TabPanel tabNum={tabNum} index={0}>
-                <Category />
+                <></>
             </TabPanel>
             <TabPanel tabNum={tabNum} index={1}>
                 <EnhancedTable />
