@@ -4,9 +4,9 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
   reactStrictMode: true,
-  // experimental: {
-  //   outputStandalone: true,
-  // },
+  experimental: {
+    outputStandalone: true,
+  },
   webpack: (config, options) => {
     config.optimization.minimize = isProd;
     config.optimization.minimizer = [
