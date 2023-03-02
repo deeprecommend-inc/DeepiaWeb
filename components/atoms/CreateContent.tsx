@@ -54,8 +54,6 @@ const CreateContent = () => {
         (state) => state.auth.currentUser,
     );
     const { handleSubmit, control, reset } = useForm();
-    const categories = useAppSelector((state) => state.category.list);
-    const categoryIds = categories.map((val) => val.id.toString());
     const dark = useAppSelector((state) => state.ui.dark);
     const { t } = useLocale();
 

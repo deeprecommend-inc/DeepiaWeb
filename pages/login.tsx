@@ -16,17 +16,12 @@ import { useRouter } from 'next/router';
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
 import { useState } from 'react';
 import { useAppDispatch } from '../redux/hooks';
-import { setLogList } from '../redux/reducers/logSlice';
 import {
     setCurrentUser,
     updateIsAfterLogin,
 } from '../redux/reducers/authSlice';
 import { NextSeo } from 'next-seo';
 import { authUiController } from '../libs/auth/presentation/auth.ui.controller';
-import {
-    setCategoryList,
-    setPublicCategoryList,
-} from '../redux/reducers/categorySlice';
 import SignInButton from '../components/template/SignInButton';
 import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';

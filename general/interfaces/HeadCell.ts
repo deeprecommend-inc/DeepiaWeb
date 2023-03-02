@@ -1,8 +1,6 @@
-import { LogDto } from '../../libs/log/session/dto/log.dto';
-
 export interface HeadCell {
     disablePadding: boolean;
-    id: keyof LogDto;
+    id: number;
     label: string;
     numeric: boolean;
 }
