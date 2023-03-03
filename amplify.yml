@@ -4,7 +4,6 @@ frontend:
         preBuild:
             commands:
                 - yarn install --ignore-engines
-                - echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" >> .env
         build:
             commands:
                 - yarn run build
