@@ -3,16 +3,7 @@ import React from 'react';
 import { CopyrightContent } from '../molecules/CopyrightContent';
 
 const Copyright = (props) => {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            <CopyrightContent />
-        </Typography>
-    );
+    return <CopyrightContent className={props?.className} />;
 };
 
 export default Copyright;

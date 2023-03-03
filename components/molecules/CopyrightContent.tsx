@@ -1,18 +1,24 @@
-import React from "react";
-import CopyrightLink from "../atoms/CopyrightLink";
-import CopyrightText from "../atoms/Copyright";
-import FullYear from "../atoms/FullYear";
+import React from 'react';
+import CopyrightLink from '../atoms/CopyrightLink';
+import CopyrightText from '../atoms/Copyright';
+import FullYear from '../atoms/FullYear';
+import { Typography } from '@mui/material';
 
 interface Props {
-  className?: string;
+    className?: string;
 }
 
 export const CopyrightContent = (props: Props) => {
-  return (
-    <div className={props?.className}>
-      <CopyrightText />
-      <FullYear />
-      <CopyrightLink />
-    </div>
-  );
+    return (
+        <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            className={props?.className}
+        >
+            <CopyrightText />
+            <FullYear />
+            <CopyrightLink />
+        </Typography>
+    );
 };
