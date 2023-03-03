@@ -107,6 +107,7 @@ const CreateContent = () => {
                                 gap: '8px',
                             }}
                         >
+                            {/* @ts-ignore */}
                             <Controller
                                 name={'title'}
                                 control={control}
