@@ -22,7 +22,6 @@ import {
 } from '../redux/reducers/authSlice';
 import { NextSeo } from 'next-seo';
 import { authUiController } from '../libs/auth/presentation/auth.ui.controller';
-import SignInButton from '../components/template/SignInButton';
 import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
 import { useLocale } from '../hooks/useLocale';

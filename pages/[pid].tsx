@@ -33,7 +33,6 @@ const darkMode = createTheme({
 const lightMode = createTheme({});
 
 const Pid = () => {
-    const router = useRouter();
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
     const dark = useAppSelector((state) => state.ui.dark);
@@ -45,8 +44,6 @@ const Pid = () => {
             const dark = await asyncLocalStorage.getItem(darkModeKey);
 
             if (!token) {
-                // await asyncLocalStorage.removeItem(accessTokenKey);
-                // router.push("login");
                 return;
             } else {
                 dispatch(updateIsAfterLogin(true));
@@ -59,24 +56,6 @@ const Pid = () => {
                 await authUiController.currentUser().then((currentUser) => {
                     dispatch(setCurrentUser(currentUser));
                 });
-                //   .catch(() => {
-                //     router.push("login");
-                //   });
-
-                // const categoryId = await asyncLocalStorage.getItem(
-                //   categoryIdForGetLogKey
-                // );
-
-                // const logList = categoryId
-                //   ? await categoryLogUiController.findAll(Number(categoryId))
-                //   : await logUiController.findAll();
-                // const categoryList = await categoryUiController.findAll();
-                // const publicCategoryList = await categoryUiController.findPublic();
-
-                // dispatch(setLogList(logList));
-
-                // dispatch(setCategoryList(categoryList));
-                // dispatch(setPublicCategoryList(publicCategoryList));
             }
 
             Boolean(dark)
