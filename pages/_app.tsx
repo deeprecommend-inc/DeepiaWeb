@@ -1,9 +1,7 @@
 import '../styles/globals.scss';
-import type { AppProps } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import { DefaultSeo } from 'next-seo';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 import { accessTokenKey } from '../general/constants/localStorageKey';

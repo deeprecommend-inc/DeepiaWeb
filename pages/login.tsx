@@ -148,6 +148,7 @@ export default function SignIn() {
                             }}
                         >
                             <form onSubmit={handleSubmit(onSubmit)}>
+                                {/* @ts-ignore */}
                                 <Controller
                                     name={'email'}
                                     control={control}

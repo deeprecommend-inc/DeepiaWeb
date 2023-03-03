@@ -60,20 +60,6 @@ const Home = () => {
                 await authUiController.currentUser().then((currentUser) => {
                     dispatch(setCurrentUser(currentUser));
                 });
-                //   .catch(() => {
-                //     router.push("login");
-                //   });
-                // const categoryId = await asyncLocalStorage.getItem(
-                //   categoryIdForGetLogKey
-                // );
-                // const logList = categoryId
-                //   ? await categoryLogUiController.findAll(Number(categoryId))
-                //   : await logUiController.findAll();
-                // const categoryList = await categoryUiController.findAll();
-                // const publicCategoryList = await categoryUiController.findPublic();
-                // dispatch(setLogList(logList));
-                // dispatch(setCategoryList(categoryList));
-                // dispatch(setPublicCategoryList(publicCategoryList));
             }
 
             Boolean(dark)
