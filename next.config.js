@@ -3,6 +3,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
+    output: 'standalone',
+    experimental: {
+        outputFileTracingRoot: path.join(__dirname, '../../'),
+    },
     webpack: (config, options) => {
         config.optimization.minimize = isProd;
         config.optimization.minimizer = [
