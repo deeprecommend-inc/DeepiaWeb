@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-deepiaweb-dev-104327-authRole",
+      "UnauthRoleArn": "arn:aws:iam::290164200559:role/amplify-deepiaweb-dev-104327-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::290164200559:role/amplify-deepiaweb-dev-104327-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-deepiaweb-dev-104327-deployment",
+      "UnauthRoleName": "amplify-deepiaweb-dev-104327-unauthRole",
+      "StackName": "amplify-deepiaweb-dev-104327",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:290164200559:stack/amplify-deepiaweb-dev-104327/caf73460-b964-11ed-9df7-0ef188728e91",
+      "AmplifyAppId": "d39gxhy6dee57r"
+    }
+  }
+}
