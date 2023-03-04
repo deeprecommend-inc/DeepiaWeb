@@ -141,6 +141,7 @@ const CreateContent = () => {
                             <Controller
                                 name="categoryId"
                                 control={control}
+                                defaultValue={0}
                                 render={({ field }) => (
                                     <Select {...field}>
                                         <MenuItem value={0}>{t.image}</MenuItem>

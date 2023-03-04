@@ -22,6 +22,7 @@ import Copyright from '../components/organisms/Copyright';
 import { NextSeo } from 'next-seo';
 import { useLocale } from '../hooks/useLocale';
 import { SwitchLang } from '../components/atoms/SwitchLang';
+import Container from '@mui/material/Container';
 
 type SignUpUser = {
     name: string;
@@ -126,209 +127,180 @@ export default function SignInSide() {
                 }}
             />
             <ThemeProvider theme={theme}>
-                <Grid
-                    container
-                    component="main"
-                    sx={{ height: '100vh', overflow: 'hidden' }}
-                >
+                <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     {/* @ts-ignore */}
-                    <ReactPlayer
-                        url={'cat.mp4'}
-                        playing
-                        loop
-                        muted
-                        sm={4}
-                        md={7}
-                        width="100%"
-                        height="auto"
-                        className="relative"
+                    <Box
                         sx={{
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
                         }}
-                    />
-                    <Grid
-                        className="absolute top-0 right-0 h-screen"
-                        item
-                        xs={12}
-                        sm={8}
-                        md={5}
-                        component={Paper}
-                        elevation={0}
-                        square
                     >
+                        <Box sx={{ m: 1 }}>
+                            <Logo />
+                        </Box>
+                        <Typography component="h1" variant="h5">
+                            Deepia
+                        </Typography>
+                        <Typography>{t.signup.header.description}</Typography>
                         <Box
                             sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
+                                mt: 1,
+                                textAlign: 'center',
+                                marginTop: '24px',
                             }}
                         >
-                            <Box sx={{ m: 1 }}>
-                                <Logo />
-                            </Box>
-                            <Typography component="h1" variant="h5">
-                                Deepia
-                            </Typography>
-                            <Typography>
-                                {t.signup.header.description}
-                            </Typography>
-                            <Box sx={{ mt: 1, textAlign: 'center' }}>
-                                <form onSubmit={handleSubmit(onSubmit)}>
-                                    {/* @ts-ignore */}
-                                    <Controller
-                                        name={'name'}
-                                        control={control}
-                                        defaultValue=""
-                                        render={({
-                                            field: { onChange, value },
-                                            fieldState: { error },
-                                        }) => (
-                                            <TextField
-                                                className="text-white"
-                                                label={t.signup.form.name}
-                                                margin="normal"
-                                                fullWidth
-                                                required
-                                                value={value}
-                                                onChange={onChange}
-                                                error={!!error}
-                                                helperText={
-                                                    error ? error.message : null
-                                                }
-                                            />
-                                        )}
-                                        rules={{
-                                            required: 'Name required',
-                                            maxLength: {
-                                                value: 32,
-                                                message: 'Max length exceded',
-                                            },
-                                        }}
-                                    />
-                                    <Controller
-                                        name={'email'}
-                                        control={control}
-                                        defaultValue=""
-                                        render={({
-                                            field: { onChange, value },
-                                            fieldState: { error },
-                                        }) => (
-                                            <TextField
-                                                label={t.signup.form.email}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                value={value}
-                                                onChange={onChange}
-                                                error={!!error}
-                                                helperText={
-                                                    error ? error.message : null
-                                                }
-                                            />
-                                        )}
-                                        rules={{
-                                            required: 'E-mail required',
-                                            pattern: {
-                                                value: REGEXP.EMAIL,
-                                                message:
-                                                    'Invalid e-mail address',
-                                            },
-                                        }}
-                                    />
-                                    <Controller
-                                        name={'password'}
-                                        control={control}
-                                        defaultValue=""
-                                        render={({
-                                            field: { onChange, value },
-                                            fieldState: { error },
-                                        }) => (
-                                            <TextField
-                                                label={t.signup.form.password}
-                                                fullWidth
-                                                required
-                                                margin="normal"
-                                                type="password"
-                                                value={value}
-                                                onChange={onChange}
-                                                error={!!error}
-                                                helperText={
-                                                    error ? error.message : null
-                                                }
-                                            />
-                                        )}
-                                        rules={{
-                                            required: 'Password required',
-                                            pattern: {
-                                                value: REGEXP.PASSWORD,
-                                                message:
-                                                    'Please type using half-width characters',
-                                            },
-                                            minLength: {
-                                                value: 8,
-                                                message:
-                                                    'Password must be at least 8 characters',
-                                            },
-                                        }}
-                                    />
-                                    <Controller
-                                        name={'passwordConfirmation'}
-                                        control={control}
-                                        defaultValue=""
-                                        render={({
-                                            field: { onChange, value },
-                                            fieldState: { error },
-                                        }) => (
-                                            <TextField
-                                                label={
-                                                    t.signup.form
-                                                        .passwordConfirmation
-                                                }
-                                                fullWidth
-                                                required
-                                                margin="normal"
-                                                type="password"
-                                                value={value}
-                                                onChange={onChange}
-                                                error={!!error}
-                                                helperText={
-                                                    error ? error.message : null
-                                                }
-                                            />
-                                        )}
-                                        rules={{
-                                            required:
-                                                'Password confirmation required',
-                                            validate: (input) =>
-                                                input ===
-                                                control._formValues.password
-                                                    ? (null as any)
-                                                    : 'Password does not matched',
-                                        }}
-                                    />
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        sx={{ mt: 3, mb: 2 }}
-                                    >
-                                        Sign up
-                                    </Button>
-                                    <Link href="login" variant="body2">
-                                        {t.signup.form.login}
-                                    </Link>
-                                    <SwitchLang path={'/signup'} />
-                                    <Copyright sx={{ mt: 5 }} />
-                                </form>
-                            </Box>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                {/* @ts-ignore */}
+                                <Controller
+                                    name={'name'}
+                                    control={control}
+                                    defaultValue=""
+                                    render={({
+                                        field: { onChange, value },
+                                        fieldState: { error },
+                                    }) => (
+                                        <TextField
+                                            className="text-white"
+                                            label={t.signup.form.name}
+                                            margin="normal"
+                                            fullWidth
+                                            required
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={
+                                                error ? error.message : null
+                                            }
+                                        />
+                                    )}
+                                    rules={{
+                                        required: 'Name required',
+                                        maxLength: {
+                                            value: 32,
+                                            message: 'Max length exceded',
+                                        },
+                                    }}
+                                />
+                                <Controller
+                                    name={'email'}
+                                    control={control}
+                                    defaultValue=""
+                                    render={({
+                                        field: { onChange, value },
+                                        fieldState: { error },
+                                    }) => (
+                                        <TextField
+                                            label={t.signup.form.email}
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={
+                                                error ? error.message : null
+                                            }
+                                        />
+                                    )}
+                                    rules={{
+                                        required: 'E-mail required',
+                                        pattern: {
+                                            value: REGEXP.EMAIL,
+                                            message: 'Invalid e-mail address',
+                                        },
+                                    }}
+                                />
+                                <Controller
+                                    name={'password'}
+                                    control={control}
+                                    defaultValue=""
+                                    render={({
+                                        field: { onChange, value },
+                                        fieldState: { error },
+                                    }) => (
+                                        <TextField
+                                            label={t.signup.form.password}
+                                            fullWidth
+                                            required
+                                            margin="normal"
+                                            type="password"
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={
+                                                error ? error.message : null
+                                            }
+                                        />
+                                    )}
+                                    rules={{
+                                        required: 'Password required',
+                                        pattern: {
+                                            value: REGEXP.PASSWORD,
+                                            message:
+                                                'Please type using half-width characters',
+                                        },
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                'Password must be at least 8 characters',
+                                        },
+                                    }}
+                                />
+                                <Controller
+                                    name={'passwordConfirmation'}
+                                    control={control}
+                                    defaultValue=""
+                                    render={({
+                                        field: { onChange, value },
+                                        fieldState: { error },
+                                    }) => (
+                                        <TextField
+                                            label={
+                                                t.signup.form
+                                                    .passwordConfirmation
+                                            }
+                                            fullWidth
+                                            required
+                                            margin="normal"
+                                            type="password"
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={
+                                                error ? error.message : null
+                                            }
+                                        />
+                                    )}
+                                    rules={{
+                                        required:
+                                            'Password confirmation required',
+                                        validate: (input) =>
+                                            input ===
+                                            control._formValues.password
+                                                ? (null as any)
+                                                : 'Password does not matched',
+                                    }}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="outlined"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Sign up
+                                </Button>
+                                <Link href="login" variant="body2">
+                                    {t.signup.form.login}
+                                </Link>
+                                <SwitchLang path={'/signup'} />
+                                <Copyright sx={{ mt: 5 }} />
+                            </form>
                         </Box>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Container>
                 <Snackbar
                     open={openSuccessSnackbar}
                     anchorOrigin={snackbarPosition}

@@ -173,7 +173,7 @@ export const LeftNav = () => {
                             </div>
                         );
                     })}
-                    <CopyrightContent className="ml-4" />
+                    <CopyrightContent />
                 </List>
             </SimpleBar>
         </div>
