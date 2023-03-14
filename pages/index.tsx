@@ -139,14 +139,14 @@ const Home = () => {
                                         }}
                                     />
                                     <Chip
-                                        label={t.music}
+                                        label={t.text}
                                         variant="outlined"
                                         onClick={() => {
                                             narrowDown(2);
                                         }}
                                     />
                                     <Chip
-                                        label={t.text}
+                                        label={t.music}
                                         variant="outlined"
                                         onClick={() => {
                                             narrowDown(3);
@@ -170,98 +170,98 @@ const Home = () => {
                                     {[
                                         {
                                             title: 'Unkoman',
-                                            img: '/sampleImage/6.png',
+                                            img: '/images/test1.png',
                                             user: {
                                                 name: 'DeepRecommend',
-                                                image: '/sampleImage/17.png',
+                                                image: '/images/test12.png',
                                             },
                                         },
                                         {
                                             title: 'I am very lucky',
-                                            img: '/sampleImage/7.png',
+                                            img: '/images/test2.png',
                                             user: {
                                                 name: 'Jin Sugimoto',
-                                                image: '/sampleImage/16.png',
+                                                image: '/images/test11.png',
                                             },
                                         },
                                         {
                                             title: 'chanchan charachara',
-                                            img: '/sampleImage/8.png',
+                                            img: '/images/test3.png',
                                             user: {
                                                 name: 'AI man',
-                                                image: '/sampleImage/15.png',
+                                                image: '/images/test10.png',
                                             },
                                         },
                                         {
                                             title: 'CCCCC',
-                                            img: '/sampleImage/9.png',
+                                            img: '/images/test4.png',
                                             user: {
                                                 name: 'Unkown',
-                                                image: '/sampleImage/14.png',
+                                                image: '/images/test9.png',
                                             },
                                         },
                                         {
                                             title: 'Nekoni koban',
-                                            img: '/sampleImage/10.png',
+                                            img: '/images/test5.png',
                                             user: {
                                                 name: 'Kabochan',
-                                                image: '/sampleImage/13.png',
+                                                image: '/images/test8.png',
                                             },
                                         },
                                         {
                                             title: 'HHH',
-                                            img: '/sampleImage/11.png',
+                                            img: '/images/test6.png',
                                             user: {
                                                 name: 'Sobakasu',
-                                                image: '/sampleImage/12.png',
+                                                image: '/images/test7.png',
                                             },
                                         },
                                         {
                                             title: 'Quick',
-                                            img: '/sampleImage/12.png',
+                                            img: '/images/test7.png',
                                             user: {
                                                 name: 'Nikibi',
-                                                image: '/sampleImage/11.png',
+                                                image: '/images/test6.png',
                                             },
                                         },
                                         {
                                             title: 'Bird',
-                                            img: '/sampleImage/13.png',
+                                            img: '/images/test8.png',
                                             user: {
                                                 name: 'Mohikan',
-                                                image: '/sampleImage/10.png',
+                                                image: '/images/test5.png',
                                             },
                                         },
                                         {
                                             title: 'Black Sigma',
-                                            img: '/sampleImage/14.png',
+                                            img: '/images/test9.png',
                                             user: {
                                                 name: 'Yamamoto',
-                                                image: '/sampleImage/9.png',
+                                                image: '/images/test4.png',
                                             },
                                         },
                                         {
                                             title: 'Killer',
-                                            img: '/sampleImage/15.png',
+                                            img: '/images/test10.png',
                                             user: {
                                                 name: 'WaqWaqSan',
-                                                image: '/sampleImage/8.png',
+                                                image: '/images/test3.png',
                                             },
                                         },
                                         {
                                             title: 'Random',
-                                            img: '/sampleImage/16.png',
+                                            img: '/images/test11.png',
                                             user: {
                                                 name: 'ChiChiSibori',
-                                                image: '/sampleImage/7.png',
+                                                image: '/images/test2.png',
                                             },
                                         },
                                         {
                                             title: 'Easy pencil',
-                                            img: '/sampleImage/17.png',
+                                            img: '/images/test12.png',
                                             user: {
                                                 name: 'Kosan',
-                                                image: '/sampleImage/6.png',
+                                                image: '/images/test1.png',
                                             },
                                         },
                                     ].map((content, index) => (

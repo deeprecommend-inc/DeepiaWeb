@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
 import CreateContent from '../atoms/CreateContent';
 import { SearchForm } from '../atoms/SearchFrom';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -84,11 +85,13 @@ export const ResponsiveDrawer = (props: Props) => {
                         }}
                     >
                         <CreateContent />
+                        <IconButton className="mx-2">
+                            <NotificationsIcon />
+                        </IconButton>
                         {isAfterLogin ? (
                             <AccountMenu />
                         ) : (
                             <Button
-                                className="ml-4"
                                 onClick={() => {
                                     router.push('/login');
                                 }}
