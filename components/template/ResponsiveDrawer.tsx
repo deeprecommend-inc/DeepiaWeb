@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CreateContent from '../atoms/CreateContent';
 import { SearchForm } from '../atoms/SearchFrom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import ToolbarMenu from './ToolbarMenu';
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -101,10 +102,14 @@ export const ResponsiveDrawer = (props: Props) => {
                         )}
                     </div>
                 </Toolbar>
+                <ToolbarMenu />
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                sx={{
+                    width: { sm: drawerWidth },
+                    flexShrink: { sm: 0 },
+                }}
                 aria-label="mailbox folders"
             >
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -147,9 +152,9 @@ export const ResponsiveDrawer = (props: Props) => {
                     flexGrow: 1,
                     p: 3,
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
+                    paddingTop: '64px!important',
                 }}
             >
-                <Toolbar />
                 {props.contents}
             </Box>
         </Box>

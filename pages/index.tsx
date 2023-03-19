@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import router, { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -21,6 +21,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { setDark } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
+import ToolbarMenu from '../components/template/ToolbarMenu';
+import { contentUiController } from '../libs/content/presentation/content.ui.controler';
 
 const darkMode = createTheme({
     palette: {
@@ -33,33 +35,28 @@ const darkMode = createTheme({
 
 const lightMode = createTheme({});
 
-const Home = () => {
+const Home = ({ contents }) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
     const dark = useAppSelector((state) => state.ui.dark);
     const { t, locale } = useLocale();
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
         const init = async () => {
+            setReady(true);
+
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
+            const contents = await contentUiController.findAll();
 
-            if (!token) {
-                // await asyncLocalStorage.removeItem(accessTokenKey);
-                // router.push("login");
-                // return;
-            } else {
+            console.log({ contents });
+
+            if (token || !isAfterLogin) {
+                const currentUser = await authUiController.currentUser();
+                dispatch(setCurrentUser(currentUser));
                 dispatch(updateIsAfterLogin(true));
-                await authUiController.currentUser().then((currentUser) => {
-                    dispatch(setCurrentUser(currentUser));
-                });
-            }
-
-            if (!isAfterLogin) {
-                await authUiController.currentUser().then((currentUser) => {
-                    dispatch(setCurrentUser(currentUser));
-                });
             }
 
             Boolean(dark)
@@ -70,7 +67,7 @@ const Home = () => {
         init();
     }, []);
 
-    const narrowDown = (num: number) => {};
+    if (!ready) return <></>;
 
     return (
         <>
@@ -123,43 +120,6 @@ const Home = () => {
                     <ResponsiveDrawer
                         contents={
                             <>
-                                <Toolbar className="gap-4 fixed bg-white w-full z-50">
-                                    <Chip
-                                        label={t.all}
-                                        variant="outlined"
-                                        onClick={() => {
-                                            narrowDown(0);
-                                        }}
-                                    />
-                                    <Chip
-                                        label={t.image}
-                                        variant="outlined"
-                                        onClick={() => {
-                                            narrowDown(1);
-                                        }}
-                                    />
-                                    <Chip
-                                        label={t.text}
-                                        variant="outlined"
-                                        onClick={() => {
-                                            narrowDown(2);
-                                        }}
-                                    />
-                                    <Chip
-                                        label={t.music}
-                                        variant="outlined"
-                                        onClick={() => {
-                                            narrowDown(3);
-                                        }}
-                                    />
-                                    {/* <Chip
-                    label={t.video}
-                    variant="outlined"
-                    onClick={() => {
-                      narrowDown(4);
-                    }}
-                  /> */}
-                                </Toolbar>
                                 <Grid
                                     container
                                     sx={{
@@ -167,104 +127,7 @@ const Home = () => {
                                         gap: '24px',
                                     }}
                                 >
-                                    {[
-                                        {
-                                            title: 'Unkoman',
-                                            img: '/images/test1.png',
-                                            user: {
-                                                name: 'DeepRecommend',
-                                                image: '/images/test12.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'I am very lucky',
-                                            img: '/images/test2.png',
-                                            user: {
-                                                name: 'Jin Sugimoto',
-                                                image: '/images/test11.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'chanchan charachara',
-                                            img: '/images/test3.png',
-                                            user: {
-                                                name: 'AI man',
-                                                image: '/images/test10.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'CCCCC',
-                                            img: '/images/test4.png',
-                                            user: {
-                                                name: 'Unkown',
-                                                image: '/images/test9.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Nekoni koban',
-                                            img: '/images/test5.png',
-                                            user: {
-                                                name: 'Kabochan',
-                                                image: '/images/test8.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'HHH',
-                                            img: '/images/test6.png',
-                                            user: {
-                                                name: 'Sobakasu',
-                                                image: '/images/test7.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Quick',
-                                            img: '/images/test7.png',
-                                            user: {
-                                                name: 'Nikibi',
-                                                image: '/images/test6.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Bird',
-                                            img: '/images/test8.png',
-                                            user: {
-                                                name: 'Mohikan',
-                                                image: '/images/test5.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Black Sigma',
-                                            img: '/images/test9.png',
-                                            user: {
-                                                name: 'Yamamoto',
-                                                image: '/images/test4.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Killer',
-                                            img: '/images/test10.png',
-                                            user: {
-                                                name: 'WaqWaqSan',
-                                                image: '/images/test3.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Random',
-                                            img: '/images/test11.png',
-                                            user: {
-                                                name: 'ChiChiSibori',
-                                                image: '/images/test2.png',
-                                            },
-                                        },
-                                        {
-                                            title: 'Easy pencil',
-                                            img: '/images/test12.png',
-                                            user: {
-                                                name: 'Kosan',
-                                                image: '/images/test1.png',
-                                            },
-                                        },
-                                    ].map((content, index) => (
+                                    {contents.map((content, index) => (
                                         <Grid
                                             item
                                             key={index}
@@ -315,6 +178,111 @@ const Home = () => {
             </ThemeProvider>
         </>
     );
+};
+
+export const getServerSideProps = async () => {
+    const contents = [
+        {
+            title: 'Unkoman',
+            img: '/images/test1.png',
+            user: {
+                name: 'DeepRecommend',
+                image: '/images/test12.png',
+            },
+        },
+        {
+            title: 'I am very lucky',
+            img: '/images/test2.png',
+            user: {
+                name: 'Jin Sugimoto',
+                image: '/images/test11.png',
+            },
+        },
+        {
+            title: 'chanchan charachara',
+            img: '/images/test3.png',
+            user: {
+                name: 'AI man',
+                image: '/images/test10.png',
+            },
+        },
+        {
+            title: 'CCCCC',
+            img: '/images/test4.png',
+            user: {
+                name: 'Unkown',
+                image: '/images/test9.png',
+            },
+        },
+        {
+            title: 'Nekoni koban',
+            img: '/images/test5.png',
+            user: {
+                name: 'Kabochan',
+                image: '/images/test8.png',
+            },
+        },
+        {
+            title: 'HHH',
+            img: '/images/test6.png',
+            user: {
+                name: 'Sobakasu',
+                image: '/images/test7.png',
+            },
+        },
+        {
+            title: 'Quick',
+            img: '/images/test7.png',
+            user: {
+                name: 'Nikibi',
+                image: '/images/test6.png',
+            },
+        },
+        {
+            title: 'Bird',
+            img: '/images/test8.png',
+            user: {
+                name: 'Mohikan',
+                image: '/images/test5.png',
+            },
+        },
+        {
+            title: 'Black Sigma',
+            img: '/images/test9.png',
+            user: {
+                name: 'Yamamoto',
+                image: '/images/test4.png',
+            },
+        },
+        {
+            title: 'Killer',
+            img: '/images/test10.png',
+            user: {
+                name: 'WaqWaqSan',
+                image: '/images/test3.png',
+            },
+        },
+        {
+            title: 'Random',
+            img: '/images/test11.png',
+            user: {
+                name: 'ChiChiSibori',
+                image: '/images/test2.png',
+            },
+        },
+        {
+            title: 'Easy pencil',
+            img: '/images/test12.png',
+            user: {
+                name: 'Kosan',
+                image: '/images/test1.png',
+            },
+        },
+    ];
+
+    return {
+        props: { contents },
+    };
 };
 
 export default Home;

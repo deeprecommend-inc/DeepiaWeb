@@ -34,6 +34,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SimpleBar from 'simplebar-react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import 'simplebar/dist/simplebar.min.css';
+import { UserDto } from '../../libs/user/session/dto/user.dto';
 
 export const LeftNav = () => {
     const router = useRouter();
@@ -43,6 +44,9 @@ export const LeftNav = () => {
     const dark = useAppSelector((state) => state.ui.dark);
     const currentUser: AuthCurrentUserDto = useAppSelector(
         (state) => state.auth.currentUser,
+    );
+    const following: UserDto[] = useAppSelector(
+        (state) => state.user.following,
     );
 
     const logout = async () => {
@@ -77,22 +81,6 @@ export const LeftNav = () => {
                 </Typography>
             </Toolbar>
             <Divider />
-
-            {/* <ListCreateLogItem />
-      <BasicTabs /> */}
-            {/* <Divider />
-          
-            <ListCommonItem
-                text={t.leftNav.desktopApp}
-                link="/download"
-                iconElement={<InstallDesktopIcon />}
-            />
-            <ListCommonItem
-                text={t.leftNav.chromeExtension}
-                link="https://chrome.google.com/webstore/detail/deepia/nmmfoalnbcllnnknfagnfmdmdkdgjgoi"
-                iconElement={<ExtensionIcon />}
-            /> */}
-            {/* <ListTipItem text={t.leftNav.tipping} iconElement={<PaidIcon />} /> */}
             <SimpleBar
                 style={{
                     height: 'calc(100% - 64px)',
@@ -117,41 +105,39 @@ export const LeftNav = () => {
 
                 <List>
                     <div className="ml-4">{t.leftNav.following}</div>
-                    {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(
-                        (sample, index) => {
-                            return (
-                                <div key={index}>
-                                    <ListCommonItem
-                                        text={currentUser?.name}
-                                        iconElement={
-                                            currentUser?.image ? (
-                                                <Avatar
-                                                    src={currentUser?.image}
-                                                    sx={{
-                                                        width: 32,
-                                                        height: 32,
-                                                    }}
-                                                />
-                                            ) : (
-                                                <Avatar
-                                                    sx={{
-                                                        width: 32,
-                                                        height: 32,
-                                                    }}
-                                                >
-                                                    <PersonIcon />
-                                                </Avatar>
-                                            )
-                                        }
-                                        callback={() => {
-                                            router.push(currentUser?.name);
-                                        }}
-                                        isPurple={true}
-                                    />
-                                </div>
-                            );
-                        },
-                    )}
+                    {following.map((sample, index) => {
+                        return (
+                            <div key={index}>
+                                <ListCommonItem
+                                    text={currentUser?.name}
+                                    iconElement={
+                                        currentUser?.image ? (
+                                            <Avatar
+                                                src={currentUser?.image}
+                                                sx={{
+                                                    width: 32,
+                                                    height: 32,
+                                                }}
+                                            />
+                                        ) : (
+                                            <Avatar
+                                                sx={{
+                                                    width: 32,
+                                                    height: 32,
+                                                }}
+                                            >
+                                                <PersonIcon />
+                                            </Avatar>
+                                        )
+                                    }
+                                    callback={() => {
+                                        router.push(currentUser?.name);
+                                    }}
+                                    isPurple={true}
+                                />
+                            </div>
+                        );
+                    })}
                 </List>
 
                 <List
