@@ -8,6 +8,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 export const useAnotherServices = () => {
     const { t, locale } = useLocale();
@@ -21,9 +23,19 @@ export const useAnotherServices = () => {
             iconElement: <HomeIcon />,
         },
         {
-            title: t.leftNav.community,
+            title: t.leftNav.discord,
             link: 'https://discord.gg/QjSFUCzDn5',
-            iconElement: <GroupIcon />,
+            iconElement: (
+                <FontAwesomeIcon
+                    icon={faDiscord}
+                    style={{
+                        color: '#888888',
+                        width: '1em',
+                        height: '1em',
+                        fontSize: '1.5rem',
+                    }}
+                />
+            ),
         },
         {
             title: t.leftNav.twitter,

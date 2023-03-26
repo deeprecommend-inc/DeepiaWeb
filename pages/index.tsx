@@ -23,6 +23,7 @@ import { useLocale } from '../hooks/useLocale';
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import ToolbarMenu from '../components/template/ToolbarMenu';
 import { contentUiController } from '../libs/content/presentation/content.ui.controler';
+import { setContentList } from '../redux/reducers/contentSlice';
 
 const darkMode = createTheme({
     palette: {
@@ -39,6 +40,7 @@ const Home = ({ contents }) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
+    const contentList = useAppSelector((state) => state.content.list);
     const dark = useAppSelector((state) => state.ui.dark);
     const { t, locale } = useLocale();
     const [ready, setReady] = useState(false);
@@ -50,7 +52,6 @@ const Home = ({ contents }) => {
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
             const contents = await contentUiController.findAll();
-
             console.log({ contents });
 
             if (token || !isAfterLogin) {
@@ -62,6 +63,8 @@ const Home = ({ contents }) => {
             Boolean(dark)
                 ? await dispatch(setDark(true))
                 : await dispatch(setDark(false));
+
+            dispatch(setContentList(contents));
         };
 
         init();
@@ -127,7 +130,7 @@ const Home = ({ contents }) => {
                                         gap: '24px',
                                     }}
                                 >
-                                    {contents.map((content, index) => (
+                                    {contentList.map((content, index) => (
                                         <Grid
                                             item
                                             key={index}
@@ -135,7 +138,12 @@ const Home = ({ contents }) => {
                                                 width: 'calc((100% / 4) - 48px)',
                                             }}
                                         >
-                                            <img src={content.img} />
+                                            <img
+                                                src={
+                                                    'data:image/png;base64,' +
+                                                    content.deliverables
+                                                }
+                                            />
                                             <div
                                                 style={{
                                                     display: 'flex',

@@ -56,6 +56,7 @@ export default {
         shop: 'Shop',
         quickAI: 'Quick AI',
         twitter: 'Twitter',
+        discord: 'Discord',
     },
     dialog: {
         createLog: {
