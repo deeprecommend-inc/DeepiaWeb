@@ -4,7 +4,7 @@ import { asyncLocalStorage } from '../../general/utils/asyncLocalStorage';
 
 export const asyncApiClient = {
     create: async () => {
-        return await axios.create({
+        const client = await axios.create({
             baseURL: process.env.NEXT_PUBLIC_API_URL,
             responseType: 'json',
             headers: {
@@ -15,5 +15,17 @@ export const asyncApiClient = {
                 )}`,
             },
         });
+
+        client.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                if (error.response && error.response.status === 500) {
+                    await asyncLocalStorage.removeItem(accessTokenKey);
+                }
+                return Promise.reject(error);
+            },
+        );
+
+        return client;
     },
 };

@@ -71,14 +71,14 @@ const CreateContent = () => {
 
     const createContent = async (data: CreateContentDto) => {
         await contentUiController.create(data);
-        // await setList();
+        await setList();
         resetFormValue();
         closeDialog();
     };
 
     const setList = async () => {
-        // const list = await contentUiController.findAll();
-        // dispatch(setContentList(list));
+        const list = await contentUiController.findAll();
+        dispatch(setContentList(list));
     };
 
     const resetFormValue = () => {

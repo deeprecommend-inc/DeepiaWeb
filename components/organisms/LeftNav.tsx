@@ -102,7 +102,6 @@ export const LeftNav = () => {
                     })}
                 </List>
                 <Divider />
-
                 <List>
                     <div className="ml-4">{t.leftNav.following}</div>
                     {following.map((sample, index) => {
@@ -139,7 +138,6 @@ export const LeftNav = () => {
                         );
                     })}
                 </List>
-
                 <List
                     sx={{
                         width: '100%',

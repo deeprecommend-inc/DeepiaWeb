@@ -52,7 +52,6 @@ const Home = ({ contents }) => {
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
             const contents = await contentUiController.findAll();
-            console.log({ contents });
 
             if (token || !isAfterLogin) {
                 const currentUser = await authUiController.currentUser();
