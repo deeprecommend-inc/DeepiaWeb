@@ -1,13 +1,20 @@
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import { useLocale } from '../../hooks/useLocale';
+import { useAppSelector } from '../../redux/hooks';
 
 const ToolbarMenu = () => {
     const { t, locale } = useLocale();
+    const dark = useAppSelector((state) => state.ui.dark);
 
     const narrowDown = (num: number) => {};
 
     return (
-        <Toolbar className="gap-4 fixed bg-white w-full z-50">
+        <Toolbar
+            className="gap-4 fixed w-full z-50"
+            style={{
+                background: dark ? '#121212' : '#ffffff',
+            }}
+        >
             <Chip
                 label={t.all}
                 variant="outlined"
