@@ -43,13 +43,13 @@ const ToolbarMenu = () => {
                     narrowDown(3);
                 }}
             />
-            {/* <Chip
-              label={t.video}
-              variant="outlined"
-              onClick={() => {
-                narrowDown(4);
-              }}
-            /> */}
+            <Chip
+                label={t.video}
+                variant="outlined"
+                onClick={() => {
+                    narrowDown(4);
+                }}
+            />
         </Toolbar>
     );
 };

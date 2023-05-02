@@ -18,8 +18,8 @@ export const useAnotherServices = () => {
             title: t.leftNav.homepage,
             link:
                 locale === 'en'
-                    ? 'https://www.deep-recommend.com/deepia'
-                    : 'https://www.deep-recommend.com/ja/deepia',
+                    ? 'https://www.deep-recommend.com'
+                    : 'https://www.deep-recommend.com/ja',
             iconElement: <HomeIcon />,
         },
         {
