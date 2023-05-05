@@ -71,7 +71,7 @@ export default function SignIn() {
         await asyncLocalStorage.setItem(accessTokenKey, dto.token);
         successSnackbar();
 
-        // await setInitData(dto.token);
+        await setInitData(dto.token);
         dispatch(updateIsAfterLogin(true));
 
         router.push('/');
