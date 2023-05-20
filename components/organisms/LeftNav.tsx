@@ -96,6 +96,7 @@ export const LeftNav = () => {
                                     callback={() => {
                                         router.push(menu.link);
                                     }}
+                                    disabled={menu.disabled}
                                 />
                             </div>
                         );

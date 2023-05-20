@@ -42,6 +42,7 @@ const ToolbarMenu = () => {
                 onClick={() => {
                     narrowDown(3);
                 }}
+                disabled={true}
             />
             <Chip
                 label={t.video}
@@ -49,6 +50,7 @@ const ToolbarMenu = () => {
                 onClick={() => {
                     narrowDown(4);
                 }}
+                disabled={true}
             />
         </Toolbar>
     );

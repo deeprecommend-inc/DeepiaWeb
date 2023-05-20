@@ -86,7 +86,7 @@ export const ResponsiveDrawer = (props: Props) => {
                         }}
                     >
                         <CreateContent />
-                        <IconButton className="mx-2">
+                        <IconButton className="mx-2" disabled>
                             <NotificationsIcon />
                         </IconButton>
                         {isAfterLogin ? (

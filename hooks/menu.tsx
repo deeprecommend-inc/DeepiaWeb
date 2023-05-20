@@ -23,16 +23,17 @@ export const useMenus = () => {
             link: '/following',
             iconElement: <GroupIcon />,
         },
-        //
         {
             title: t.leftNav.explore,
             link: '/explore',
             iconElement: <ExploreIcon />,
+            disabled: true,
         },
         {
             title: t.leftNav.live,
             link: '/live',
             iconElement: <VideocamIcon />,
+            disabled: true,
         },
     ];
 
