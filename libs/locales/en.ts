@@ -8,8 +8,8 @@ export default {
     },
     login: {
         head: {
-            title: 'Deepia｜Log in',
-            description: 'Log in page of Deepia',
+            title: 'Deepia｜Content in',
+            description: 'Content in page of Deepia',
         },
         header: {
             description: 'Brain Power Enhancer',
@@ -17,7 +17,7 @@ export default {
         form: {
             email: 'Email',
             password: 'Password',
-            login: 'Log in',
+            login: 'Content in',
             register: "Don't have an account? Sign Up",
         },
     },
@@ -35,7 +35,7 @@ export default {
             password: 'Password',
             passwordConfirmation: 'Password confirmation',
             signup: 'Sign up',
-            login: 'Have an account? Log in',
+            login: 'Have an account? Content in',
         },
     },
     leftNav: {
@@ -61,18 +61,18 @@ export default {
         live: 'LIVE',
     },
     dialog: {
-        createLog: {
-            title: 'New',
+        createContent: {
+            title: 'Generate',
             contentText:
-                'Enter a title and select the category of content to generate.',
+                'Enter a prompt and select the category of content to generate.',
         },
-        editLog: {
-            title: 'Edit Log',
+        editContent: {
+            title: 'Edit',
             contentText:
-                'To update log to this website, please rewrite your title and link here.',
+                'To update log to this website, please rewrite your prompt and link here.',
         },
-        deleteLog: {
-            title: 'Delete Logs',
+        deleteContent: {
+            title: 'Delete',
             contentText:
                 'To delete logs to this website.\nAre you sure you want to delete selected logs?',
         },
@@ -113,6 +113,8 @@ export default {
                 title: 'Title required',
                 link: 'Link required',
                 category: 'Category required',
+                prompt: 'Prompt required',
+                name: 'Name required',
             },
             pattern: {
                 link: 'Link should be url',
@@ -120,8 +122,8 @@ export default {
             maxLen: 'Max length exceeded',
         },
     },
-    log: {
-        title: 'Title',
+    content: {
+        prompt: 'Prompt',
         link: 'Link',
         memo: 'Memo',
         category: 'Category',
@@ -150,7 +152,7 @@ export default {
     account: {
         name: 'Account',
         title: 'Account Setting',
-        logout: 'Logout',
+        logout: 'Contentout',
         setting: 'Settings',
         settingDeepia: 'Setting Deepia Application',
         lang: 'Language',
@@ -179,4 +181,5 @@ export default {
     all: 'All',
     search: 'Search',
     video: 'Video',
+    space: 'Space',
 };

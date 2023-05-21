@@ -1,6 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import ResponsiveDrawer from '../components/template/ResponsiveDrawer';
 import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
 
@@ -20,7 +21,7 @@ const Custom404: NextPage<Props> = ({ statusCode }) => {
         init();
     }, []);
 
-    return <div>{statusCode} error</div>;
+    return <ResponsiveDrawer contents={<div>{statusCode} error</div>} />;
 };
 
 export default Custom404;

@@ -8,7 +8,7 @@ export class ContentMapper {
         return Content.create(
             {
                 id: dto.id,
-                title: dto.title,
+                prompt: dto.prompt,
                 categoryId: dto.categoryId,
                 deliverables: dto.deliverables,
                 userId: dto.userId,
@@ -20,7 +20,7 @@ export class ContentMapper {
     static toDto(model: ContentModel): ContentDto {
         return {
             id: Number(model.id),
-            title: model.title,
+            prompt: model.prompt,
             categoryId: model.category_id,
             deliverables: model.deliverables,
             user: {
@@ -35,7 +35,7 @@ export class ContentMapper {
     static async toPersistence(domain: Content): Promise<ContentModel> {
         const model = new ContentModel();
 
-        model.title = domain.title;
+        model.prompt = domain.prompt;
         model.category_id = domain.categoryId;
         model.deliverables = domain.deliverables;
         model.user_id = domain.userId;

@@ -5,7 +5,7 @@ import { ContentId } from './content.id';
 
 export interface IContent {
     id: number;
-    title: string;
+    prompt: string;
     categoryId: number;
     deliverables?: string;
     userId?: number;
@@ -17,8 +17,8 @@ export class Content extends AggregateRoot<IContent> {
         return ContentId.create(this._id);
     }
 
-    get title(): string {
-        return this.props.title;
+    get prompt(): string {
+        return this.props.prompt;
     }
 
     get categoryId(): number {

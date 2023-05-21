@@ -34,6 +34,7 @@ import FormControl from '@mui/material/FormControl';
 import { useLocale } from '../../hooks/useLocale';
 import AddIcon from '@mui/icons-material/Add';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
+import { CONTENT_CATEGORY } from '../../general/constants/contentCategory';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -70,10 +71,10 @@ const CreateContent = () => {
     };
 
     const createContent = async (data: CreateContentDto) => {
+        closeDialog();
         await contentUiController.create(data);
         await setList();
         resetFormValue();
-        closeDialog();
     };
 
     const setList = async () => {
@@ -83,7 +84,7 @@ const CreateContent = () => {
 
     const resetFormValue = () => {
         reset({
-            title: '',
+            prompt: '',
             category: '',
         });
     };
@@ -96,10 +97,10 @@ const CreateContent = () => {
 
             <Dialog open={open} maxWidth="xs">
                 <form onSubmit={handleSubmit(createContent)}>
-                    <DialogTitle>{t.dialog.createLog.title}</DialogTitle>
+                    <DialogTitle>{t.dialog.createContent.title}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            {t.dialog.createLog.contentText}
+                            {t.dialog.createContent.contentText}
                         </DialogContentText>
                         <div
                             style={{
@@ -109,7 +110,7 @@ const CreateContent = () => {
                         >
                             {/* @ts-ignore */}
                             <Controller
-                                name={'title'}
+                                name={'prompt'}
                                 control={control}
                                 defaultValue=""
                                 render={({
@@ -117,7 +118,7 @@ const CreateContent = () => {
                                     fieldState: { error },
                                 }) => (
                                     <TextField
-                                        label={t.log.title}
+                                        label={t.content.prompt}
                                         margin="dense"
                                         fullWidth
                                         required
@@ -131,7 +132,7 @@ const CreateContent = () => {
                                     />
                                 )}
                                 rules={{
-                                    required: t.form.err.required.title,
+                                    required: t.form.err.required.prompt,
                                     maxLength: {
                                         value: 128,
                                         message: t.form.err.maxLen,
@@ -144,9 +145,32 @@ const CreateContent = () => {
                                 defaultValue={0}
                                 render={({ field }) => (
                                     <Select {...field}>
-                                        <MenuItem value={0}>{t.image}</MenuItem>
-                                        <MenuItem value={1}>{t.music}</MenuItem>
-                                        <MenuItem value={2}>{t.text}</MenuItem>
+                                        <MenuItem
+                                            value={CONTENT_CATEGORY.IMAGE}
+                                        >
+                                            {t.image}
+                                        </MenuItem>
+                                        <MenuItem value={CONTENT_CATEGORY.TEXT}>
+                                            {t.text}
+                                        </MenuItem>
+                                        <MenuItem
+                                            value={CONTENT_CATEGORY.MUSIC}
+                                            disabled
+                                        >
+                                            {t.music}
+                                        </MenuItem>
+                                        <MenuItem
+                                            value={CONTENT_CATEGORY.VIDEO}
+                                            disabled
+                                        >
+                                            {t.video}
+                                        </MenuItem>
+                                        <MenuItem
+                                            value={CONTENT_CATEGORY.SPACE}
+                                            disabled
+                                        >
+                                            {t.space}
+                                        </MenuItem>
                                     </Select>
                                 )}
                                 rules={{

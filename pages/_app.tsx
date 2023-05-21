@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
 import { useRouter } from 'next/router';
+import ResponsiveDrawer from '../components/template/ResponsiveDrawer';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     const router = useRouter();

@@ -170,7 +170,7 @@ const Home = ({ contents }) => {
                                                                 'normal',
                                                         }}
                                                     >
-                                                        {content.title}
+                                                        {content.prompt}
                                                     </h1>
                                                     <p>{content.user.name}</p>
                                                 </div>
@@ -188,104 +188,7 @@ const Home = ({ contents }) => {
 };
 
 export const getServerSideProps = async () => {
-    const contents = [
-        {
-            title: 'Unkoman',
-            img: '/images/test1.png',
-            user: {
-                name: 'DeepRecommend',
-                image: '/images/test12.png',
-            },
-        },
-        {
-            title: 'I am very lucky',
-            img: '/images/test2.png',
-            user: {
-                name: 'Jin Sugimoto',
-                image: '/images/test11.png',
-            },
-        },
-        {
-            title: 'chanchan charachara',
-            img: '/images/test3.png',
-            user: {
-                name: 'AI man',
-                image: '/images/test10.png',
-            },
-        },
-        {
-            title: 'CCCCC',
-            img: '/images/test4.png',
-            user: {
-                name: 'Unkown',
-                image: '/images/test9.png',
-            },
-        },
-        {
-            title: 'Nekoni koban',
-            img: '/images/test5.png',
-            user: {
-                name: 'Kabochan',
-                image: '/images/test8.png',
-            },
-        },
-        {
-            title: 'HHH',
-            img: '/images/test6.png',
-            user: {
-                name: 'Sobakasu',
-                image: '/images/test7.png',
-            },
-        },
-        {
-            title: 'Quick',
-            img: '/images/test7.png',
-            user: {
-                name: 'Nikibi',
-                image: '/images/test6.png',
-            },
-        },
-        {
-            title: 'Bird',
-            img: '/images/test8.png',
-            user: {
-                name: 'Mohikan',
-                image: '/images/test5.png',
-            },
-        },
-        {
-            title: 'Black Sigma',
-            img: '/images/test9.png',
-            user: {
-                name: 'Yamamoto',
-                image: '/images/test4.png',
-            },
-        },
-        {
-            title: 'Killer',
-            img: '/images/test10.png',
-            user: {
-                name: 'WaqWaqSan',
-                image: '/images/test3.png',
-            },
-        },
-        {
-            title: 'Random',
-            img: '/images/test11.png',
-            user: {
-                name: 'ChiChiSibori',
-                image: '/images/test2.png',
-            },
-        },
-        {
-            title: 'Easy pencil',
-            img: '/images/test12.png',
-            user: {
-                name: 'Kosan',
-                image: '/images/test1.png',
-            },
-        },
-    ];
+    const contents = [];
 
     return {
         props: { contents },

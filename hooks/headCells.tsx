@@ -18,16 +18,16 @@ export const useHeadCells = () => {
             label: t.favicon,
         },
         {
-            id: 'title',
+            id: 'prompt',
             numeric: true,
             disablePadding: false,
-            label: t.log.title,
+            label: t.content.prompt,
         },
         {
             id: 'link',
             numeric: true,
             disablePadding: false,
-            label: t.log.link,
+            label: t.content.link,
         },
         {
             id: 'copy',

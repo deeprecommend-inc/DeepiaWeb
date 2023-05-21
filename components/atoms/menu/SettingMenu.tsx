@@ -197,7 +197,7 @@ const SettingMenu = ({ close }) => {
                                             />
                                         )}
                                         rules={{
-                                            required: t.form.err.required.title,
+                                            required: t.form.err.required.name,
                                             maxLength: {
                                                 value: 128,
                                                 message: t.form.err.maxLen,

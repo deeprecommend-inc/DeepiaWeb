@@ -61,20 +61,20 @@ export default {
         live: 'LIVE',
     },
     dialog: {
-        createLog: {
-            title: '新規',
+        createContent: {
+            title: '生成',
             contentText:
-                'タイトルを入力し、生成するコンテンツのカテゴリを選択します',
+                'プロンプトを入力し、生成するコンテンツのカテゴリを選択します',
         },
-        editLog: {
-            title: 'ログ編集',
+        editContent: {
+            title: '編集',
             contentText:
-                'タイトルとリンク、メモ、カテゴリーを編集し、ログを更新することができます',
+                'プロンプトを編集し、コンテンツを更新することができます',
         },
-        deleteLog: {
-            title: 'ログ削除',
+        deleteContent: {
+            title: '削除',
             contentText:
-                'ログを削除します。\n失ったデータは復元できません。よろしいですか？',
+                'コンテンツを削除します。\n失ったデータは復元できません。よろしいですか？',
         },
         addCategories: {
             title: 'カテゴリー',
@@ -111,6 +111,8 @@ export default {
                 title: 'タイトルは必須です',
                 link: 'リンクは必須です',
                 category: 'カテゴリは必須です',
+                prompt: 'プロンプトは必須です',
+                name: '名前は必須です',
             },
             pattern: {
                 link: 'リンクはURLである必要があります',
@@ -118,8 +120,8 @@ export default {
             maxLen: '文字数が上限を超えました',
         },
     },
-    log: {
-        title: 'タイトル',
+    content: {
+        prompt: 'プロンプト',
         link: 'リンク',
         memo: 'メモ',
         category: 'カテゴリー',
@@ -177,4 +179,5 @@ export default {
     all: 'すべて',
     search: '検索',
     video: '動画',
+    space: '空間',
 };

@@ -1,4 +1,4 @@
 export class CreateContentDto {
-  title!: string;
-  categoryId!: number;
+    prompt!: string;
+    categoryId!: number;
 }

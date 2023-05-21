@@ -1,3 +1,3 @@
 export class UpdateContentDto {
-  title!: string;
+    prompt!: string;
 }
