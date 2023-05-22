@@ -18,7 +18,7 @@ const Custom500: NextPage<Props> = ({ statusCode }) => {
             router.push('login');
         };
 
-        init();
+        // init();
     }, []);
 
     return <ResponsiveDrawer contents={<div>{statusCode} error</div>} />;

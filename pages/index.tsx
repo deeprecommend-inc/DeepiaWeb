@@ -24,6 +24,7 @@ import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import ToolbarMenu from '../components/template/ToolbarMenu';
 import { contentUiController } from '../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../redux/reducers/contentSlice';
+import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
 
 const darkMode = createTheme({
     palette: {
@@ -51,7 +52,6 @@ const Home = ({ contents }) => {
 
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
-            const contents = await contentUiController.findAll();
 
             if (token || !isAfterLogin) {
                 const currentUser = await authUiController.currentUser();
@@ -63,11 +63,21 @@ const Home = ({ contents }) => {
                 ? await dispatch(setDark(true))
                 : await dispatch(setDark(false));
 
-            dispatch(setContentList(contents));
+            getContents();
         };
 
         init();
     }, []);
+
+    const getContents = async () => {
+        const contents = await contentUiController.findAll();
+        dispatch(setContentList(contents));
+    };
+
+    const deleteContent = async (contentId: number) => {
+        await contentUiController.delete({ id: contentId });
+        getContents();
+    };
 
     if (!ready) return <></>;
 
@@ -135,20 +145,38 @@ const Home = ({ contents }) => {
                                             key={index}
                                             sx={{
                                                 width: 'calc((100% / 4) - 48px)',
+                                                minHeight:
+                                                    'calc((100% / 4) - 48px)',
                                             }}
                                         >
-                                            <img
-                                                src={
-                                                    'data:image/png;base64,' +
-                                                    content.deliverables
-                                                }
-                                            />
-                                            <div
-                                                style={{
-                                                    display: 'flex',
-                                                    padding: '8px',
-                                                }}
-                                            >
+                                            {content.categoryId}
+                                            <div className="content-container">
+                                                {content.categoryId ===
+                                                    CONTENT_CATEGORY.IMAGE && (
+                                                    <img
+                                                        src={
+                                                            'data:image/png;base64,' +
+                                                            content.deliverables
+                                                        }
+                                                    />
+                                                )}
+                                                {content.categoryId ===
+                                                    CONTENT_CATEGORY.TEXT && (
+                                                    <>{content.deliverables}</>
+                                                )}
+                                                {content.categoryId !==
+                                                    CONTENT_CATEGORY.IMAGE &&
+                                                    content.categoryId !==
+                                                        CONTENT_CATEGORY.TEXT && (
+                                                        <img
+                                                            src={
+                                                                'data:image/png;base64,' +
+                                                                content.deliverables
+                                                            }
+                                                        />
+                                                    )}
+                                            </div>
+                                            <div className="user-info flex p-2 w-full">
                                                 <Avatar
                                                     src={content.user.image}
                                                     sx={{
