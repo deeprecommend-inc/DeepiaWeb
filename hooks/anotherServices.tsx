@@ -10,9 +10,12 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { useAppSelector } from '../redux/hooks';
 
 export const useAnotherServices = () => {
     const { t, locale } = useLocale();
+    const dark = useAppSelector((state) => state.ui.dark);
+
     const anotherServices = [
         {
             title: t.leftNav.homepage,
@@ -29,7 +32,7 @@ export const useAnotherServices = () => {
                 <FontAwesomeIcon
                     icon={faDiscord}
                     style={{
-                        color: '#888888',
+                        color: dark ? '#ffffff' : '#888888',
                         width: '1em',
                         height: '1em',
                         fontSize: '1.5rem',

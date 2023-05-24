@@ -6,6 +6,12 @@ import { ContentMapper } from '../../session/mapper/content.mapper';
 import { ContentModel } from '../datasource/content.model';
 
 export const contentRepo: ContentRepo = {
+    find: async (): Promise<ContentDto[]> => {
+        const apiClient = await asyncApiClient.create();
+        const res = await apiClient.get<ContentModel[]>('/content/');
+        const dto = res.data.map((o) => ContentMapper.toDto(o));
+        return dto;
+    },
     findAll: async (): Promise<ContentDto[]> => {
         const apiClient = await asyncApiClient.create();
         const res = await apiClient.get<ContentModel[]>('/content/');
@@ -28,9 +34,8 @@ export const contentRepo: ContentRepo = {
         const model = await ContentMapper.toPersistence(domain);
         await apiClient.put<void>(`/content/${id}/`, model);
     },
-    delete: async (domain: Content): Promise<void> => {
+    delete: async (id: number): Promise<void> => {
         const apiClient = await asyncApiClient.create();
-        const model = await ContentMapper.toPersistence(domain);
-        await apiClient.post<void>(`/content/delete/`, model);
+        await apiClient.delete<void>(`/content/${id}/`);
     },
 };

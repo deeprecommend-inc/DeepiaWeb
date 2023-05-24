@@ -25,6 +25,7 @@ import ToolbarMenu from '../components/template/ToolbarMenu';
 import { contentUiController } from '../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../redux/reducers/contentSlice';
 import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
+import { ImgDataURI } from '../components/atoms/ImgDataURI';
 
 const darkMode = createTheme({
     palette: {
@@ -37,7 +38,7 @@ const darkMode = createTheme({
 
 const lightMode = createTheme({});
 
-const Home = ({ contents }) => {
+const Home = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
@@ -53,7 +54,7 @@ const Home = ({ contents }) => {
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
 
-            if (token || !isAfterLogin) {
+            if (token && !isAfterLogin) {
                 const currentUser = await authUiController.currentUser();
                 dispatch(setCurrentUser(currentUser));
                 dispatch(updateIsAfterLogin(true));
@@ -74,9 +75,9 @@ const Home = ({ contents }) => {
         dispatch(setContentList(contents));
     };
 
-    const deleteContent = async (contentId: number) => {
-        await contentUiController.delete({ id: contentId });
-        getContents();
+    const deleteContent = async (id: number) => {
+        await contentUiController.delete(id);
+        await getContents();
     };
 
     if (!ready) return <></>;
@@ -149,13 +150,11 @@ const Home = ({ contents }) => {
                                                     'calc((100% / 4) - 48px)',
                                             }}
                                         >
-                                            {content.categoryId}
                                             <div className="content-container">
                                                 {content.categoryId ===
                                                     CONTENT_CATEGORY.IMAGE && (
-                                                    <img
-                                                        src={
-                                                            'data:image/png;base64,' +
+                                                    <ImgDataURI
+                                                        uri={
                                                             content.deliverables
                                                         }
                                                     />
@@ -168,9 +167,8 @@ const Home = ({ contents }) => {
                                                     CONTENT_CATEGORY.IMAGE &&
                                                     content.categoryId !==
                                                         CONTENT_CATEGORY.TEXT && (
-                                                        <img
-                                                            src={
-                                                                'data:image/png;base64,' +
+                                                        <ImgDataURI
+                                                            uri={
                                                                 content.deliverables
                                                             }
                                                         />
@@ -213,14 +211,6 @@ const Home = ({ contents }) => {
             </ThemeProvider>
         </>
     );
-};
-
-export const getServerSideProps = async () => {
-    const contents = [];
-
-    return {
-        props: { contents },
-    };
 };
 
 export default Home;

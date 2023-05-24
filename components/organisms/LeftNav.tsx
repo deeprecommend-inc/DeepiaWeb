@@ -49,11 +49,6 @@ export const LeftNav = () => {
         (state) => state.user.following,
     );
 
-    const logout = async () => {
-        await asyncLocalStorage.removeItem(accessTokenKey);
-        router.push('login');
-    };
-
     return (
         <div
             className="overflow-hidden"
