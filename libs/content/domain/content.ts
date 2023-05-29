@@ -10,6 +10,7 @@ export interface IContent {
     deliverables?: string;
     userId?: number;
     user?: any;
+    searchWord?: string;
 }
 
 export class Content extends AggregateRoot<IContent> {
@@ -35,6 +36,10 @@ export class Content extends AggregateRoot<IContent> {
 
     get user(): User {
         return this.props.user;
+    }
+
+    get searchWord(): string {
+        return this.props.searchWord;
     }
 
     constructor(props: IContent, id?: UniqueEntityID) {

@@ -12,6 +12,7 @@ export class ContentMapper {
                 categoryId: dto.categoryId,
                 deliverables: dto.deliverables,
                 userId: dto.userId,
+                searchWord: dto.searchWord,
             },
             new UniqueEntityID(dto.id),
         );
@@ -39,6 +40,7 @@ export class ContentMapper {
         model.category_id = domain.categoryId;
         model.deliverables = domain.deliverables;
         model.user_id = domain.userId;
+        model.search_word = domain.searchWord;
 
         return model;
     }

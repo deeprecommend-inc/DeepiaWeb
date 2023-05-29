@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import router, { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -20,6 +20,12 @@ import { pink } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { setDark } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
+import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
+import ToolbarMenu from '../components/template/ToolbarMenu';
+import { contentUiController } from '../libs/content/presentation/content.ui.controler';
+import { setContentList } from '../redux/reducers/contentSlice';
+import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
+import { ImgDataURI } from '../components/atoms/ImgDataURI';
 
 const darkMode = createTheme({
     palette: {
@@ -36,6 +42,7 @@ const Pid = () => {
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
     const dark = useAppSelector((state) => state.ui.dark);
+    const contentList = useAppSelector((state) => state.content.list);
     const { t, locale } = useLocale();
 
     useEffect(() => {
@@ -61,6 +68,9 @@ const Pid = () => {
             Boolean(dark)
                 ? await dispatch(setDark(true))
                 : await dispatch(setDark(false));
+
+            const contents = await contentUiController.findByUser();
+            dispatch(setContentList(contents));
         };
 
         init();
@@ -114,7 +124,83 @@ const Pid = () => {
                         e.preventDefault();
                     }}
                 >
-                    <ResponsiveDrawer contents={<></>} />
+                    <ResponsiveDrawer
+                        contents={
+                            <>
+                                <Grid
+                                    container
+                                    sx={{
+                                        padding: '88px 64px 24px',
+                                        gap: '24px',
+                                    }}
+                                >
+                                    {contentList.map((content, index) => (
+                                        <Grid
+                                            item
+                                            key={index}
+                                            sx={{
+                                                width: 'calc((100% / 4) - 48px)',
+                                                minHeight:
+                                                    'calc((100% / 4) - 48px)',
+                                            }}
+                                        >
+                                            <div className="content-container">
+                                                {content.categoryId ===
+                                                    CONTENT_CATEGORY.IMAGE && (
+                                                    <ImgDataURI
+                                                        uri={
+                                                            content.deliverables
+                                                        }
+                                                    />
+                                                )}
+                                                {content.categoryId ===
+                                                    CONTENT_CATEGORY.TEXT && (
+                                                    <>{content.deliverables}</>
+                                                )}
+                                                {content.categoryId !==
+                                                    CONTENT_CATEGORY.IMAGE &&
+                                                    content.categoryId !==
+                                                        CONTENT_CATEGORY.TEXT && (
+                                                        <ImgDataURI
+                                                            uri={
+                                                                content.deliverables
+                                                            }
+                                                        />
+                                                    )}
+                                            </div>
+                                            <div className="user-info flex p-2 w-full">
+                                                <Avatar
+                                                    src={content.user.image}
+                                                    sx={{
+                                                        width: 32,
+                                                        height: 32,
+                                                    }}
+                                                />
+                                                <div className="pl-2">
+                                                    <h1
+                                                        style={{
+                                                            fontSize: '20px',
+                                                            fontWeight: 500,
+                                                            overflow: 'hidden',
+                                                            display: 'block',
+                                                            maxHeight: '4rem',
+                                                            textOverflow:
+                                                                'ellipsis',
+                                                            whiteSpace:
+                                                                'normal',
+                                                        }}
+                                                    >
+                                                        {content.prompt}
+                                                    </h1>
+                                                    <p>{content.user.name}</p>
+                                                </div>
+                                            </div>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </>
+                        }
+                    />
                 </Box>
             </ThemeProvider>
         </>

@@ -1,14 +1,25 @@
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import { CONTENT_CATEGORY } from '../../general/constants/contentCategory';
 import { useLocale } from '../../hooks/useLocale';
-import { useAppSelector } from '../../redux/hooks';
+import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { setContentList } from '../../redux/reducers/contentSlice';
 
 const ToolbarMenu = () => {
     const { t, locale } = useLocale();
+    const dispatch = useAppDispatch();
     const dark = useAppSelector((state) => state.ui.dark);
 
-    const narrowDown = (num: number) => {
-        // TODO: コンテンツ取得
+    const narrowDown = async (categoryId?: number) => {
+        if (categoryId === undefined) {
+            const contents = await contentUiController.findAll();
+            dispatch(setContentList(contents));
+        } else {
+            const contents = await contentUiController.find({
+                categoryId,
+            });
+            dispatch(setContentList(contents));
+        }
     };
 
     return (
@@ -21,8 +32,8 @@ const ToolbarMenu = () => {
             <Chip
                 label={t.all}
                 variant="outlined"
-                onClick={() => {
-                    narrowDown(null);
+                onClick={async () => {
+                    await narrowDown();
                 }}
             />
             <Chip

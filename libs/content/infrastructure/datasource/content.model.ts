@@ -7,4 +7,5 @@ export class ContentModel {
     deliverables?: string;
     user_id?: number;
     user?: UserModel;
+    search_word?: string;
 }

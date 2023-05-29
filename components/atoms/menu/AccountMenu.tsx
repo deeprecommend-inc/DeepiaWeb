@@ -43,7 +43,6 @@ const AccountMenu = () => {
     const logout = async () => {
         await asyncLocalStorage.removeItem(accessTokenKey);
         dispatch(updateIsAfterLogin(false));
-        // router.push('login');
     };
 
     return (

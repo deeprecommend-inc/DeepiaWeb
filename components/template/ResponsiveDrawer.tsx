@@ -19,6 +19,7 @@ import CreateContent from '../atoms/CreateContent';
 import { SearchForm } from '../atoms/SearchFrom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ToolbarMenu from './ToolbarMenu';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const drawerWidth = 240;
 const drawerHeight = 148;
@@ -57,29 +58,25 @@ export const ResponsiveDrawer = (props: Props) => {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        backgroundColor: dark ? '' : '#ffffff',
+                        backgroundColor:
+                            dark !== undefined
+                                ? dark
+                                    ? ''
+                                    : '#ffffff'
+                                : '#ffffff',
                     }}
                 >
-                    <div
-                        style={{
+                    <Box
+                        sx={{
                             display: 'flex',
                             justifyContent: 'start',
                             alignItems: 'center',
                         }}
                     >
                         <SearchForm />
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: 'none' } }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    </div>
-                    <div
-                        style={{
+                    </Box>
+                    <Box
+                        sx={{
                             display: 'flex',
                             justifyContent: 'end',
                             alignItems: 'center',
@@ -100,7 +97,7 @@ export const ResponsiveDrawer = (props: Props) => {
                                 Log in
                             </Button>
                         )}
-                    </div>
+                    </Box>
                 </Toolbar>
                 <ToolbarMenu />
             </AppBar>

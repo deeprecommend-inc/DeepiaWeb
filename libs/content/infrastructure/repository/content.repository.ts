@@ -6,15 +6,24 @@ import { ContentMapper } from '../../session/mapper/content.mapper';
 import { ContentModel } from '../datasource/content.model';
 
 export const contentRepo: ContentRepo = {
-    find: async (): Promise<ContentDto[]> => {
+    find: async (domain: Content): Promise<ContentDto[]> => {
         const apiClient = await asyncApiClient.create();
-        const res = await apiClient.get<ContentModel[]>('/content/');
+        const params = await ContentMapper.toPersistence(domain);
+        const res = await apiClient.get<ContentModel[]>('/content/', {
+            params,
+        });
         const dto = res.data.map((o) => ContentMapper.toDto(o));
         return dto;
     },
     findAll: async (): Promise<ContentDto[]> => {
         const apiClient = await asyncApiClient.create();
         const res = await apiClient.get<ContentModel[]>('/content/');
+        const dto = res.data.map((o) => ContentMapper.toDto(o));
+        return dto;
+    },
+    findByUser: async (): Promise<ContentDto[]> => {
+        const apiClient = await asyncApiClient.create();
+        const res = await apiClient.get<ContentModel[]>('/content/user/');
         const dto = res.data.map((o) => ContentMapper.toDto(o));
         return dto;
     },
@@ -27,7 +36,7 @@ export const contentRepo: ContentRepo = {
     create: async (domain: Content): Promise<void> => {
         const apiClient = await asyncApiClient.create();
         const model = await ContentMapper.toPersistence(domain);
-        await apiClient.post<void>('/content/', model);
+        await apiClient.post<void>('/content/create/', model);
     },
     update: async (id: number, domain: Content): Promise<void> => {
         const apiClient = await asyncApiClient.create();

@@ -152,7 +152,7 @@ export default {
     account: {
         name: 'Account',
         title: 'Account Setting',
-        logout: 'Contentout',
+        logout: 'Log out',
         setting: 'Settings',
         settingDeepia: 'Setting Deepia Application',
         lang: 'Language',
