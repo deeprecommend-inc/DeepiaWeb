@@ -58,12 +58,7 @@ export const ResponsiveDrawer = (props: Props) => {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        backgroundColor:
-                            dark !== undefined
-                                ? dark
-                                    ? ''
-                                    : '#ffffff'
-                                : '#ffffff',
+                        backgroundColor: dark ? '' : '#ffffff',
                     }}
                 >
                     <Box
