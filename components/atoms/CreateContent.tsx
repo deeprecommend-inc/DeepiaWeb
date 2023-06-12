@@ -35,6 +35,7 @@ import { useLocale } from '../../hooks/useLocale';
 import AddIcon from '@mui/icons-material/Add';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
 import { CONTENT_CATEGORY } from '../../general/constants/contentCategory';
+import { useRouter } from 'next/router';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -57,13 +58,19 @@ const CreateContent = () => {
     const { handleSubmit, control, reset } = useForm();
     const dark = useAppSelector((state) => state.ui.dark);
     const { t } = useLocale();
+    const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
+    const router = useRouter();
 
     useEffect(() => {
         resetFormValue();
     }, [open]);
 
     const openDialog = () => {
-        setOpen(true);
+        if (isAfterLogin) {
+            setOpen(true);
+        } else {
+            router.push('/login');
+        }
     };
 
     const closeDialog = () => {

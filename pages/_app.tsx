@@ -12,17 +12,6 @@ import ResponsiveDrawer from '../components/template/ResponsiveDrawer';
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     const router = useRouter();
 
-    useEffect(() => {
-        window.addEventListener('storage', async (event) => {
-            const token = await asyncLocalStorage.getItem(accessTokenKey);
-            if (!token) {
-                await asyncLocalStorage.removeItem(accessTokenKey);
-                router.push('login');
-                return;
-            }
-        });
-    });
-
     return (
         <Provider store={store}>
             <SessionProvider session={session}>

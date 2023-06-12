@@ -26,6 +26,8 @@ import { contentUiController } from '../libs/content/presentation/content.ui.con
 import { setContentList } from '../redux/reducers/contentSlice';
 import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
 import { ImgDataURI } from '../components/atoms/ImgDataURI';
+import SimpleBar from 'simplebar-react';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const darkMode = createTheme({
     palette: {
@@ -161,7 +163,20 @@ const Home = () => {
                                                 )}
                                                 {content.categoryId ===
                                                     CONTENT_CATEGORY.TEXT && (
-                                                    <>{content.deliverables}</>
+                                                    <SimpleBar
+                                                        style={{
+                                                            width: '350px',
+                                                            height: '350px',
+                                                            wordWrap:
+                                                                'break-word',
+                                                            overflowWrap:
+                                                                'break-word',
+                                                            overflowY: 'auto',
+                                                            overflowX: 'hidden',
+                                                        }}
+                                                    >
+                                                        {content.deliverables}
+                                                    </SimpleBar>
                                                 )}
                                                 {content.categoryId !==
                                                     CONTENT_CATEGORY.IMAGE &&
