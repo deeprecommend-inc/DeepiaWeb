@@ -36,6 +36,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
 import { CONTENT_CATEGORY } from '../../general/constants/contentCategory';
 import { useRouter } from 'next/router';
+import { updateLoading } from '../../redux/reducers/uiSlice';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -78,10 +79,14 @@ const CreateContent = () => {
     };
 
     const createContent = async (data: CreateContentDto) => {
+        dispatch(updateLoading(true));
+
         closeDialog();
         await contentUiController.create(data);
         await setList();
         resetFormValue();
+
+        dispatch(updateLoading(false));
     };
 
     const setList = async () => {

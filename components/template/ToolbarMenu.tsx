@@ -4,6 +4,7 @@ import { useLocale } from '../../hooks/useLocale';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setContentList } from '../../redux/reducers/contentSlice';
+import { updateLoading } from '../../redux/reducers/uiSlice';
 
 const ToolbarMenu = () => {
     const { t, locale } = useLocale();
@@ -11,6 +12,8 @@ const ToolbarMenu = () => {
     const dark = useAppSelector((state) => state.ui.dark);
 
     const narrowDown = async (categoryId?: number) => {
+        dispatch(updateLoading(true));
+
         if (categoryId === undefined) {
             const contents = await contentUiController.findAll();
             dispatch(setContentList(contents));
@@ -20,6 +23,8 @@ const ToolbarMenu = () => {
             });
             dispatch(setContentList(contents));
         }
+
+        dispatch(updateLoading(false));
     };
 
     return (

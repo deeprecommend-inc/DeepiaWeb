@@ -22,6 +22,7 @@ export const useMenus = () => {
             title: t.leftNav.following,
             link: '/following',
             iconElement: <GroupIcon />,
+            disabled: true,
         },
         {
             title: t.leftNav.explore,

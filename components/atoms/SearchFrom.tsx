@@ -10,6 +10,7 @@ import { useLocale } from '../../hooks/useLocale';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../../redux/reducers/contentSlice';
+import { updateLoading } from '../../redux/reducers/uiSlice';
 
 export const SearchForm = () => {
     const { t } = useLocale();
@@ -18,8 +19,12 @@ export const SearchForm = () => {
     const dark = useAppSelector((state) => state.ui.dark);
 
     const narrowDown = async (searchWord: string) => {
+        dispatch(updateLoading(true));
+
         const contents = await contentUiController.find({ searchWord });
         dispatch(setContentList(contents));
+
+        dispatch(updateLoading(false));
     };
 
     const handleSearch = () => {

@@ -18,7 +18,7 @@ import {
 } from '../general/constants/localStorageKey';
 import { pink } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { setDark } from '../redux/reducers/uiSlice';
+import { setDark, updateLoading } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import ToolbarMenu from '../components/template/ToolbarMenu';
@@ -26,6 +26,9 @@ import { contentUiController } from '../libs/content/presentation/content.ui.con
 import { setContentList } from '../redux/reducers/contentSlice';
 import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
 import { ImgDataURI } from '../components/atoms/ImgDataURI';
+import SimpleBar from 'simplebar-react';
+import LinearProgress from '@mui/material/LinearProgress';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const darkMode = createTheme({
     palette: {
@@ -39,42 +42,48 @@ const darkMode = createTheme({
 const lightMode = createTheme({});
 
 const Pid = () => {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
-    const dark = useAppSelector((state) => state.ui.dark);
     const contentList = useAppSelector((state) => state.content.list);
+    const dark = useAppSelector((state) => state.ui.dark);
     const { t, locale } = useLocale();
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
         const init = async () => {
+            setReady(true);
+
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
 
-            if (!token) {
-                return;
-            } else {
+            if (token && !isAfterLogin) {
+                const currentUser = await authUiController.currentUser();
+                dispatch(setCurrentUser(currentUser));
                 dispatch(updateIsAfterLogin(true));
-                await authUiController.currentUser().then((currentUser) => {
-                    dispatch(setCurrentUser(currentUser));
-                });
-            }
-
-            if (!isAfterLogin) {
-                await authUiController.currentUser().then((currentUser) => {
-                    dispatch(setCurrentUser(currentUser));
-                });
             }
 
             Boolean(dark)
                 ? await dispatch(setDark(true))
                 : await dispatch(setDark(false));
 
-            const contents = await contentUiController.findByUser();
-            dispatch(setContentList(contents));
+            getContents();
         };
 
         init();
     }, []);
+
+    const getContents = async () => {
+        const contents = await contentUiController.findByUser();
+        dispatch(setContentList(contents));
+    };
+
+    const deleteContent = async (id: number) => {
+        await contentUiController.delete(id);
+        await getContents();
+    };
+
+    if (!ready) return <></>;
 
     return (
         <>
@@ -155,7 +164,20 @@ const Pid = () => {
                                                 )}
                                                 {content.categoryId ===
                                                     CONTENT_CATEGORY.TEXT && (
-                                                    <>{content.deliverables}</>
+                                                    <SimpleBar
+                                                        style={{
+                                                            width: '350px',
+                                                            height: '350px',
+                                                            wordWrap:
+                                                                'break-word',
+                                                            overflowWrap:
+                                                                'break-word',
+                                                            overflowY: 'auto',
+                                                            overflowX: 'hidden',
+                                                        }}
+                                                    >
+                                                        {content.deliverables}
+                                                    </SimpleBar>
                                                 )}
                                                 {content.categoryId !==
                                                     CONTENT_CATEGORY.IMAGE &&

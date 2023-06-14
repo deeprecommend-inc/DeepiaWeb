@@ -55,7 +55,7 @@ const AccountMenu = () => {
                 }}
             >
                 {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
+                    <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
                 <Tooltip title={t.account.title}>
                     <IconButton
                         onClick={handleClick}

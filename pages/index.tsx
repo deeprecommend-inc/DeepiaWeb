@@ -16,9 +16,9 @@ import {
     categoryIdForGetLogKey,
     darkModeKey,
 } from '../general/constants/localStorageKey';
-import { pink } from '@mui/material/colors';
+import { pink, deepPurple } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { setDark } from '../redux/reducers/uiSlice';
+import { setDark, updateLoading } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
 import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
 import ToolbarMenu from '../components/template/ToolbarMenu';
@@ -28,17 +28,24 @@ import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
 import { ImgDataURI } from '../components/atoms/ImgDataURI';
 import SimpleBar from 'simplebar-react';
 import LinearProgress from '@mui/material/LinearProgress';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const darkMode = createTheme({
     palette: {
         primary: {
-            main: pink[500],
+            main: deepPurple[500],
         },
         mode: 'dark',
     },
 });
 
-const lightMode = createTheme({});
+const lightMode = createTheme({
+    palette: {
+        primary: {
+            main: deepPurple[500],
+        },
+    },
+});
 
 const Home = () => {
     const router = useRouter();
@@ -69,7 +76,13 @@ const Home = () => {
             getContents();
         };
 
+        dispatch(updateLoading(true));
+
         init();
+
+        setTimeout(() => {
+            dispatch(updateLoading(false));
+        }, 1000);
     }, []);
 
     const getContents = async () => {

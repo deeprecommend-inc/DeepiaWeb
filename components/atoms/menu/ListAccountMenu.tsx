@@ -20,6 +20,11 @@ import { useLocale } from '../../../hooks/useLocale';
 import { useRouter } from 'next/router';
 import { contentUiController } from '../../../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../../../redux/reducers/contentSlice';
+import { updateLoading } from '../../../redux/reducers/uiSlice';
+
+type Props = {
+    close: () => void;
+};
 
 const ListAccountMenu = ({ close }) => {
     const [open, setOpen] = useState(false);
@@ -32,7 +37,14 @@ const ListAccountMenu = ({ close }) => {
     const dispatch = useAppDispatch();
 
     const clickAvatar = async () => {
+        dispatch(updateLoading(true));
+
         router.push('/' + currentUser.name);
+        close();
+
+        setTimeout(() => {
+            dispatch(updateLoading(false));
+        }, 1000);
     };
 
     return (

@@ -46,7 +46,7 @@ const SettingMenu = ({ close }) => {
     const dispatch = useAppDispatch();
     const dark = useAppSelector((state) => state.ui.dark);
     const { t } = useLocale();
-    const [lang, setLang] = useState('');
+    const [lang, setLang] = useState('en');
     const router = useRouter();
     const [isApplicationSetting, setApplicationSetting] = useState(false);
     const { handleSubmit, control, reset, setValue, getValues } = useForm();

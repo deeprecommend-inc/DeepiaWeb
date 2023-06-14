@@ -8,6 +8,7 @@ import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
 import { useRouter } from 'next/router';
 import ResponsiveDrawer from '../components/template/ResponsiveDrawer';
+import LoadingOverlay from '../components/template/LoadingOverlay';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     const router = useRouter();
@@ -15,6 +16,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     return (
         <Provider store={store}>
             <SessionProvider session={session}>
+                <LoadingOverlay />
                 <Component {...pageProps} />
             </SessionProvider>
         </Provider>

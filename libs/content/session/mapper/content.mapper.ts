@@ -33,14 +33,22 @@ export class ContentMapper {
         };
     }
 
-    static async toPersistence(domain: Content): Promise<ContentModel> {
+    static async toPersistence(
+        domain: Content,
+        newItem: boolean = false,
+    ): Promise<ContentModel> {
         const model = new ContentModel();
 
-        model.prompt = domain.prompt;
-        model.category_id = domain.categoryId;
-        model.deliverables = domain.deliverables;
-        model.user_id = domain.userId;
-        model.search_word = domain.searchWord;
+        if (newItem) {
+            model.prompt = domain.prompt;
+            model.category_id = domain.categoryId;
+        } else {
+            model.prompt = domain.prompt;
+            model.category_id = domain.categoryId;
+            model.deliverables = domain.deliverables;
+            model.user_id = domain.userId;
+            model.search_word = domain.searchWord;
+        }
 
         return model;
     }
