@@ -148,7 +148,7 @@ const Pid = () => {
                         e.preventDefault();
                     }}
                 >
-                    <AccountProfile user={currentUser} />
+                    {/* <AccountProfile user={currentUser} /> */}
                     <ResponsiveDrawer
                         contents={
                             <>
