@@ -108,6 +108,7 @@ export default {
         coutinuous: 'Continuous',
         uploadFile: 'Upload File',
         icon: 'Change Icon',
+        copy: 'Copy',
         err: {
             required: {
                 title: 'Title required',

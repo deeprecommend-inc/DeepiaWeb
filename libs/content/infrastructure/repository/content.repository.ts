@@ -13,12 +13,14 @@ export const contentRepo: ContentRepo = {
             params,
         });
         const dto = res.data.map((o) => ContentMapper.toDto(o));
+        console.log({ dto });
         return dto;
     },
     findAll: async (): Promise<ContentDto[]> => {
         const apiClient = await asyncApiClient.create();
         const res = await apiClient.get<ContentModel[]>('/content/');
         const dto = res.data.map((o) => ContentMapper.toDto(o));
+        console.log({ dto });
         return dto;
     },
     findByUser: async (): Promise<ContentDto[]> => {

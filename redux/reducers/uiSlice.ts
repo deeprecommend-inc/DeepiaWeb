@@ -5,6 +5,7 @@ interface UiState {
     loading: boolean;
     iFrames: string[];
     dark: boolean;
+    lang: string;
 }
 
 const initialState: UiState = {
@@ -12,6 +13,7 @@ const initialState: UiState = {
     loading: false,
     iFrames: [],
     dark: false,
+    lang: 'en',
 };
 
 export const uiSlice = createSlice({
@@ -30,10 +32,13 @@ export const uiSlice = createSlice({
         setDark: (state, action: PayloadAction<boolean>) => {
             state.dark = action.payload;
         },
+        setLang: (state, action: PayloadAction<string>) => {
+            state.lang = action.payload;
+        },
     },
 });
 
-export const { updateTabNum, updateLoading, setIFrames, setDark } =
+export const { updateTabNum, updateLoading, setIFrames, setDark, setLang } =
     uiSlice.actions;
 
 export default uiSlice.reducer;

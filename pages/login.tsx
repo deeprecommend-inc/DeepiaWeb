@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -15,7 +15,7 @@ import { REGEXP } from '../general/utils/regExp';
 import { useRouter } from 'next/router';
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
 import { useState } from 'react';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
     setCurrentUser,
     updateIsAfterLogin,
@@ -26,8 +26,9 @@ import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
 import { useLocale } from '../hooks/useLocale';
 import { SwitchLang } from '../components/atoms/SwitchLang';
-
-const theme = createTheme();
+import { darkMode, lightMode } from '../general/constants/theme';
+import { RootState } from '../redux/store';
+import { setDark } from '../redux/reducers/uiSlice';
 
 const snackbarPosition: SnackbarOrigin = {
     vertical: 'top',
@@ -37,10 +38,19 @@ const snackbarPosition: SnackbarOrigin = {
 export default function SignIn() {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const dark = useAppSelector((state: RootState) => state.ui.dark);
     const { handleSubmit, control, reset, setValue } = useForm();
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
     const { t, locale } = useLocale();
+
+    useEffect(() => {
+        const init = async () => {
+            await dispatch(setDark(false));
+        };
+
+        init();
+    }, []);
 
     const handleClose = () => {
         setOpenSuccessSnackbar(false);
@@ -122,7 +132,7 @@ export default function SignIn() {
                     cardType: 'summary',
                 }}
             />
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={dark ? darkMode : lightMode}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box

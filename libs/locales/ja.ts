@@ -106,6 +106,7 @@ export default {
         coutinuous: '継続的に',
         uploadFile: '画像アップロード',
         icon: 'アイコン変更',
+        copy: 'コピー',
         err: {
             required: {
                 title: 'タイトルは必須です',

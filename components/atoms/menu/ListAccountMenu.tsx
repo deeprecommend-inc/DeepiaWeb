@@ -37,14 +37,8 @@ const ListAccountMenu = ({ close }) => {
     const dispatch = useAppDispatch();
 
     const clickAvatar = async () => {
-        dispatch(updateLoading(true));
-
-        router.push('/' + currentUser.name);
         close();
-
-        setTimeout(() => {
-            dispatch(updateLoading(false));
-        }, 1000);
+        router.push(currentUser.name);
     };
 
     return (

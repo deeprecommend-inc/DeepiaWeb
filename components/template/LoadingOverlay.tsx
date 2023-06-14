@@ -4,24 +4,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { Box } from '@mui/system';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { pink, deepPurple } from '@mui/material/colors';
-
-const darkMode = createTheme({
-    palette: {
-        primary: {
-            main: deepPurple[500],
-        },
-        mode: 'dark',
-    },
-});
-
-const lightMode = createTheme({
-    palette: {
-        primary: {
-            main: deepPurple[500],
-        },
-    },
-});
+import { darkMode, lightMode } from '../../general/constants/theme';
 
 const LoadingOverlay = () => {
     const dark = useAppSelector((state) => state.ui.dark);
@@ -41,7 +24,6 @@ const LoadingOverlay = () => {
                     width: '100vw',
                     height: '100vh',
                     zIndex: 9999,
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
                 }}
             >
                 <LinearProgress

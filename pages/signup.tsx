@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { CreateUserDto } from '../libs/user/session/dto/create.user.dto';
 import { userUiController } from '../libs/user/presentation/user.ui.controller';
 import { REGEXP } from '../general/utils/regExp';
@@ -23,6 +23,9 @@ import { NextSeo } from 'next-seo';
 import { useLocale } from '../hooks/useLocale';
 import { SwitchLang } from '../components/atoms/SwitchLang';
 import Container from '@mui/material/Container';
+import { darkMode, lightMode } from '../general/constants/theme';
+import { RootState } from '../redux/store';
+import { setDark } from '../redux/reducers/uiSlice';
 
 type SignUpUser = {
     name: string;
@@ -45,6 +48,15 @@ export default function SignInSide() {
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
     const { t, locale } = useLocale();
+    const dark = useAppSelector((state: RootState) => state.ui.dark);
+
+    useEffect(() => {
+        const init = async () => {
+            await dispatch(setDark(false));
+        };
+
+        init();
+    }, []);
 
     const handleClose = () => {
         setOpenSuccessSnackbar(false);
@@ -126,7 +138,7 @@ export default function SignInSide() {
                     cardType: 'summary',
                 }}
             />
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={dark ? darkMode : lightMode}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     {/* @ts-ignore */}

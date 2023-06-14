@@ -15,37 +15,30 @@ import {
     accessTokenKey,
     categoryIdForGetLogKey,
     darkModeKey,
+    langKey,
 } from '../general/constants/localStorageKey';
 import { pink, deepPurple } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { setDark, updateLoading } from '../redux/reducers/uiSlice';
+import { setDark, setLang, updateLoading } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
-import { Avatar, Chip, Grid, Toolbar } from '@mui/material';
+import {
+    Avatar,
+    Chip,
+    Grid,
+    IconButton,
+    ListItemIcon,
+    Menu,
+    MenuItem,
+    Toolbar,
+} from '@mui/material';
 import ToolbarMenu from '../components/template/ToolbarMenu';
 import { contentUiController } from '../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../redux/reducers/contentSlice';
 import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
 import { ImgDataURI } from '../components/atoms/ImgDataURI';
 import SimpleBar from 'simplebar-react';
-import LinearProgress from '@mui/material/LinearProgress';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-const darkMode = createTheme({
-    palette: {
-        primary: {
-            main: deepPurple[500],
-        },
-        mode: 'dark',
-    },
-});
-
-const lightMode = createTheme({
-    palette: {
-        primary: {
-            main: deepPurple[500],
-        },
-    },
-});
+import { darkMode, lightMode } from '../general/constants/theme';
+import ContentMenu from '../components/atoms/menu/ContentMenu';
 
 const Home = () => {
     const router = useRouter();
@@ -55,13 +48,17 @@ const Home = () => {
     const dark = useAppSelector((state) => state.ui.dark);
     const { t, locale } = useLocale();
     const [ready, setReady] = useState(false);
+    const currentUser = useAppSelector((state) => state.auth.currentUser);
 
     useEffect(() => {
         const init = async () => {
             setReady(true);
 
+            dispatch(updateLoading(true));
+
             const token = await asyncLocalStorage.getItem(accessTokenKey);
             const dark = await asyncLocalStorage.getItem(darkModeKey);
+            const lang = await asyncLocalStorage.getItem(langKey);
 
             if (token && !isAfterLogin) {
                 const currentUser = await authUiController.currentUser();
@@ -69,28 +66,34 @@ const Home = () => {
                 dispatch(updateIsAfterLogin(true));
             }
 
-            Boolean(dark)
-                ? await dispatch(setDark(true))
-                : await dispatch(setDark(false));
+            if (dark) {
+                await dispatch(setDark(true));
+            } else {
+                await dispatch(setDark(false));
+            }
+
+            if (lang) {
+                await dispatch(setLang(lang));
+            } else {
+                await dispatch(setLang('en'));
+            }
 
             getContents();
         };
 
-        dispatch(updateLoading(true));
-
         init();
-
-        setTimeout(() => {
-            dispatch(updateLoading(false));
-        }, 1000);
     }, []);
 
     const getContents = async () => {
         const contents = await contentUiController.findAll();
         dispatch(setContentList(contents));
+
+        dispatch(updateLoading(false));
     };
 
     const deleteContent = async (id: number) => {
+        dispatch(updateLoading(true));
+
         await contentUiController.delete(id);
         await getContents();
     };
@@ -202,32 +205,58 @@ const Home = () => {
                                                         />
                                                     )}
                                             </div>
-                                            <div className="user-info flex p-2 w-full">
-                                                <Avatar
-                                                    src={content.user.image}
-                                                    sx={{
-                                                        width: 32,
-                                                        height: 32,
-                                                    }}
-                                                />
-                                                <div className="pl-2">
-                                                    <h1
-                                                        style={{
-                                                            fontSize: '20px',
-                                                            fontWeight: 500,
-                                                            overflow: 'hidden',
-                                                            display: 'block',
-                                                            maxHeight: '4rem',
-                                                            textOverflow:
-                                                                'ellipsis',
-                                                            whiteSpace:
-                                                                'normal',
+                                            <div className="user-info flex justify-between p-2 w-full">
+                                                <div className="flex ">
+                                                    <Avatar
+                                                        src={content.user.image}
+                                                        sx={{
+                                                            width: 32,
+                                                            height: 32,
                                                         }}
-                                                    >
-                                                        {content.prompt}
-                                                    </h1>
-                                                    <p>{content.user.name}</p>
+                                                    />
+                                                    <div className="pl-2">
+                                                        <h1
+                                                            style={{
+                                                                fontSize:
+                                                                    '20px',
+                                                                fontWeight: 500,
+                                                                overflow:
+                                                                    'hidden',
+                                                                display:
+                                                                    'block',
+                                                                maxHeight:
+                                                                    '4rem',
+                                                                textOverflow:
+                                                                    'ellipsis',
+                                                                whiteSpace:
+                                                                    'normal',
+                                                            }}
+                                                        >
+                                                            {content.prompt}
+                                                        </h1>
+                                                        <p>
+                                                            {content.user.name}
+                                                        </p>
+                                                    </div>
                                                 </div>
+                                                {content.user.id ===
+                                                    (currentUser?.id ?? 0) && (
+                                                    <div>
+                                                        <ContentMenu
+                                                            contentId={
+                                                                content.id
+                                                            }
+                                                            prompt={
+                                                                content.prompt
+                                                            }
+                                                            onDelete={() => {
+                                                                deleteContent(
+                                                                    content.id,
+                                                                );
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                         </Grid>
                                     ))}

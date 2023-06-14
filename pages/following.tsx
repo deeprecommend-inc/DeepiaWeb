@@ -20,17 +20,7 @@ import { pink } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { setDark } from '../redux/reducers/uiSlice';
 import { useLocale } from '../hooks/useLocale';
-
-const darkMode = createTheme({
-    palette: {
-        primary: {
-            main: pink[500],
-        },
-        mode: 'dark',
-    },
-});
-
-const lightMode = createTheme({});
+import { darkMode, lightMode } from '../general/constants/theme';
 
 const Following = () => {
     const router = useRouter();

@@ -25,11 +25,14 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import { darkModeKey } from '../../../general/constants/localStorageKey';
+import {
+    darkModeKey,
+    langKey,
+} from '../../../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../../../general/utils/asyncLocalStorage';
 import { useLocale } from '../../../hooks/useLocale';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { setDark } from '../../../redux/reducers/uiSlice';
+import { setDark, setLang as setUiLang } from '../../../redux/reducers/uiSlice';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonIcon from '@mui/icons-material/Person';
@@ -60,15 +63,30 @@ const SettingMenu = ({ close }) => {
         setFromLocalStorage();
     }, []);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setLang(event.target.value as string);
-        router.push('/', '/', { locale: event.target.value });
+    const handleChange = async (event: SelectChangeEvent) => {
+        const lang = event.target.value as string;
+        setLang(lang);
+        await asyncLocalStorage.setItem(langKey, lang);
+        router.push('/', '/', { locale: lang });
     };
 
     const setFromLocalStorage = async () => {
         const dark = await asyncLocalStorage.getItem(darkModeKey);
+        const lang = await asyncLocalStorage.getItem(langKey);
 
-        Boolean(dark) ? dispatch(setDark(true)) : dispatch(setDark(false));
+        if (dark) {
+            await dispatch(setDark(true));
+        } else {
+            await dispatch(setDark(false));
+        }
+
+        if (lang) {
+            setLang(lang);
+            await dispatch(setUiLang(lang));
+        } else {
+            setLang('en');
+            await dispatch(setUiLang('en'));
+        }
     };
 
     const setDense = async (bool: boolean) => {
