@@ -27,14 +27,23 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { red } from '@mui/material/colors';
+import { CurrentUserId } from '../../../libs/auth/domain/current.user.id';
 
 type Props = {
     contentId: number;
+    contentUserId: number;
+    currentUserId: number;
     prompt: string;
     onDelete: (id) => void;
 };
 
-const ContentMenu = ({ contentId, prompt, onDelete }: Props) => {
+const ContentMenu = ({
+    contentId,
+    contentUserId,
+    currentUserId,
+    prompt,
+    onDelete,
+}: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { t } = useLocale();
@@ -104,18 +113,20 @@ const ContentMenu = ({ contentId, prompt, onDelete }: Props) => {
                     </ListItemIcon>
                     {t.form.copy}
                 </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        onDelete(contentId);
-                        closeMenu();
-                    }}
-                    sx={{ color: red[500] }}
-                >
-                    <ListItemIcon sx={{ color: red[500] }}>
-                        <DeleteIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={t.form.delete} />
-                </MenuItem>
+                {contentUserId === currentUserId && (
+                    <MenuItem
+                        onClick={() => {
+                            onDelete(contentId);
+                            closeMenu();
+                        }}
+                        sx={{ color: red[500] }}
+                    >
+                        <ListItemIcon sx={{ color: red[500] }}>
+                            <DeleteIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={t.form.delete} />
+                    </MenuItem>
+                )}
             </Menu>
         </React.Fragment>
     );

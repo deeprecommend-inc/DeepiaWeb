@@ -9,6 +9,7 @@ export class UserMapper {
             {
                 id: dto.id,
                 name: dto.name,
+                username: dto.username,
                 email: dto.email,
                 image: dto.image,
                 password: dto.password,
@@ -31,6 +32,7 @@ export class UserMapper {
         const model = new UserModel();
 
         model.name = domain.name;
+        model.username = domain.username;
         model.email = domain.email;
         model.image = domain.image;
         model.password = domain.password;

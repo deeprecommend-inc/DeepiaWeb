@@ -4,17 +4,22 @@ import React, { useEffect } from 'react';
 import ResponsiveDrawer from '../components/template/ResponsiveDrawer';
 import { accessTokenKey } from '../general/constants/localStorageKey';
 import { asyncLocalStorage } from '../general/utils/asyncLocalStorage';
+import { useAppDispatch } from '../redux/hooks';
+import { updateIsAfterLogin } from '../redux/reducers/authSlice';
+import { updateLoading } from '../redux/reducers/uiSlice';
 
 interface Props {
     statusCode: number;
 }
 const Error: NextPage<Props> = ({ statusCode }) => {
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const init = async () => {
             await asyncLocalStorage.removeItem(accessTokenKey);
-            router.push('login');
+            dispatch(updateIsAfterLogin(false));
+            dispatch(updateLoading(false));
         };
 
         init();
@@ -22,6 +27,7 @@ const Error: NextPage<Props> = ({ statusCode }) => {
 
     return (
         <ResponsiveDrawer
+            isDetail={false}
             contents={
                 <>
                     <div>{statusCode} error</div>

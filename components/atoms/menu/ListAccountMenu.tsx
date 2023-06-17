@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import { contentUiController } from '../../../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../../../redux/reducers/contentSlice';
 import { updateLoading } from '../../../redux/reducers/uiSlice';
+import { setDetail } from '../../../redux/reducers/userSlice';
 
 type Props = {
     close: () => void;
@@ -37,8 +38,9 @@ const ListAccountMenu = ({ close }) => {
     const dispatch = useAppDispatch();
 
     const clickAvatar = async () => {
+        dispatch(setDetail(currentUser));
         close();
-        router.push(currentUser.name);
+        router.push('@' + currentUser.name);
     };
 
     return (

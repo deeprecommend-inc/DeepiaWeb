@@ -4,7 +4,8 @@ import { UserId } from './user.id';
 
 export interface IUser {
     id: number;
-    name: string;
+    name?: string;
+    username: string;
     email: string;
     image?: string;
     password: string;
@@ -18,6 +19,10 @@ export class User extends AggregateRoot<IUser> {
 
     get name(): string {
         return this.props.name;
+    }
+
+    get username(): string {
+        return this.props.username;
     }
 
     get email(): string {

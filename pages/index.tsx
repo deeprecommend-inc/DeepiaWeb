@@ -149,6 +149,7 @@ const Home = () => {
                     }}
                 >
                     <ResponsiveDrawer
+                        isDetail={false}
                         contents={
                             <>
                                 <Grid
@@ -191,7 +192,11 @@ const Home = () => {
                                                             overflowX: 'hidden',
                                                         }}
                                                     >
-                                                        {content.deliverables}
+                                                        <span
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: content.deliverables,
+                                                            }}
+                                                        />
                                                     </SimpleBar>
                                                 )}
                                                 {content.categoryId !==
@@ -239,24 +244,24 @@ const Home = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {content.user.id ===
-                                                    (currentUser?.id ?? 0) && (
-                                                    <div>
-                                                        <ContentMenu
-                                                            contentId={
-                                                                content.id
-                                                            }
-                                                            prompt={
-                                                                content.prompt
-                                                            }
-                                                            onDelete={() => {
-                                                                deleteContent(
-                                                                    content.id,
-                                                                );
-                                                            }}
-                                                        />
-                                                    </div>
-                                                )}
+
+                                                <div>
+                                                    <ContentMenu
+                                                        contentId={content.id}
+                                                        contentUserId={
+                                                            content.user.id
+                                                        }
+                                                        currentUserId={
+                                                            currentUser?.id ?? 0
+                                                        }
+                                                        prompt={content.prompt}
+                                                        onDelete={() => {
+                                                            deleteContent(
+                                                                content.id,
+                                                            );
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </Grid>
                                     ))}

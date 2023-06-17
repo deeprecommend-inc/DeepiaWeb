@@ -20,23 +20,26 @@ import { SearchForm } from '../atoms/SearchFrom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ToolbarMenu from './ToolbarMenu';
 import LinearProgress from '@mui/material/LinearProgress';
+import AccountProfile from './AccountProfile';
 
 const drawerWidth = 240;
 const drawerHeight = 148;
 
 type Props = {
+    isDetail: boolean;
     contents: any;
     window?: () => Window;
 };
 
 export const ResponsiveDrawer = (props: Props) => {
-    const { window } = props;
+    const { window, isDetail } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const container =
         window !== undefined ? () => window().document.body : undefined;
     const dark = useAppSelector((state) => state.ui.dark);
     const isAfterLogin = useAppSelector((state) => state.auth.isAfterLogin);
     const router = useRouter();
+    const currentUser = useAppSelector((state) => state.auth.currentUser);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -95,6 +98,7 @@ export const ResponsiveDrawer = (props: Props) => {
                     </Box>
                 </Toolbar>
                 <ToolbarMenu />
+                {isDetail && <AccountProfile user={currentUser} />}
             </AppBar>
             <Box
                 component="nav"

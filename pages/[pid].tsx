@@ -33,6 +33,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccountProfile from '../components/template/AccountProfile';
 import ContentMenu from '../components/atoms/menu/ContentMenu';
 import { darkMode, lightMode } from '../general/constants/theme';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Pid = () => {
     const router = useRouter();
@@ -42,7 +43,7 @@ const Pid = () => {
     const dark = useAppSelector((state) => state.ui.dark);
     const { t, locale } = useLocale();
     const [ready, setReady] = useState(false);
-    const currentUser = useAppSelector((state) => state.auth.currentUser);
+    const userDetail = useAppSelector((state) => state.user.detail);
 
     useEffect(() => {
         const init = async () => {
@@ -54,7 +55,6 @@ const Pid = () => {
             const dark = await asyncLocalStorage.getItem(darkModeKey);
             const lang = await asyncLocalStorage.getItem(langKey);
 
-            console.log({ token });
             if (!token) {
                 router.push('/');
                 return;
@@ -148,8 +148,8 @@ const Pid = () => {
                         e.preventDefault();
                     }}
                 >
-                    {/* <AccountProfile user={currentUser} /> */}
                     <ResponsiveDrawer
+                        isDetail={true}
                         contents={
                             <>
                                 <Grid
@@ -241,24 +241,23 @@ const Pid = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {content.user.id ===
-                                                    currentUser.id && (
-                                                    <div>
-                                                        <ContentMenu
-                                                            contentId={
-                                                                content.id
-                                                            }
-                                                            prompt={
-                                                                content.prompt
-                                                            }
-                                                            onDelete={() => {
-                                                                deleteContent(
-                                                                    content.id,
-                                                                );
-                                                            }}
-                                                        />
-                                                    </div>
-                                                )}
+                                                <div>
+                                                    <ContentMenu
+                                                        contentId={content.id}
+                                                        contentUserId={
+                                                            content.user.id
+                                                        }
+                                                        currentUserId={
+                                                            userDetail?.id ?? 0
+                                                        }
+                                                        prompt={content.prompt}
+                                                        onDelete={() => {
+                                                            deleteContent(
+                                                                content.id,
+                                                            );
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </Grid>
                                     ))}
