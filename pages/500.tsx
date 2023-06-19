@@ -21,7 +21,12 @@ const Custom500: NextPage<Props> = ({ statusCode }) => {
         // init();
     }, []);
 
-    return <ResponsiveDrawer contents={<div>{statusCode} error</div>} />;
+    return (
+        <ResponsiveDrawer
+            isDetail={false}
+            contents={<div>{statusCode} error</div>}
+        />
+    );
 };
 
 export default Custom500;

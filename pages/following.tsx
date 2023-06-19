@@ -104,7 +104,7 @@ const Following = () => {
                         e.preventDefault();
                     }}
                 >
-                    <ResponsiveDrawer contents={<></>} />
+                    <ResponsiveDrawer isDetail={false} contents={<></>} />
                 </Box>
             </ThemeProvider>
         </>
