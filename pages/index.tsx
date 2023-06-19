@@ -39,6 +39,8 @@ import { ImgDataURI } from '../components/atoms/ImgDataURI';
 import SimpleBar from 'simplebar-react';
 import { darkMode, lightMode } from '../general/constants/theme';
 import ContentMenu from '../components/atoms/menu/ContentMenu';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const Home = () => {
     const router = useRouter();
@@ -192,10 +194,14 @@ const Home = () => {
                                                             overflowX: 'hidden',
                                                         }}
                                                     >
-                                                        <span
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: content.deliverables,
-                                                            }}
+                                                        <ReactMarkdown
+                                                            // eslint-disable-next-line react/no-children-prop
+                                                            children={
+                                                                content.deliverables
+                                                            }
+                                                            remarkPlugins={[
+                                                                remarkGfm,
+                                                            ]}
                                                         />
                                                     </SimpleBar>
                                                 )}

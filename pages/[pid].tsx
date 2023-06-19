@@ -34,6 +34,8 @@ import AccountProfile from '../components/template/AccountProfile';
 import ContentMenu from '../components/atoms/menu/ContentMenu';
 import { darkMode, lightMode } from '../general/constants/theme';
 import PersonIcon from '@mui/icons-material/Person';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const Pid = () => {
     const router = useRouter();
@@ -193,7 +195,15 @@ const Pid = () => {
                                                             overflowX: 'hidden',
                                                         }}
                                                     >
-                                                        {content.deliverables}
+                                                        <ReactMarkdown
+                                                            // eslint-disable-next-line react/no-children-prop
+                                                            children={
+                                                                content.deliverables
+                                                            }
+                                                            remarkPlugins={[
+                                                                remarkGfm,
+                                                            ]}
+                                                        />
                                                     </SimpleBar>
                                                 )}
                                                 {content.categoryId !==
