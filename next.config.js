@@ -4,6 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
     reactStrictMode: true,
+    productionBrowserSourceMaps: false,
     output: 'standalone',
     webpack: (config, options) => {
         config.optimization.minimize = isProd;
