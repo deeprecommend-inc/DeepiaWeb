@@ -36,7 +36,6 @@ export const userRepo: UserRepo = {
     update: async (id: number, domain: User): Promise<void> => {
         const apiClient = await asyncApiClient.create();
         const model = await UserMapper.toPersistence(domain);
-        console.log({ model });
         await apiClient.put<void>(`/user/${id}/`, model);
     },
     delete: async (id: number): Promise<void> => {
