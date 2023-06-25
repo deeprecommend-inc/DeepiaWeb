@@ -37,9 +37,24 @@ const ContentList = ({ onDelete }: Props) => {
                             width: 'calc((100% / 4) - 48px)',
                             minHeight: 'calc((100% / 4) - 48px)',
                             borderRadius: '24px',
+                            position:
+                                content.categoryId === CONTENT_CATEGORY.TEXT
+                                    ? 'relative'
+                                    : '',
+                            scrollY: 'hidden',
                         }}
                     >
-                        <div className="content-container">
+                        <div
+                            className="content-container"
+                            style={
+                                content.categoryId === CONTENT_CATEGORY.TEXT
+                                    ? {
+                                          paddingTop: '100%',
+                                          position: 'relative',
+                                      }
+                                    : {}
+                            }
+                        >
                             {content.deliverables && (
                                 <>
                                     {content.categoryId ===
@@ -51,12 +66,17 @@ const ContentList = ({ onDelete }: Props) => {
                                     {content.categoryId ===
                                         CONTENT_CATEGORY.TEXT && (
                                         <SimpleBar
+                                            className="simplebar"
                                             style={{
-                                                width: '350px',
-                                                height: '350px',
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                bottom: 0,
+                                                height: '100%',
                                                 wordWrap: 'break-word',
                                                 overflowWrap: 'break-word',
-                                                overflowY: 'auto',
+                                                overflowY: 'scroll',
                                                 overflowX: 'hidden',
                                                 borderRadius: '12px',
                                             }}

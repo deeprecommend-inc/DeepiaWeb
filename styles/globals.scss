@@ -81,3 +81,13 @@ td {
         background-color: #ffffff;
     }
 }
+
+.content-container {
+    .simplebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
