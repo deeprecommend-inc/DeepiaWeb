@@ -40,43 +40,58 @@ const ContentList = ({ onDelete }: Props) => {
                         }}
                     >
                         <div className="content-container">
-                            {content.categoryId === CONTENT_CATEGORY.IMAGE && (
-                                <ImgDataURI uri={content.deliverables} />
+                            {content.deliverables && (
+                                <>
+                                    {content.categoryId ===
+                                        CONTENT_CATEGORY.IMAGE && (
+                                        <ImgDataURI
+                                            uri={content.deliverables}
+                                        />
+                                    )}
+                                    {content.categoryId ===
+                                        CONTENT_CATEGORY.TEXT && (
+                                        <SimpleBar
+                                            style={{
+                                                width: '350px',
+                                                height: '350px',
+                                                wordWrap: 'break-word',
+                                                overflowWrap: 'break-word',
+                                                overflowY: 'auto',
+                                                overflowX: 'hidden',
+                                                borderRadius: '12px',
+                                            }}
+                                        >
+                                            <ReactMarkdown
+                                                // eslint-disable-next-line react/no-children-prop
+                                                children={content.deliverables}
+                                                remarkPlugins={[remarkGfm]}
+                                            />
+                                        </SimpleBar>
+                                    )}
+                                    {content.categoryId !==
+                                        CONTENT_CATEGORY.IMAGE &&
+                                        content.categoryId !==
+                                            CONTENT_CATEGORY.TEXT &&
+                                        contentCategoryIds.includes(
+                                            content.categoryId,
+                                        ) && (
+                                            <ImgDataURI
+                                                uri={content.deliverables}
+                                            />
+                                        )}
+                                </>
                             )}
-                            {content.categoryId === CONTENT_CATEGORY.TEXT && (
-                                <SimpleBar
-                                    style={{
-                                        width: '350px',
-                                        height: '350px',
-                                        wordWrap: 'break-word',
-                                        overflowWrap: 'break-word',
-                                        overflowY: 'auto',
-                                        overflowX: 'hidden',
-                                        borderRadius: '12px',
-                                    }}
-                                >
-                                    <ReactMarkdown
-                                        // eslint-disable-next-line react/no-children-prop
-                                        children={content.deliverables}
-                                        remarkPlugins={[remarkGfm]}
-                                    />
-                                </SimpleBar>
-                            )}
-                            {content.categoryId !== CONTENT_CATEGORY.IMAGE &&
-                                content.categoryId !== CONTENT_CATEGORY.TEXT &&
-                                contentCategoryIds.includes(
+                            {!content.deliverables &&
+                                !contentCategoryIds.includes(
                                     content.categoryId,
-                                ) && <ImgDataURI uri={content.deliverables} />}
-                            {!contentCategoryIds.includes(
-                                content.categoryId,
-                            ) && (
-                                <img
-                                    src={'/logo_gray.png'}
-                                    style={{
-                                        borderRadius: '12px',
-                                    }}
-                                />
-                            )}
+                                ) && (
+                                    <img
+                                        src={'/logo_gray.png'}
+                                        style={{
+                                            borderRadius: '12px',
+                                        }}
+                                    />
+                                )}
                         </div>
                         <div className="user-info flex justify-between p-2 w-full">
                             <div className="flex ">
