@@ -1,10 +1,14 @@
-const downloadImage = (dataUrl: string, filename: string) => {
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+const downloadImage = (base64Data: string, filename: string) => {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:image/png;base64,' + base64Data);
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 };
 
 export default downloadImage;

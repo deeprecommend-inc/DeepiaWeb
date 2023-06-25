@@ -3,5 +3,12 @@ type Props = {
 };
 
 export const ImgDataURI = ({ uri }: Props) => {
-    return <img src={'data:image/png;base64,' + uri} />;
+    return (
+        <img
+            src={'data:image/png;base64,' + uri}
+            style={{
+                borderRadius: '12px',
+            }}
+        />
+    );
 };

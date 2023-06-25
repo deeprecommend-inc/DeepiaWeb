@@ -109,6 +109,7 @@ export default {
         uploadFile: 'Upload File',
         icon: 'Change Icon',
         copy: 'Copy',
+        download: 'Download',
         err: {
             required: {
                 title: 'Title required',

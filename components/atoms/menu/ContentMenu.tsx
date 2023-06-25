@@ -28,22 +28,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { red } from '@mui/material/colors';
 import { CurrentUserId } from '../../../libs/auth/domain/current.user.id';
+import { ContentDto } from '../../../libs/content/session/dto/content.dto';
+import { CONTENT_CATEGORY } from '../../../general/constants/contentCategory';
+import downloadImage from '../../../general/constants/downloadImage';
+import DownloadIcon from '@mui/icons-material/Download';
 
 type Props = {
-    contentId: number;
-    contentUserId: number;
+    content: ContentDto;
     currentUserId: number;
-    prompt: string;
     onDelete: (id) => void;
 };
 
-const ContentMenu = ({
-    contentId,
-    contentUserId,
-    currentUserId,
-    prompt,
-    onDelete,
-}: Props) => {
+const ContentMenu = ({ content, currentUserId, onDelete }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { t } = useLocale();
@@ -102,9 +98,25 @@ const ContentMenu = ({
                     vertical: 'bottom',
                 }}
             >
+                {content.categoryId === CONTENT_CATEGORY.IMAGE && (
+                    <MenuItem
+                        onClick={() => {
+                            downloadImage(
+                                content.deliverables,
+                                content.prompt + '.png',
+                            );
+                            closeMenu();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <DownloadIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={t.form.download} />
+                    </MenuItem>
+                )}
                 <MenuItem
                     onClick={async () => {
-                        await navigator.clipboard.writeText(prompt);
+                        await navigator.clipboard.writeText(content.prompt);
                         closeMenu();
                     }}
                 >
@@ -113,10 +125,10 @@ const ContentMenu = ({
                     </ListItemIcon>
                     {t.form.copy}
                 </MenuItem>
-                {contentUserId === currentUserId && (
+                {content.user.id === currentUserId && (
                     <MenuItem
                         onClick={() => {
-                            onDelete(contentId);
+                            onDelete(content.id);
                             closeMenu();
                         }}
                         sx={{ color: red[500] }}

@@ -107,6 +107,7 @@ export default {
         uploadFile: '画像アップロード',
         icon: 'アイコン変更',
         copy: 'コピー',
+        download: 'ダウンロード',
         err: {
             required: {
                 title: 'タイトルは必須です',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Box } from '@mui/system';
 import router, { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -34,13 +34,17 @@ import {
 import ToolbarMenu from '../components/template/ToolbarMenu';
 import { contentUiController } from '../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../redux/reducers/contentSlice';
-import { CONTENT_CATEGORY } from '../general/constants/contentCategory';
+import {
+    contentCategoryIds,
+    CONTENT_CATEGORY,
+} from '../general/constants/contentCategory';
 import { ImgDataURI } from '../components/atoms/ImgDataURI';
 import SimpleBar from 'simplebar-react';
 import { darkMode, lightMode } from '../general/constants/theme';
 import ContentMenu from '../components/atoms/menu/ContentMenu';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import ContentList from '../components/template/ContentList';
 
 const Home = () => {
     const router = useRouter();
@@ -146,134 +150,10 @@ const Home = () => {
                     className={`h-screen overflow-scroll ${
                         dark ? 'dark' : 'light'
                     }`}
-                    onContextMenu={(e) => {
-                        e.preventDefault();
-                    }}
                 >
                     <ResponsiveDrawer
                         isDetail={false}
-                        contents={
-                            <>
-                                <Grid
-                                    container
-                                    sx={{
-                                        padding: '88px 64px 24px',
-                                        gap: '24px',
-                                    }}
-                                >
-                                    {contentList.map((content, index) => (
-                                        <Grid
-                                            item
-                                            key={index}
-                                            sx={{
-                                                width: 'calc((100% / 4) - 48px)',
-                                                minHeight:
-                                                    'calc((100% / 4) - 48px)',
-                                            }}
-                                        >
-                                            <div className="content-container">
-                                                {content.categoryId ===
-                                                    CONTENT_CATEGORY.IMAGE && (
-                                                    <ImgDataURI
-                                                        uri={
-                                                            content.deliverables
-                                                        }
-                                                    />
-                                                )}
-                                                {content.categoryId ===
-                                                    CONTENT_CATEGORY.TEXT && (
-                                                    <SimpleBar
-                                                        style={{
-                                                            width: '350px',
-                                                            height: '350px',
-                                                            wordWrap:
-                                                                'break-word',
-                                                            overflowWrap:
-                                                                'break-word',
-                                                            overflowY: 'auto',
-                                                            overflowX: 'hidden',
-                                                        }}
-                                                    >
-                                                        <ReactMarkdown
-                                                            // eslint-disable-next-line react/no-children-prop
-                                                            children={
-                                                                content.deliverables
-                                                            }
-                                                            remarkPlugins={[
-                                                                remarkGfm,
-                                                            ]}
-                                                        />
-                                                    </SimpleBar>
-                                                )}
-                                                {content.categoryId !==
-                                                    CONTENT_CATEGORY.IMAGE &&
-                                                    content.categoryId !==
-                                                        CONTENT_CATEGORY.TEXT && (
-                                                        <ImgDataURI
-                                                            uri={
-                                                                content.deliverables
-                                                            }
-                                                        />
-                                                    )}
-                                            </div>
-                                            <div className="user-info flex justify-between p-2 w-full">
-                                                <div className="flex ">
-                                                    <Avatar
-                                                        src={content.user.image}
-                                                        sx={{
-                                                            width: 32,
-                                                            height: 32,
-                                                        }}
-                                                    />
-                                                    <div className="pl-2">
-                                                        <h1
-                                                            style={{
-                                                                fontSize:
-                                                                    '20px',
-                                                                fontWeight: 500,
-                                                                overflow:
-                                                                    'hidden',
-                                                                display:
-                                                                    'block',
-                                                                maxHeight:
-                                                                    '4rem',
-                                                                textOverflow:
-                                                                    'ellipsis',
-                                                                whiteSpace:
-                                                                    'normal',
-                                                            }}
-                                                        >
-                                                            {content.prompt}
-                                                        </h1>
-                                                        <p>
-                                                            {content.user.name}
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <ContentMenu
-                                                        contentId={content.id}
-                                                        contentUserId={
-                                                            content.user.id
-                                                        }
-                                                        currentUserId={
-                                                            currentUser?.id ?? 0
-                                                        }
-                                                        prompt={content.prompt}
-                                                        onDelete={() => {
-                                                            deleteContent(
-                                                                content.id,
-                                                            );
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </>
-                        }
+                        contents={<ContentList onDelete={deleteContent} />}
                     />
                 </Box>
             </ThemeProvider>
