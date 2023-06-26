@@ -134,7 +134,7 @@ const CreateContent = () => {
                                         margin="dense"
                                         fullWidth
                                         required
-                                        variant="standard"
+                                        variant="outlined"
                                         value={value}
                                         onChange={onChange}
                                         error={!!error}
@@ -145,10 +145,6 @@ const CreateContent = () => {
                                 )}
                                 rules={{
                                     required: t.form.err.required.prompt,
-                                    maxLength: {
-                                        value: 128,
-                                        message: t.form.err.maxLen,
-                                    },
                                 }}
                             />
                             <Controller
