@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import ContentMenu from '../../components/atoms/menu/ContentMenu';
 import { useAppSelector } from '../../redux/hooks';
+import LogoGray from '../atoms/LogoGray';
 
 type Props = {
     onDelete: (id) => void;
@@ -94,24 +95,13 @@ const ContentList = ({ onDelete }: Props) => {
                                             CONTENT_CATEGORY.TEXT &&
                                         contentCategoryIds.includes(
                                             content.categoryId,
-                                        ) && (
-                                            <ImgDataURI
-                                                uri={content.deliverables}
-                                            />
-                                        )}
+                                        ) && <LogoGray />}
                                 </>
                             )}
                             {!content.deliverables &&
                                 !contentCategoryIds.includes(
                                     content.categoryId,
-                                ) && (
-                                    <img
-                                        src={'/logo_gray.png'}
-                                        style={{
-                                            borderRadius: '12px',
-                                        }}
-                                    />
-                                )}
+                                ) && <LogoGray />}
                         </div>
                         <div className="user-info flex justify-between p-2 w-full">
                             <div className="flex ">
