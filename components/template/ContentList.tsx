@@ -34,6 +34,10 @@ const ContentList = ({ onDelete }: Props) => {
                     <Grid
                         item
                         key={index}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={2.5}
                         sx={{
                             width: 'calc((100% / 4) - 48px)',
                             minHeight: 'calc((100% / 4) - 48px)',
@@ -75,6 +79,7 @@ const ContentList = ({ onDelete }: Props) => {
                                                 right: 0,
                                                 bottom: 0,
                                                 height: '100%',
+                                                flexGrow: 1,
                                                 wordWrap: 'break-word',
                                                 overflowWrap: 'break-word',
                                                 overflowY: 'scroll',

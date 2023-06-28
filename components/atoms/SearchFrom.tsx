@@ -11,12 +11,15 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { contentUiController } from '../../libs/content/presentation/content.ui.controler';
 import { setContentList } from '../../redux/reducers/contentSlice';
 import { updateLoading } from '../../redux/reducers/uiSlice';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 export const SearchForm = () => {
     const { t } = useLocale();
     const dispatch = useAppDispatch();
     const [searchWord, setSearchWord] = useState('');
     const dark = useAppSelector((state) => state.ui.dark);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const narrowDown = async (searchWord: string) => {
         dispatch(updateLoading(true));
@@ -43,7 +46,8 @@ export const SearchForm = () => {
                 p: '2px 4px',
                 display: 'flex',
                 alignItems: 'center',
-                width: 400,
+                width: isMobile ? '100%' : 400,
+                maxWidth: isMobile ? '400px' : 'none',
                 border: '1px solid rgba(0, 0, 0, 0.12)',
                 backgroundColor: dark ? '#2F2F2F' : '#f5f5f5',
                 borderRadius: '24px',
