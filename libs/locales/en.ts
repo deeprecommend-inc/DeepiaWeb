@@ -8,8 +8,8 @@ export default {
     },
     login: {
         head: {
-            title: 'Deepia｜Content in',
-            description: 'Content in page of Deepia',
+            title: 'Deepia｜Log in',
+            description: 'Log in page of Deepia',
         },
         header: {
             description: 'Brain Power Enhancer',
@@ -17,7 +17,7 @@ export default {
         form: {
             email: 'Email',
             password: 'Password',
-            login: 'Content in',
+            login: 'Log in',
             register: "Don't have an account? Sign Up",
         },
     },
@@ -35,7 +35,7 @@ export default {
             password: 'Password',
             passwordConfirmation: 'Password confirmation',
             signup: 'Sign up',
-            login: 'Have an account? Content in',
+            login: 'Have an account? Log in',
         },
     },
     leftNav: {
