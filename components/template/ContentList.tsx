@@ -11,6 +11,7 @@ import remarkGfm from 'remark-gfm';
 import ContentMenu from '../../components/atoms/menu/ContentMenu';
 import { useAppSelector } from '../../redux/hooks';
 import LogoGray from '../atoms/LogoGray';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 type Props = {
     onDelete: (id) => void;
@@ -20,13 +21,15 @@ const ContentList = ({ onDelete }: Props) => {
     const dark = useAppSelector((state) => state.ui.dark);
     const currentUser = useAppSelector((state) => state.auth.currentUser);
     const contentList = useAppSelector((state) => state.content.list);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <>
             <Grid
                 container
                 sx={{
-                    padding: '88px 64px 24px',
+                    padding: isMobile ? '88px 24px 24px' : '88px 64px 24px',
                     gap: '24px',
                 }}
             >
