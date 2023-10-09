@@ -119,7 +119,7 @@ const Pid = () => {
                     }}
                 >
                     <ResponsiveDrawer
-                        isDetail={true}
+                        isDetail={false}
                         contents={<ContentList onDelete={deleteContent} />}
                     />
                 </Box>
