@@ -3,7 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     productionBrowserSourceMaps: false,
     output: 'standalone',
     webpack: (config, options) => {
