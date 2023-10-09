@@ -31,6 +31,7 @@ const LoadingOverlay = () => {
                         width: '100%',
                         position: 'absolute',
                         top: '0',
+                        height: '2px',
                     }}
                 />
             </Box>

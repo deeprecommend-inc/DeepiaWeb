@@ -15,7 +15,13 @@ import { userUiController } from '../libs/user/presentation/user.ui.controller';
 import { REGEXP } from '../general/utils/regExp';
 import ReactPlayer from 'react-player';
 import Logo from '../components/atoms/Logo';
-import { Snackbar, Alert, SnackbarOrigin } from '@mui/material';
+import {
+    Snackbar,
+    Alert,
+    SnackbarOrigin,
+    InputAdornment,
+    IconButton,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Copyright from '../components/organisms/Copyright';
@@ -26,6 +32,8 @@ import Container from '@mui/material/Container';
 import { darkMode, lightMode } from '../general/constants/theme';
 import { RootState } from '../redux/store';
 import { setDark } from '../redux/reducers/uiSlice';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 type SignUpUser = {
     name: string;
@@ -49,6 +57,9 @@ export default function SignInSide() {
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
     const { t, locale } = useLocale();
     const dark = useAppSelector((state: RootState) => state.ui.dark);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirmation, setShowPasswordConfirmation] =
+        useState(false);
 
     useEffect(() => {
         const init = async () => {
@@ -77,6 +88,14 @@ export default function SignInSide() {
         }
 
         setOpenErrorSnackbar(true);
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const togglePasswordConfirmationVisibility = () => {
+        setShowPasswordConfirmation(!showPasswordConfirmation);
     };
 
     const onSubmit = async (data: SignUpUser) => {
@@ -194,6 +213,11 @@ export default function SignInSide() {
                                             value: 32,
                                             message: 'Max length exceded',
                                         },
+                                        pattern: {
+                                            value: REGEXP.UNIQUE_NAME,
+                                            message:
+                                                'Only alphanumeric characters and symbols are allowed',
+                                        },
                                     }}
                                 />
                                 <Controller
@@ -238,13 +262,35 @@ export default function SignInSide() {
                                             fullWidth
                                             required
                                             margin="normal"
-                                            type="password"
+                                            type={
+                                                showPassword
+                                                    ? 'text'
+                                                    : 'password'
+                                            }
                                             value={value}
                                             onChange={onChange}
                                             error={!!error}
                                             helperText={
                                                 error ? error.message : null
                                             }
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            edge="end"
+                                                            onClick={
+                                                                togglePasswordVisibility
+                                                            }
+                                                        >
+                                                            {showPassword ? (
+                                                                <VisibilityOffIcon />
+                                                            ) : (
+                                                                <VisibilityIcon />
+                                                            )}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
                                         />
                                     )}
                                     rules={{
@@ -277,13 +323,36 @@ export default function SignInSide() {
                                             fullWidth
                                             required
                                             margin="normal"
-                                            type="password"
+                                            type={
+                                                showPasswordConfirmation
+                                                    ? 'text'
+                                                    : 'password'
+                                            } // change type based on visibility
                                             value={value}
                                             onChange={onChange}
                                             error={!!error}
                                             helperText={
                                                 error ? error.message : null
                                             }
+                                            InputProps={{
+                                                // Add the eye icon
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            edge="end"
+                                                            onClick={
+                                                                togglePasswordConfirmationVisibility
+                                                            }
+                                                        >
+                                                            {showPasswordConfirmation ? (
+                                                                <VisibilityOffIcon />
+                                                            ) : (
+                                                                <VisibilityIcon />
+                                                            )}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
                                         />
                                     )}
                                     rules={{
@@ -296,6 +365,7 @@ export default function SignInSide() {
                                                 : 'Password does not matched',
                                     }}
                                 />
+
                                 <Button
                                     type="submit"
                                     fullWidth

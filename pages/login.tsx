@@ -13,7 +13,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { AuthLoginDto } from '../libs/auth/session/dto/auth.login.dto';
 import { REGEXP } from '../general/utils/regExp';
 import { useRouter } from 'next/router';
-import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
+import {
+    Alert,
+    IconButton,
+    InputAdornment,
+    Snackbar,
+    SnackbarOrigin,
+} from '@mui/material';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
@@ -29,6 +35,8 @@ import { SwitchLang } from '../components/atoms/SwitchLang';
 import { darkMode, lightMode } from '../general/constants/theme';
 import { RootState } from '../redux/store';
 import { setDark } from '../redux/reducers/uiSlice';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const snackbarPosition: SnackbarOrigin = {
     vertical: 'top',
@@ -43,6 +51,7 @@ export default function SignIn() {
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
     const { t, locale } = useLocale();
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const init = async () => {
@@ -71,6 +80,10 @@ export default function SignIn() {
         }
 
         setOpenErrorSnackbar(true);
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const onSubmit = async (data: AuthLoginDto) => {
@@ -201,13 +214,35 @@ export default function SignIn() {
                                             fullWidth
                                             required
                                             margin="normal"
-                                            type="password"
+                                            type={
+                                                showPassword
+                                                    ? 'text'
+                                                    : 'password'
+                                            }
                                             value={value}
                                             onChange={onChange}
                                             error={!!error}
                                             helperText={
                                                 error ? error.message : null
                                             }
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            edge="end"
+                                                            onClick={
+                                                                togglePasswordVisibility
+                                                            }
+                                                        >
+                                                            {showPassword ? (
+                                                                <VisibilityOffIcon />
+                                                            ) : (
+                                                                <VisibilityIcon />
+                                                            )}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
                                         />
                                     )}
                                     rules={{

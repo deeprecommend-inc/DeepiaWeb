@@ -4,4 +4,5 @@ export const REGEXP = {
     PASSWORD: /^[0-9a-zA-Z]*$/,
     YOUTUBE:
         /\b(?:https?):\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\/[\w!?/+\-|:=~;.,*&@#$%()'"[\]]+/g,
+    UNIQUE_NAME: /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]*$/,
 } as const;
