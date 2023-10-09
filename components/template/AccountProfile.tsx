@@ -9,9 +9,11 @@ const avatarSize = 100;
 
 type Props = {
     user: UserDto;
+    followers: number;
+    contentsLength: number;
 };
 
-const AccountProfile = ({ user }: Props) => {
+const AccountProfile = ({ user, followers, contentsLength }: Props) => {
     const dark = useAppSelector((state) => state.ui.dark);
 
     return (
@@ -46,10 +48,16 @@ const AccountProfile = ({ user }: Props) => {
                         }}
                     >
                         <Typography color="text.primary" className="">
-                            {user?.username}
+                            <h1>{user?.username}</h1>
                         </Typography>
-                        <Typography color="text.primary">
-                            {user?.name}
+                        <Typography color="text.primary" className="">
+                            <h1>{user?.name}</h1>
+                        </Typography>
+                        <Typography color="text.primary" className="">
+                            <strong>{followers}</strong> Followers
+                        </Typography>
+                        <Typography color="text.primary" className="">
+                            <strong>{contentsLength}</strong> Contents
                         </Typography>
                     </Box>
                 </Box>

@@ -109,43 +109,6 @@ const Pid = () => {
 
     return (
         <>
-            <NextSeo
-                title={t.index.head.title}
-                description={t.index.head.description}
-                canonical={'https://deepia.space'}
-                openGraph={{
-                    url: 'https://deepia.space',
-                    title: t.index.head.title,
-                    description: t.index.head.description,
-                    type: 'website',
-                    locale: locale,
-                    images: [
-                        {
-                            url: 'https://deepia.s3.ap-northeast-1.amazonaws.com/DeepRecommend+(1).png',
-                            width: 800,
-                            height: 600,
-                            alt: 'DeepRecommend',
-                            type: 'image/png',
-                        },
-                        {
-                            url: 'https://deepia.s3.ap-northeast-1.amazonaws.com/DeepRecommend+(1).png',
-                            width: 900,
-                            height: 800,
-                            alt: 'DeepRecommend',
-                            type: 'image/png',
-                        },
-                        {
-                            url: 'https://deepia.s3.ap-northeast-1.amazonaws.com/DeepRecommend+(1).png',
-                        },
-                    ],
-                    site_name: 'DeepRecommend',
-                }}
-                twitter={{
-                    handle: '@DeepRecommend',
-                    site: '@DeepRecommend',
-                    cardType: 'summary',
-                }}
-            />
             <ThemeProvider theme={dark ? darkMode : lightMode}>
                 <Box
                     className={`h-screen overflow-scroll ${

@@ -98,7 +98,13 @@ export const ResponsiveDrawer = (props: Props) => {
                     </Box>
                 </Toolbar>
                 <ToolbarMenu />
-                {/* {isDetail && <AccountProfile user={currentUser} />} */}
+                {isDetail && (
+                    <AccountProfile
+                        user={currentUser}
+                        followers={100}
+                        contentsLength={100}
+                    />
+                )}
             </AppBar>
             <Box
                 component="nav"
