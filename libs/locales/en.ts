@@ -2,7 +2,7 @@
 export default {
     index: {
         head: {
-            title: 'Deepia',
+            title: 'Deepia｜The Simplest & Perceptionable AI-Agent.',
             description: 'Brain Power Enhancer',
         },
     },
