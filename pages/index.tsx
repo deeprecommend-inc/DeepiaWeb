@@ -44,7 +44,8 @@ import { darkMode, lightMode } from '../general/constants/theme';
 import ContentMenu from '../components/atoms/menu/ContentMenu';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import ContentList from '../components/template/ContentList';
+import ContentList from '../components/v2/ContentList';
+import PromptArea from '../components/v2/PromptArea';
 
 const Home = () => {
     const router = useRouter();
@@ -75,7 +76,7 @@ const Home = () => {
             if (dark) {
                 await dispatch(setDark(true));
             } else {
-                await dispatch(setDark(false));
+                await dispatch(setDark(true));
             }
 
             if (lang) {
@@ -145,17 +146,10 @@ const Home = () => {
                     cardType: 'summary',
                 }}
             />
+
             <ThemeProvider theme={dark ? darkMode : lightMode}>
-                <Box
-                    className={`h-screen overflow-scroll ${
-                        dark ? 'dark' : 'light'
-                    }`}
-                >
-                    <ResponsiveDrawer
-                        isDetail={false}
-                        contents={<ContentList onDelete={deleteContent} />}
-                    />
-                </Box>
+                <PromptArea />
+                <ContentList />
             </ThemeProvider>
         </>
     );
