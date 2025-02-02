@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContentListContainer = styled.div`
+  position: fixed;
+  top: 100vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
@@ -38,7 +40,7 @@ const TitleOverlay = styled.div`
 `;
 
 const sampleContents = [
-  { title: 'Sample Content 1', thumbnail: 'https://via.placeholder.com/150' },
+  { title: 'Sample Content 1', thumbnail: 'https://via.placeholder.com/300' },
   { title: 'Sample Content 2', thumbnail: 'https://via.placeholder.com/150' },
   { title: 'Sample Content 3', thumbnail: 'https://via.placeholder.com/150' },
 ];

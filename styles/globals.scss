@@ -173,3 +173,35 @@ td {
 .storyboard-button:hover {
   background-color: #5a5a5a;
 }
+
+
+/* src/styles.css */
+.content-list {
+  /* グリッドレイアウトを有効にする */
+  display: grid;
+  /* カラムは自動フィルで、最小200px、最大1frに */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* カード同士の隙間を確保 */
+  gap: 16px;
+  /* ページ全体に余白をもたせたい場合 */
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.content-item {
+  /* 画像コンテナのデザインを整えたい場合はここで設定 */
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  /* 影などを付けたい場合 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content-item img {
+  /* 画像は横幅100%でリサイズ */
+  width: 100%;
+  /* 高さは自動で伸縮 */
+  height: auto;
+  display: block;
+}
+  

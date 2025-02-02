@@ -76,7 +76,7 @@ const PromptArea = () => {
   };
 
   const handleScrollDown = () => {
-    window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   };
 
   return (
