@@ -1,26 +1,43 @@
-import { pink, deepPurple } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 const darkMode = createTheme({
     palette: {
-        primary: {
-            main: deepPurple[400],
-        },
         mode: 'dark',
-        text: {
-            primary: '#fff',
+        primary: {
+            main: blue[400],
         },
+        background: {
+            default: '#121212',
+            paper: '#1e1e1e',
+        },
+        text: {
+            primary: '#ffffff',
+            secondary: '#b0b0b0',
+        },
+    },
+    shape: {
+        borderRadius: 8,
     },
 });
 
 const lightMode = createTheme({
     palette: {
+        mode: 'light',
         primary: {
-            main: deepPurple[500],
+            main: blue[600],
+        },
+        background: {
+            default: '#fafafa',
+            paper: '#ffffff',
         },
         text: {
-            primary: '#000',
+            primary: '#333333',
+            secondary: '#666666',
         },
+    },
+    shape: {
+        borderRadius: 8,
     },
 });
 
