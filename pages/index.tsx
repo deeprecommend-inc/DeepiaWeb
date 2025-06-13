@@ -33,6 +33,7 @@ import {
   VideoCall as VideoIcon,
   AudioFile as AudioIcon,
   Face as FaceIcon,
+  ThreeDRotation as Model3DIcon,
   Send as SendIcon,
   Favorite as FavoriteIcon,
   Share as ShareIcon,
@@ -48,77 +49,10 @@ import {
 } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { WorkflowEditor } from '../components/workflow/WorkflowEditor';
-
-// APIクライアント
-const apiClient = {
-  baseURL: 'http://localhost:9000',
-  
-  async request(endpoint: string, options: RequestInit = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    console.log('API Request URL:', url); // デバッグ用
-    
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    };
-
-    try {
-      const response = await fetch(url, config);
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`API Error ${response.status}:`, errorText);
-        throw new Error(`API Error: ${response.status} - ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Request failed:', error);
-      throw error;
-    }
-  },
-
-  // コンテンツ関連API
-  async getContents() {
-    return this.request('/api/content/');
-  },
-
-  async createContent(data: any) {
-    return this.request('/api/content/', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  },
-
-  async deleteContent(id: number) {
-    return this.request(`/api/content/${id}/`, {
-      method: 'DELETE',
-    });
-  },
-
-  // 認証関連API
-  async register(data: any) {
-    return this.request('/api/auth/register/', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  },
-
-  async login(data: any) {
-    return this.request('/api/auth/login/', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  },
-
-  async verifyEmail(token: string, userId: string) {
-    return this.request(`/api/auth/verify/${token}/?user_id=${userId}`);
-  },
-};
+import { ModelSelector } from '../components/ai/ModelSelector';
+import { ApiDebugInfo } from '../components/debug/ApiDebugInfo';
+import { AIModel } from '../constants/aiModels';
+import { mockApi, shouldUseMockApi } from '../utils/mockApi';
 
 // テーマ設定
 const theme = createTheme({
@@ -220,6 +154,7 @@ interface User {
   name: string;
   email: string;
   username?: string;
+  avatar?: string;
 }
 
 const Home = () => {
@@ -237,6 +172,17 @@ const Home = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showWorkflowEditor, setShowWorkflowEditor] = useState(false);
   
+  // AI生成関連の状態
+  const [showModelSelector, setShowModelSelector] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<'image' | 'video' | 'audio' | '3d'>('image');
+  const [currentGenerationTask, setCurrentGenerationTask] = useState<any>(null);
+  
+  // デバッグ関連の状態
+  const [showDebugInfo, setShowDebugInfo] = useState(false);
+  const [debugError, setDebugError] = useState<any>(null);
+  const [debugRequestData, setDebugRequestData] = useState<any>(null);
+  const [debugResponseData, setDebugResponseData] = useState<any>(null);
+  
   // 認証関連の状態
   const [user, setUser] = useState<User | null>(null);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
@@ -246,6 +192,147 @@ const Home = () => {
     email: '',
     password: '',
   });
+
+  // APIクライアント（コンポーネント内で定義してstateにアクセス可能にする）
+  const apiClient = {
+    baseURL: 'http://localhost:9000',
+    
+    async request(endpoint: string, options: RequestInit = {}) {
+      // モックAPIを使用するかチェック
+      if (shouldUseMockApi()) {
+        console.log('Using Mock API for:', endpoint);
+        return this.handleMockRequest(endpoint, options);
+      }
+
+      const url = `${this.baseURL}${endpoint}`;
+      console.log('API Request URL:', url);
+      console.log('API Request Options:', options);
+      
+      // JWTトークンがある場合は追加
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+          ...options.headers,
+        },
+        ...options,
+      };
+
+      // リクエストボディをログ出力
+      if (config.body) {
+        console.log('API Request Body:', config.body);
+      }
+
+      try {
+        const response = await fetch(url, config);
+        
+        if (!response.ok) {
+          let errorData;
+          try {
+            errorData = await response.json();
+          } catch {
+            errorData = await response.text();
+          }
+          console.error(`API Error ${response.status}:`, errorData);
+          throw new Error(`API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        }
+        
+        const data = await response.json();
+        console.log('API Response:', data);
+        return data;
+      } catch (error) {
+        console.error('Request failed:', error);
+        
+        // デバッグ情報を保存
+        setDebugError(error);
+        setDebugRequestData({ endpoint, options });
+        setDebugResponseData(null);
+        
+        throw error;
+      }
+    },
+
+    async handleMockRequest(endpoint: string, options: RequestInit = {}) {
+      try {
+        const method = options.method || 'GET';
+        const body = options.body ? JSON.parse(options.body as string) : null;
+
+        switch (endpoint) {
+          case '/api/content/':
+            if (method === 'GET') {
+              return await mockApi.getContents();
+            } else if (method === 'POST') {
+              return await mockApi.createContent(body);
+            }
+            break;
+          
+          case '/api/auth/login/':
+            if (method === 'POST') {
+              return await mockApi.login(body);
+            }
+            break;
+          
+          case '/api/auth/register/':
+            if (method === 'POST') {
+              return await mockApi.register(body);
+            }
+            break;
+          
+          default:
+            if (endpoint.startsWith('/api/auth/verify/')) {
+              const urlParts = endpoint.split('/');
+              const token = urlParts[urlParts.length - 2];
+              const userId = new URLSearchParams(endpoint.split('?')[1] || '').get('user_id');
+              return await mockApi.verifyEmail(token, parseInt(userId || '1'));
+            }
+            break;
+        }
+
+        throw new Error(`Mock API: Endpoint not implemented: ${endpoint}`);
+      } catch (error) {
+        console.error('Mock API Error:', error);
+        throw error;
+      }
+    },
+
+    // コンテンツ関連API
+    async getContents() {
+      return this.request('/api/content/');
+    },
+
+    async createContent(data: any) {
+      return this.request('/api/content/', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+
+    async deleteContent(id: number) {
+      return this.request(`/api/content/${id}/`, {
+        method: 'DELETE',
+      });
+    },
+
+    // 認証関連API
+    async register(data: any) {
+      return this.request('/api/auth/register/', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+
+    async login(data: any) {
+      return this.request('/api/auth/login/', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+
+    async verifyEmail(token: string, userId: string) {
+      return this.request(`/api/auth/verify/${token}/?user_id=${userId}`);
+    },
+  };
 
   // 初期データ読み込み
   useEffect(() => {
@@ -267,7 +354,7 @@ const Home = () => {
         title: item.title || `Content ${item.id}`,
         prompt: item.prompt,
         content_type: item.content_type || getContentTypeFromCategory(item.category_id),
-        image_url: item.deliverables.startsWith('http') ? item.deliverables : null,
+        image_url: item.deliverables && item.deliverables.startsWith('http') ? item.deliverables : null,
         created_at: item.created_at,
         user: item.user || 1,
         likes: item.likes || 0,
@@ -298,6 +385,96 @@ const Home = () => {
     setSnackbar({ open: true, message, severity });
   };
 
+  // AI生成処理
+  const handleAIGeneration = async (model: AIModel, parameters: Record<string, any>, taskType: string) => {
+    try {
+      setCreating(true);
+      setCurrentGenerationTask({ model, parameters, taskType });
+      
+      showMessage(`${model.name}で生成を開始しています...`, 'info');
+      
+      // piapi.yamlに基づいたリクエストを作成
+      const requestData = {
+        model: model.id,
+        task_type: taskType,
+        input: parameters,
+        config: {
+          service_mode: 'public' // デフォルトでPay-as-you-goモード
+        }
+      };
+      
+      console.log('AI Generation Request:', requestData);
+      
+      // モックAPIまたは開発環境では直接DeepiaAPIを使用、本番環境ではPiAPIを使用
+      let response;
+      if (shouldUseMockApi() || process.env.NODE_ENV === 'development') {
+        // DeepiaAPIでシミュレーション（モックAPIを含む）
+        response = await apiClient.createContent({
+          title: parameters.prompt?.substring(0, 50) + '...' || `${model.name}生成コンテンツ`,
+          prompt: parameters.prompt || '',
+          content_type: model.category,
+          ai_model: model.id,
+          ai_task_type: taskType,
+          ai_parameters: JSON.stringify(parameters),
+          user_id: user?.id
+        });
+        
+        setContents([response, ...contents]);
+        showMessage(`${model.name}での生成が完了しました！`, 'success');
+      } else {
+        // 本番環境でPiAPI呼び出し
+        const piApiResponse = await fetch('https://api.piapi.ai/api/v1/task', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_PIAPI_KEY || 'YOUR_API_KEY'}`,
+          },
+          body: JSON.stringify(requestData)
+        });
+        
+        if (!piApiResponse.ok) {
+          throw new Error(`PiAPI Error: ${piApiResponse.status}`);
+        }
+        
+        const taskResult = await piApiResponse.json();
+        console.log('AI Generation Response:', taskResult);
+        
+        // 生成結果をコンテンツとして保存
+        if (taskResult.task_id) {
+          const newContent = await apiClient.createContent({
+            title: parameters.prompt?.substring(0, 50) + '...' || `${model.name}生成コンテンツ`,
+            prompt: parameters.prompt || '',
+            content_type: model.category,
+            ai_model: model.id,
+            ai_task_id: taskResult.task_id,
+            ai_parameters: JSON.stringify(parameters),
+            user_id: user?.id
+          });
+          
+          setContents([newContent, ...contents]);
+          showMessage(`${model.name}での生成が完了しました！`, 'success');
+        }
+      }
+      
+    } catch (error) {
+      console.error('AI Generation failed:', error);
+      showMessage(`AI生成に失敗しました: ${error}`, 'error');
+      
+      // エラー時もデバッグ情報を表示
+      setTimeout(() => {
+        if (confirm('AI生成エラーの詳細情報を表示しますか？')) {
+          setDebugError(error);
+          setDebugRequestData({ model: model.id, parameters, taskType });
+          setDebugResponseData(null);
+          setShowDebugInfo(true);
+        }
+      }, 1000);
+    } finally {
+      setCreating(false);
+      setCurrentGenerationTask(null);
+    }
+  };
+
   const handleCreateContent = async () => {
     if (!user) {
       showMessage('コンテンツを作成するにはログインが必要です', 'error');
@@ -325,10 +502,50 @@ const Home = () => {
       showMessage('コンテンツが作成されました！');
     } catch (error) {
       console.error('Failed to create content:', error);
-      showMessage('コンテンツの作成に失敗しました', 'error');
+      showMessage('コンテンツの作成に失敗しました。詳細を確認しますか？', 'error');
+      
+      // デバッグ情報を表示するオプション
+      setTimeout(() => {
+        if (confirm('APIエラーの詳細情報を表示しますか？')) {
+          setShowDebugInfo(true);
+        }
+      }, 2000);
     } finally {
       setCreating(false);
     }
+  };
+
+  // 認証が必要な機能かどうかを判断
+  const requiresAuth = (action: string) => {
+    const authRequiredActions = ['save', 'share', 'upload', 'follow', 'like', 'comment', 'workflow_save'];
+    return authRequiredActions.includes(action);
+  };
+
+  // 認証が必要な機能にアクセスする際のチェック
+  const checkAuthAndExecute = (action: string, callback: () => void) => {
+    if (requiresAuth(action) && !user) {
+      setShowAuthDialog(true);
+      showMessage('この機能を使用するにはログインが必要です', 'info');
+      return;
+    }
+    callback();
+  };
+
+  // ユーザー認証後の処理
+  const onAuthSuccess = (userData: any, token: string, isLogin: boolean) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', token);
+    setShowAuthDialog(false);
+    
+    // 認証フォームをリセット
+    setAuthData({ name: '', email: '', password: '' });
+    
+    const message = isLogin ? 'ログインしました！' : 'アカウントが作成されました！';
+    showMessage(message + '全ての機能がご利用いただけます。', 'success');
+    
+    // 認証後にコンテンツを再読み込み（認証済みユーザー向けコンテンツも含める）
+    loadContents();
   };
 
   const handleAuth = async () => {
@@ -341,12 +558,13 @@ const Home = () => {
         });
         
         if (response.token) {
-          const userData = { id: Date.now(), email: authData.email, name: authData.email.split('@')[0] };
-          setUser(userData);
-          localStorage.setItem('user', JSON.stringify(userData));
-          localStorage.setItem('token', response.token);
-          setShowAuthDialog(false);
-          showMessage('ログインしました！');
+          const userData = { 
+            id: response.user?.id || Date.now(), 
+            email: authData.email, 
+            name: response.user?.name || authData.email.split('@')[0],
+            avatar: response.user?.avatar || null
+          };
+          onAuthSuccess(userData, response.token, true);
         }
       } else {
         // 登録
@@ -362,14 +580,16 @@ const Home = () => {
           setTimeout(async () => {
             try {
               const verifyResponse = await apiClient.verifyEmail('dummy', response.user_id);
-              const userData = verifyResponse.user;
-              setUser(userData);
-              localStorage.setItem('user', JSON.stringify(userData));
-              localStorage.setItem('token', verifyResponse.token);
-              setShowAuthDialog(false);
-              showMessage('アカウントが作成されました！');
+              const userData = {
+                id: verifyResponse.user?.id || response.user_id,
+                name: authData.name,
+                email: authData.email,
+                avatar: verifyResponse.user?.avatar || null
+              };
+              onAuthSuccess(userData, verifyResponse.token, false);
             } catch (error) {
               console.error('Auto verification failed:', error);
+              showMessage('認証に失敗しました。再度お試しください。', 'error');
             }
           }, 1000);
         }
@@ -521,21 +741,43 @@ const Home = () => {
             </IconButton>
           )}
 
-          {/* 認証ボタン */}
+          {/* 認証状態表示 */}
           {user ? (
-            <IconButton
-              onClick={handleLogout}
-              sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                color: 'white',
-                borderRadius: '12px',
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                },
-              }}
-            >
-              <LogoutIcon />
-            </IconButton>
+            <Box display="flex" alignItems="center" gap={1}>
+              <Box
+                sx={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  borderRadius: '20px',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                <Avatar 
+                  src={user.avatar} 
+                  sx={{ width: 24, height: 24 }}
+                >
+                  {user.name?.charAt(0) || 'U'}
+                </Avatar>
+                <Typography variant="body2" sx={{ color: 'white', fontSize: '0.85rem' }}>
+                  {user.name || user.email}
+                </Typography>
+              </Box>
+              <IconButton
+                onClick={handleLogout}
+                sx={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  color: 'white',
+                  borderRadius: '12px',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                  },
+                }}
+              >
+                <LogoutIcon />
+              </IconButton>
+            </Box>
           ) : (
             <IconButton
               onClick={() => setShowAuthDialog(true)}
@@ -569,14 +811,6 @@ const Home = () => {
             }}
           >
             <CardContent sx={{ p: 4 }}>
-              <Typography variant="h5" fontWeight="bold" color="white" mb={3}>
-                新しいコンテンツを作成
-              </Typography>
-
-                {/* タイプ選択 */}
-                <Typography variant="h6" color="white" mb={2}>
-                  生成タイプを選択
-                </Typography>
                 <Grid container spacing={2} mb={3}>
                   {contentTypes.map((type) => (
                     <Grid item xs={6} sm={3} key={type.id}>
@@ -601,6 +835,66 @@ const Home = () => {
                     </Grid>
                   ))}
                 </Grid>
+
+                {/* AI生成ボタン */}
+                <Box display="flex" gap={1} mb={3}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setSelectedCategory('image');
+                      setShowModelSelector(true);
+                    }}
+                    startIcon={<ImageIcon />}
+                    sx={{
+                      color: 'white',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      '&:hover': {
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    AI画像生成
+                  </Button>
+                  
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setSelectedCategory('video');
+                      setShowModelSelector(true);
+                    }}
+                    startIcon={<VideoIcon />}
+                    sx={{
+                      color: 'white',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      '&:hover': {
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    AI動画生成
+                  </Button>
+                  
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setSelectedCategory('audio');
+                      setShowModelSelector(true);
+                    }}
+                    startIcon={<AudioIcon />}
+                    sx={{
+                      color: 'white',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      '&:hover': {
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    AI音楽生成
+                  </Button>
+                </Box>
 
                 {/* タイトル入力 */}
                 <TextField
@@ -627,7 +921,7 @@ const Home = () => {
                   <Button
                     variant="contained"
                     startIcon={creating ? <CircularProgress size={20} color="inherit" /> : <SendIcon />}
-                    onClick={handleCreateContent}
+                    onClick={() => checkAuthAndExecute('save', handleCreateContent)}
                     disabled={creating || !prompt.trim() || !title.trim()}
                     sx={{
                       background: 'linear-gradient(135deg, #667eea, #764ba2)',
@@ -636,7 +930,7 @@ const Home = () => {
                       },
                     }}
                   >
-                    {creating ? '作成中...' : '作成'}
+                    {creating ? '作成中...' : user ? '作成' : '作成（ログインが必要）'}
                   </Button>
                   <Button
                     variant="outlined"
@@ -944,6 +1238,30 @@ const Home = () => {
           open={showWorkflowEditor}
           onClose={() => setShowWorkflowEditor(false)}
           apiClient={apiClient}
+          user={user}
+          onAuthRequired={() => {
+            setShowAuthDialog(true);
+            showMessage('ワークフローの保存・共有にはログインが必要です', 'info');
+          }}
+        />
+
+        {/* AIモデル選択ダイアログ */}
+        <ModelSelector
+          open={showModelSelector}
+          onClose={() => setShowModelSelector(false)}
+          category={selectedCategory}
+          onModelSelect={(model, parameters, taskType) => 
+            checkAuthAndExecute('save', () => handleAIGeneration(model, parameters, taskType))
+          }
+        />
+
+        {/* APIデバッグ情報ダイアログ */}
+        <ApiDebugInfo
+          open={showDebugInfo}
+          onClose={() => setShowDebugInfo(false)}
+          error={debugError}
+          requestData={debugRequestData}
+          responseData={debugResponseData}
         />
       </Box>
     </ThemeProvider>

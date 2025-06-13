@@ -76,77 +76,195 @@ export const nodeTemplates: NodeTemplate[] = [
     ]
   },
 
-  // Image Generation
+  // Midjourney Image Generation
   {
-    id: 'image_generation',
-    name: 'イメージ生成',
-    description: 'AIを使って画像を生成',
-    type: 'image_generation',
+    id: 'midjourney_generation',
+    name: 'Midjourney画像生成',
+    description: 'Midjourney V7で高品質画像生成',
+    type: 'midjourney_generation',
     category: 'generation',
     icon: '🎨',
     color: '#E91E63',
     defaultConfig: {
-      imageModel: 'midjourney',
-      width: 1024,
-      height: 1024,
-      steps: 50
+      model: 'midjourney',
+      task_type: 'imagine',
+      aspect_ratio: '1:1',
+      process_mode: 'fast',
+      skip_prompt_check: false
     },
     inputs: [
       { id: 'prompt', name: 'プロンプト', type: 'text', required: true },
-      { id: 'style', name: 'スタイル', type: 'text', required: false },
-      { id: 'reference', name: '参考画像', type: 'image', required: false }
+      { id: 'aspect_ratio', name: 'アスペクト比', type: 'select', required: false, options: ['1:1', '4:3', '3:4', '16:9', '9:16'] },
+      { id: 'process_mode', name: '処理モード', type: 'select', required: false, options: ['relax', 'fast', 'turbo'] }
+    ],
+    outputs: [
+      { id: 'image', name: '生成画像', type: 'image' },
+      { id: 'task_id', name: 'タスクID', type: 'text' }
+    ]
+  },
+
+  // Flux Image Generation
+  {
+    id: 'flux_generation',
+    name: 'Flux画像生成',
+    description: 'Flux高速・高品質画像生成',
+    type: 'flux_generation',
+    category: 'generation',
+    icon: '⚡',
+    color: '#FF9800',
+    defaultConfig: {
+      model: 'Qubico/flux1-dev',
+      task_type: 'txt2img',
+      width: 1024,
+      height: 1024,
+      guidance_scale: 3.5,
+      batch_size: 1
+    },
+    inputs: [
+      { id: 'prompt', name: 'プロンプト', type: 'text', required: true },
+      { id: 'negative_prompt', name: 'ネガティブプロンプト', type: 'text', required: false },
+      { id: 'width', name: '幅', type: 'number', required: false },
+      { id: 'height', name: '高さ', type: 'number', required: false },
+      { id: 'guidance_scale', name: 'ガイダンススケール', type: 'number', required: false },
+      { id: 'lora_settings', name: 'LoRA設定', type: 'array', required: false }
     ],
     outputs: [
       { id: 'image', name: '生成画像', type: 'image' }
     ]
   },
 
-  // Video Generation
+  // Kling Video Generation
   {
-    id: 'video_generation',
-    name: 'ビデオ生成',
-    description: 'AIを使って動画を生成',
-    type: 'video_generation',
+    id: 'kling_generation',
+    name: 'Kling動画生成',
+    description: 'Kuaishou KlingAI 最先端動画生成',
+    type: 'kling_generation',
     category: 'generation',
     icon: '🎬',
     color: '#9C27B0',
     defaultConfig: {
-      videoModel: 'dream_machine',
-      duration: '10s',
-      resolution: '1080p',
-      aspectRatio: '16:9'
+      model: 'kling',
+      task_type: 'video_generation',
+      version: '2.0',
+      mode: 'pro',
+      duration: 10,
+      aspect_ratio: '16:9',
+      cfg_scale: 0.5
     },
     inputs: [
       { id: 'prompt', name: 'プロンプト', type: 'text', required: true },
-      { id: 'image', name: '開始画像', type: 'image', required: false },
-      { id: 'style', name: 'スタイル', type: 'text', required: false }
+      { id: 'negative_prompt', name: 'ネガティブプロンプト', type: 'text', required: false },
+      { id: 'image_url', name: '開始画像', type: 'image', required: false },
+      { id: 'image_tail_url', name: '終了画像', type: 'image', required: false },
+      { id: 'duration', name: '長さ（秒）', type: 'select', required: false, options: ['5', '10'] },
+      { id: 'aspect_ratio', name: 'アスペクト比', type: 'select', required: false, options: ['16:9', '9:16', '1:1'] },
+      { id: 'camera_control', name: 'カメラ制御', type: 'object', required: false }
+    ],
+    outputs: [
+      { id: 'video', name: '生成動画', type: 'video' },
+      { id: 'task_id', name: 'タスクID', type: 'text' }
+    ]
+  },
+
+  // Luma Dream Machine
+  {
+    id: 'luma_generation',
+    name: 'Luma Dream Machine',
+    description: 'Luma Labs Dream Machine動画生成',
+    type: 'luma_generation',
+    category: 'generation',
+    icon: '💫',
+    color: '#673AB7',
+    defaultConfig: {
+      model: 'luma',
+      task_type: 'video_generation',
+      model_name: 'ray-v2',
+      duration: 5,
+      aspect_ratio: '16:9'
+    },
+    inputs: [
+      { id: 'prompt', name: 'プロンプト', type: 'text', required: true },
+      { id: 'frame0', name: '開始フレーム', type: 'image', required: false },
+      { id: 'frame1', name: '終了フレーム', type: 'image', required: false },
+      { id: 'duration', name: '長さ（秒）', type: 'select', required: false, options: ['5', '10'] },
+      { id: 'aspect_ratio', name: 'アスペクト比', type: 'select', required: false, options: ['9:16', '3:4', '1:1', '4:3', '16:9', '21:9'] }
     ],
     outputs: [
       { id: 'video', name: '生成動画', type: 'video' }
     ]
   },
 
-  // Audio Generation
+  // Music Generation (Suno + Udio)
   {
-    id: 'audio_generation',
-    name: 'オーディオ生成',
-    description: 'AIを使って音楽・音声を生成',
-    type: 'audio_generation',
+    id: 'music_generation',
+    name: '音楽生成',
+    description: 'Suno・Udio音楽生成',
+    type: 'music_generation',
     category: 'generation',
     icon: '🎵',
     color: '#00BCD4',
     defaultConfig: {
-      audioModel: 'suno',
-      instrumental: false,
-      duration: 30
+      model: 'music-u',
+      task_type: 'generate_music',
+      lyrics_type: 'generate',
+      platform: 'Suno'
     },
     inputs: [
-      { id: 'prompt', name: 'プロンプト', type: 'text', required: true },
-      { id: 'genre', name: 'ジャンル', type: 'text', required: false },
-      { id: 'lyrics', name: '歌詞', type: 'text', required: false }
+      { id: 'prompt', name: '音楽プロンプト', type: 'text', required: true },
+      { id: 'negative_tags', name: '除外タグ', type: 'text', required: false },
+      { id: 'gpt_description_prompt', name: 'GPT説明プロンプト', type: 'text', required: false },
+      { id: 'lyrics_type', name: '歌詞タイプ', type: 'select', required: false, options: ['generate', 'user', 'instrumental'] },
+      { id: 'lyrics', name: 'カスタム歌詞', type: 'text', required: false },
+      { id: 'seed', name: 'シード', type: 'number', required: false }
     ],
     outputs: [
-      { id: 'audio', name: '生成音声', type: 'audio' }
+      { id: 'audio', name: '生成音楽', type: 'audio' }
+    ]
+  },
+
+  // TTS (Text-to-Speech)
+  {
+    id: 'tts_generation',
+    name: '音声合成',
+    description: 'ゼロショット音声クローニング・音声合成',
+    type: 'tts_generation',
+    category: 'generation',
+    icon: '🗣️',
+    color: '#4CAF50',
+    defaultConfig: {
+      model: 'Qubico/tts',
+      task_type: 'zero-shot'
+    },
+    inputs: [
+      { id: 'gen_text', name: '音声化テキスト', type: 'text', required: true },
+      { id: 'ref_audio', name: '参照音声', type: 'audio', required: true },
+      { id: 'ref_text', name: '参照音声テキスト', type: 'text', required: false }
+    ],
+    outputs: [
+      { id: 'audio', name: '合成音声', type: 'audio' }
+    ]
+  },
+
+  // Face Swap
+  {
+    id: 'face_swap',
+    name: '顔交換',
+    description: '画像内の顔を交換',
+    type: 'face_swap',
+    category: 'generation',
+    icon: '👤',
+    color: '#795548',
+    defaultConfig: {
+      model: 'Qubico/image-toolkit',
+      task_type: 'face-swap',
+      max_resolution: '2048x2048'
+    },
+    inputs: [
+      { id: 'target_image', name: '対象画像', type: 'image', required: true },
+      { id: 'swap_image', name: '交換用顔画像', type: 'image', required: true }
+    ],
+    outputs: [
+      { id: 'result_image', name: '結果画像', type: 'image' }
     ]
   },
 

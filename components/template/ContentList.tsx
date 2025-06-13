@@ -1,5 +1,5 @@
 import { Avatar, Grid } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { ImgDataURI } from '../atoms/ImgDataURI';
 import SimpleBar from 'simplebar-react';
 import {
@@ -12,17 +12,45 @@ import ContentMenu from '../../components/atoms/menu/ContentMenu';
 import { useAppSelector } from '../../redux/hooks';
 import LogoGray from '../atoms/LogoGray';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { ContentEditDialog } from './ContentEditDialog';
+import { ContentDto } from '../../libs/content/session/dto/content.dto';
+import { asyncApiClient } from '../../libs/core/api.client';
 
 type Props = {
     onDelete: (id) => void;
+    onEdit?: (content: ContentDto) => void;
 };
 
-const ContentList = ({ onDelete }: Props) => {
+const ContentList = ({ onDelete, onEdit }: Props) => {
     const dark = useAppSelector((state) => state.ui.dark);
     const currentUser = useAppSelector((state) => state.auth.currentUser);
     const contentList = useAppSelector((state) => state.content.list);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [editingContent, setEditingContent] = useState<ContentDto | null>(null);
+
+    const handleEditContent = (content: ContentDto) => {
+        setEditingContent(content);
+        setEditDialogOpen(true);
+    };
+
+    const handleSaveContent = async (contentId: number, updatedData: { prompt: string; deliverables?: string }) => {
+        try {
+            const apiClient = await asyncApiClient.create();
+            const response = await apiClient.put(`/api/content/${contentId}/`, updatedData);
+            
+            if (onEdit) {
+                onEdit(response.data);
+            }
+            
+            // Redux state should be updated by the parent component
+        } catch (error) {
+            console.error('Failed to update content:', error);
+            throw error;
+        }
+    };
 
     return (
         <>
@@ -145,12 +173,23 @@ const ContentList = ({ onDelete }: Props) => {
                                     onDelete={() => {
                                         onDelete(content.id);
                                     }}
+                                    onEdit={handleEditContent}
                                 />
                             </div>
                         </div>
                     </Grid>
                 ))}
             </Grid>
+            
+            <ContentEditDialog
+                open={editDialogOpen}
+                content={editingContent}
+                onClose={() => {
+                    setEditDialogOpen(false);
+                    setEditingContent(null);
+                }}
+                onSave={handleSaveContent}
+            />
         </>
     );
 };

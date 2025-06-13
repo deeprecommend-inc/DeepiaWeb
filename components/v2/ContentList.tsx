@@ -74,7 +74,7 @@ const ContentList = () => {
   const handleFollow = (contentId) => {
     setContents(contents.map(content => 
       content.id === contentId 
-        ? { ...content, creator: { ...content.creator, isFollowing: !content.creator.isFollowing } }
+        ? { ...content, isFollowing: !content.isFollowing }
         : content
     ));
   };
@@ -186,7 +186,7 @@ const ContentList = () => {
                     {content.title}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255, 255, 255, 0.8)' }}>
-                    "{content.prompt}"
+                    &ldquo;{content.prompt}&rdquo;
                   </Typography>
                   
                   {/* クリエイター情報 */}

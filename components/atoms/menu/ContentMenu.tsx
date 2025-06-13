@@ -26,6 +26,7 @@ import { updateIsAfterLogin } from '../../../redux/reducers/authSlice';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import EditIcon from '@mui/icons-material/Edit';
 import { red } from '@mui/material/colors';
 import { CurrentUserId } from '../../../libs/auth/domain/current.user.id';
 import { ContentDto } from '../../../libs/content/session/dto/content.dto';
@@ -37,9 +38,10 @@ type Props = {
     content: ContentDto;
     currentUserId: number;
     onDelete: (id) => void;
+    onEdit?: (content: ContentDto) => void;
 };
 
-const ContentMenu = ({ content, currentUserId, onDelete }: Props) => {
+const ContentMenu = ({ content, currentUserId, onDelete, onEdit }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { t } = useLocale();
@@ -125,6 +127,19 @@ const ContentMenu = ({ content, currentUserId, onDelete }: Props) => {
                     </ListItemIcon>
                     {t.form.copy}
                 </MenuItem>
+                {content.user.id === currentUserId && onEdit && (
+                    <MenuItem
+                        onClick={() => {
+                            onEdit(content);
+                            closeMenu();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <EditIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="編集" />
+                    </MenuItem>
+                )}
                 {content.user.id === currentUserId && (
                     <MenuItem
                         onClick={() => {

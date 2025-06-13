@@ -106,6 +106,7 @@ interface Creator {
   followers: number;
   specialties: string[];
   bio: string;
+  isCreator: boolean;
 }
 
 const mockCreators: Creator[] = [
@@ -117,7 +118,8 @@ const mockCreators: Creator[] = [
     isFollowing: true,
     followers: 1250,
     specialties: ['画像生成', '動画編集'],
-    bio: 'デジタルアートとAI生成のプロフェッショナル'
+    bio: 'デジタルアートとAI生成のプロフェッショナル',
+    isCreator: true
   },
   {
     id: '2', 
@@ -127,7 +129,8 @@ const mockCreators: Creator[] = [
     isFollowing: false,
     followers: 890,
     specialties: ['音楽生成', 'サウンドデザイン'],
-    bio: 'AI音楽生成の専門家'
+    bio: 'AI音楽生成の専門家',
+    isCreator: true
   },
   {
     id: '3',
@@ -137,7 +140,8 @@ const mockCreators: Creator[] = [
     isFollowing: true,
     followers: 2100,
     specialties: ['動画生成', 'VFX'],
-    bio: 'ビデオコンテンツとVFXのクリエイター'
+    bio: 'ビデオコンテンツとVFXのクリエイター',
+    isCreator: true
   }
 ];
 

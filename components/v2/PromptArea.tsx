@@ -121,7 +121,7 @@ const TextBox = () => {
   const [selectedModel, setSelectedModel] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('image');
   const [loading, setLoading] = useState(false);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' });
+  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' }>({ open: false, message: '', severity: 'info' });
   const [generationResults, setGenerationResults] = useState<GenerationResult[]>([]);
 
   const showMessage = (message: string, severity: 'success' | 'error' | 'info' = 'info') => {
@@ -354,7 +354,7 @@ const TextBox = () => {
                         {result.model}
                       </Typography>
                       <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255, 255, 255, 0.8)' }}>
-                        "{result.prompt}"
+                        &ldquo;{result.prompt}&rdquo;
                       </Typography>
                       
                       {result.status === 'generating' && (

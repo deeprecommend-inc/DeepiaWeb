@@ -9,9 +9,16 @@ export type NodeType =
   | 'video_generation'
   | 'audio_generation'
   | 'model_3d_generation'
-  | 'model_3d_swap'
+  | 'face_swap'
   | 'data_transformer'
-  | 'conditional';
+  | 'conditional'
+  | 'midjourney_generation'
+  | 'flux_generation'
+  | 'kling_generation'
+  | 'luma_generation'
+  | 'music_generation'
+  | 'tts_generation'
+  | 'model_3d_swap';
 
 export interface NodeData {
   id: string;
@@ -26,15 +33,16 @@ export interface NodeData {
 export interface NodeInput {
   id: string;
   name: string;
-  type: 'text' | 'image' | 'video' | 'audio' | 'code' | 'model3d' | 'any';
+  type: 'text' | 'image' | 'video' | 'audio' | 'code' | 'model3d' | 'any' | 'select' | 'number' | 'array' | 'object';
   required: boolean;
   value?: any;
+  options?: string[];
 }
 
 export interface NodeOutput {
   id: string;
   name: string;
-  type: 'text' | 'image' | 'video' | 'audio' | 'code' | 'model3d' | 'any';
+  type: 'text' | 'image' | 'video' | 'audio' | 'code' | 'model3d' | 'any' | 'select' | 'number' | 'array' | 'object';
   value?: any;
 }
 
@@ -93,7 +101,7 @@ export interface GenerationConfig {
   // Audio Generation
   audioModel?: string;
   instrumental?: boolean;
-  duration?: number;
+  audioDuration?: number;
   
   // Code Generation
   codeLanguage?: string;
@@ -112,7 +120,7 @@ export interface NodeTemplate {
   category: string;
   icon: string;
   color: string;
-  defaultConfig: GenerationConfig;
+  defaultConfig: Record<string, any>;
   inputs: Omit<NodeInput, 'value'>[];
   outputs: NodeOutput[];
 }

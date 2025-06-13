@@ -12,7 +12,7 @@ import { AuthTokenModel } from '../datasource/auth.token.model';
 export const authRepo: AuthRepo = {
     currentUser: async (): Promise<AuthCurrentUserDto> => {
         const apiClient = await asyncApiClient.create();
-        const res = await apiClient.get<AuthCurrentUserModel>('/current_user/');
+        const res = await apiClient.get<AuthCurrentUserModel>('/api/current_user/');
         const dto = AuthCurrentUserMapper.toDto(res.data);
 
         return dto;
@@ -20,7 +20,7 @@ export const authRepo: AuthRepo = {
     login: async (domain: AuthLogin): Promise<AuthTokenDto> => {
         const apiClient = await asyncApiClient.create();
         const model = await AuthLoginMapper.toPersistence(domain);
-        const res = await apiClient.post<AuthTokenModel>('/auth/', model);
+        const res = await apiClient.post<AuthTokenModel>('/api/auth/login/', model);
         const dto = AuthTokenMapper.toDto(res.data);
 
         return dto;
